@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "okyanus-runtime",
+  "version": "${version}",
+  "name": "Okyanus Runtime",
+  "description": "Okyanus server runtime.",
+  "environment": "server",
+  "mixins": [
+    "okyanus.mixins.json"
+  ],
+  "depends": {
+    "okyanus": ">=0.1.0"
+  }
+}

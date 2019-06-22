@@ -1,11 +1,9 @@
 {
   "required": true,
-  "package": "net.fabricmc.example.mixin",
+  "package": "club.issizler.okyanus.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
-  ],
-  "client": [
-    "ExampleMixin"
+  "server": [
+    "NoGuiMixin"
   ],
   "injectors": {
     "defaultRequire": 1
