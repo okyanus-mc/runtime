@@ -3,10 +3,10 @@ package club.issizler.okyanus.command;
 import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.LiteralText;
 
 public class PluginsCommand {
 
@@ -30,7 +30,7 @@ public class PluginsCommand {
                         mods.append(", ");
                     }
 
-                    context.getSource().sendFeedback(new TextComponent(mods.toString()), false);
+                    context.getSource().sendFeedback(new LiteralText(mods.toString()), false);
                     return 1;
                 }));
     }

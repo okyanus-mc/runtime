@@ -1,10 +1,10 @@
 package club.issizler.okyanus.command;
 
 import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.LiteralText;
 
 import static club.issizler.okyanus.ServerStatus.recentTps;
 
@@ -29,7 +29,7 @@ public class TPSCommand {
                     tps.append(String.format("%.02f", recentTps[1])).append(", ");
                     tps.append(String.format("%.02f", recentTps[2]));
 
-                    context.getSource().sendFeedback(new TextComponent(tps.toString()), false);
+                    context.getSource().sendFeedback(new LiteralText(tps.toString()), false);
                     return 1;
                 }));
     }
