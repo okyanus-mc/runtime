@@ -3,7 +3,10 @@
   "package": "club.issizler.okyanus.mixin",
   "compatibilityLevel": "JAVA_8",
   "server": [
-    "NoGuiMixin"
+    "NoGuiMixin",
+    "CustomCommandsMixin",
+    "tps.MinecraftServerMixin",
+    "tps.MinecraftDedicatedServerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
