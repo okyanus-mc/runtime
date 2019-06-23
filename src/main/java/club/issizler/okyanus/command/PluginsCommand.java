@@ -11,26 +11,28 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class PluginsCommand {
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(CommandManager.literal("mods").executes(context -> {
-            boolean isConsole = context.getSource().getEntity() instanceof ServerPlayerEntity;
+        dispatcher.register(CommandManager.literal("mods")
+                .requires(source -> source.hasPermissionLevel(3))
+                .executes(context -> {
+                    boolean isConsole = context.getSource().getEntity() instanceof ServerPlayerEntity;
 
-            StringBuilder mods = new StringBuilder("Mods: ");
+                    StringBuilder mods = new StringBuilder("Mods: ");
 
-            for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
-                if (isConsole)
-                    mods.append("§a");
+                    for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
+                        if (isConsole)
+                            mods.append("§a");
 
-                mods.append(mod.getMetadata().getName());
+                        mods.append(mod.getMetadata().getName());
 
-                if (isConsole)
-                    mods.append("§r");
+                        if (isConsole)
+                            mods.append("§r");
 
-                mods.append(", ");
-            }
+                        mods.append(", ");
+                    }
 
-            context.getSource().sendFeedback(new TextComponent(mods.toString()), false);
-            return 1;
-        }));
+                    context.getSource().sendFeedback(new TextComponent(mods.toString()), false);
+                    return 1;
+                }));
     }
 
 }
