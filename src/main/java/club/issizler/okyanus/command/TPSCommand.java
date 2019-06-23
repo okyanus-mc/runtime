@@ -25,9 +25,9 @@ public class TPSCommand {
                     if (isConsole)
                         tps.append("§r");
 
-                    tps.append((int) recentTps[0]).append(", ");
-                    tps.append((int) recentTps[1]).append(", ");
-                    tps.append((int) recentTps[2]);
+                    tps.append(String.format("%.02f", recentTps[0])).append(", ");
+                    tps.append(String.format("%.02f", recentTps[1])).append(", ");
+                    tps.append(String.format("%.02f", recentTps[2]));
 
                     context.getSource().sendFeedback(new TextComponent(tps.toString()), false);
                     return 1;

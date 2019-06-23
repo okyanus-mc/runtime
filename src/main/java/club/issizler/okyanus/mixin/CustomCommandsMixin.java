@@ -20,12 +20,9 @@ public abstract class CustomCommandsMixin {
     private CommandDispatcher<ServerCommandSource> dispatcher;
 
     @Inject(at = @At("RETURN"), method = "<init>")
-    private void oky$init(boolean isManagementCommand, CallbackInfo ci) {
-        // TODO: find a proper name for isManagementCommand
-        if (isManagementCommand) {
-            PluginsCommand.register(dispatcher);
-            TPSCommand.register(dispatcher);
-        }
+    private void oky$init(boolean isDedicatedServer, CallbackInfo ci) {
+        PluginsCommand.register(dispatcher);
+        TPSCommand.register(dispatcher);
     }
 
 }
