@@ -1,11 +1,11 @@
-package club.issizler.okyanus.runtime.mixin;
+package club.issizler.okyanus.runtime.mixin.nogui;
 
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(MinecraftDedicatedServer.class)
-public abstract class NoGuiMixin {
+public abstract class MinecraftDedicatedServerMixin {
 
     /**
      * @author Okyanus

@@ -3,8 +3,8 @@
   "package": "club.issizler.okyanus.runtime.mixin",
   "compatibilityLevel": "JAVA_8",
   "server": [
-    "NoGuiMixin",
     "commands.CommandManagerMixin",
+    "nogui.MinecraftDedicatedServerMixin",
     "tps.MinecraftServerMixin",
     "tps.MinecraftDedicatedServerMixin"
   ],
