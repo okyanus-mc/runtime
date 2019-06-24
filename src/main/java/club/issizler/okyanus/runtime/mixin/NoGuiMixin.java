@@ -1,4 +1,4 @@
-package club.issizler.okyanus.mixin;
+package club.issizler.okyanus.runtime.mixin;
 
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import org.spongepowered.asm.mixin.Mixin;

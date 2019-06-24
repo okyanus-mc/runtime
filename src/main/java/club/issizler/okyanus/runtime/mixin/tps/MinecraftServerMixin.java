@@ -1,6 +1,6 @@
-package club.issizler.okyanus.mixin.tps;
+package club.issizler.okyanus.runtime.mixin.tps;
 
-import club.issizler.okyanus.ServerStatus;
+import club.issizler.okyanus.runtime.ServerStatus;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.SystemUtil;
 import org.spongepowered.asm.mixin.Mixin;

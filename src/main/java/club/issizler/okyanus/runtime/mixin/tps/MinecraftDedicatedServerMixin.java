@@ -1,6 +1,6 @@
-package club.issizler.okyanus.mixin.tps;
+package club.issizler.okyanus.runtime.mixin.tps;
 
-import club.issizler.okyanus.ServerStatus;
+import club.issizler.okyanus.runtime.ServerStatus;
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import net.minecraft.util.SystemUtil;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Arrays;
 
-import static club.issizler.okyanus.ServerStatus.recentTps;
+import static club.issizler.okyanus.runtime.ServerStatus.recentTps;
 
 @Mixin(MinecraftDedicatedServer.class)
 public abstract class MinecraftDedicatedServerMixin {

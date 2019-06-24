@@ -10,5 +10,10 @@
   ],
   "depends": {
     "okyanus": ">=0.1.0"
+  },
+  "entrypoints": {
+    "server": [
+      "club.issizler.okyanus.runtime.Runtime"
+    ]
   }
 }

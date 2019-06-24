@@ -1,4 +1,4 @@
-package club.issizler.okyanus;
+package club.issizler.okyanus.runtime;
 
 public class ServerStatus {
 
