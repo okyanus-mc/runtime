@@ -3,16 +3,10 @@
   "package": "club.issizler.okyanus.runtime.mixin",
   "compatibilityLevel": "JAVA_8",
   "server": [
-    "commands.CommandManagerMixin",
-
-    "events.MinecraftDedicatedServerMixin",
-    "events.PlayerManagerMixin",
-
-    "nogui.MinecraftDedicatedServerMixin",
-
-    "tps.MinecraftServerMixin",
-    "tps.MinecraftDedicatedServerMixin",
-
+    "CommandManagerMixin",
+    "MinecraftDedicatedServerMixin",
+    "MinecraftServerMixin",
+    "PlayerManagerMixin",
     "ServerCommandOutputMixin"
   ],
   "injectors": {

@@ -1,4 +1,4 @@
-package club.issizler.okyanus.runtime.mixin.events;
+package club.issizler.okyanus.runtime.mixin;
 
 import club.issizler.okyanus.api.Player;
 import club.issizler.okyanus.api.event.ChatEvent;

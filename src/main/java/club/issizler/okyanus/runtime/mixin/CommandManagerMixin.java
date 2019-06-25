@@ -1,4 +1,4 @@
-package club.issizler.okyanus.runtime.mixin.commands;
+package club.issizler.okyanus.runtime.mixin;
 
 import club.issizler.okyanus.api.cmd.CommandBuilder;
 import club.issizler.okyanus.api.cmd.CommandSource;

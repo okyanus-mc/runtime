@@ -1,4 +1,4 @@
-package club.issizler.okyanus.runtime.mixin.tps;
+package club.issizler.okyanus.runtime.mixin;
 
 import club.issizler.okyanus.runtime.SomeGlobals;
 import net.minecraft.server.MinecraftServer;
