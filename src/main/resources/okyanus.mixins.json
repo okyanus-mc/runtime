@@ -4,10 +4,16 @@
   "compatibilityLevel": "JAVA_8",
   "server": [
     "commands.CommandManagerMixin",
+
     "events.MinecraftDedicatedServerMixin",
+    "events.PlayerManagerMixin",
+
     "nogui.MinecraftDedicatedServerMixin",
+
     "tps.MinecraftServerMixin",
-    "tps.MinecraftDedicatedServerMixin"
+    "tps.MinecraftDedicatedServerMixin",
+
+    "ServerCommandOutputMixin"
   ],
   "injectors": {
     "defaultRequire": 1

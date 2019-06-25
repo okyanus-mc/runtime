@@ -1,6 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.tps;
 
-import club.issizler.okyanus.runtime.ServerStatus;
+import club.issizler.okyanus.runtime.SomeGlobals;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.SystemUtil;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,11 +25,11 @@ public abstract class MinecraftServerMixin {
         curTime = SystemUtil.getMeasuringTimeMs();
 
         if (tickCount++ % SAMPLE_INTERVAL == 0) {
-            double currentTps = 1E3 / (curTime - ServerStatus.tickSection) * SAMPLE_INTERVAL;
-            ServerStatus.recentTps[0] = calcTps(ServerStatus.recentTps[0], 0.92, currentTps); // 1/exp(5sec/1min)
-            ServerStatus.recentTps[1] = calcTps(ServerStatus.recentTps[1], 0.9835, currentTps); // 1/exp(5sec/5min)
-            ServerStatus.recentTps[2] = calcTps(ServerStatus.recentTps[2], 0.9945, currentTps); // 1/exp(5sec/15min)
-            ServerStatus.tickSection = curTime;
+            double currentTps = 1E3 / (curTime - SomeGlobals.tickSection) * SAMPLE_INTERVAL;
+            SomeGlobals.recentTps[0] = calcTps(SomeGlobals.recentTps[0], 0.92, currentTps); // 1/exp(5sec/1min)
+            SomeGlobals.recentTps[1] = calcTps(SomeGlobals.recentTps[1], 0.9835, currentTps); // 1/exp(5sec/5min)
+            SomeGlobals.recentTps[2] = calcTps(SomeGlobals.recentTps[2], 0.9945, currentTps); // 1/exp(5sec/15min)
+            SomeGlobals.tickSection = curTime;
         }
     }
 

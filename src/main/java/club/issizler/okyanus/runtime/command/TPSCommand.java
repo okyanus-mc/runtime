@@ -3,7 +3,7 @@ package club.issizler.okyanus.runtime.command;
 import club.issizler.okyanus.api.cmd.CommandRunnable;
 import club.issizler.okyanus.api.cmd.CommandSource;
 
-import static club.issizler.okyanus.runtime.ServerStatus.recentTps;
+import static club.issizler.okyanus.runtime.SomeGlobals.recentTps;
 
 public class TPSCommand implements CommandRunnable {
 
