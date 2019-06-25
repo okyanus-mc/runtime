@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "server": [
     "commands.CommandManagerMixin",
+    "events.MinecraftDedicatedServerMixin",
     "nogui.MinecraftDedicatedServerMixin",
     "tps.MinecraftServerMixin",
     "tps.MinecraftDedicatedServerMixin"

@@ -9,8 +9,17 @@ pluginManagement {
     }
 }
 
-// TODO: Publish API on some maven repo and reference it from there
+// TODO: Publish API and Loader on some maven repo and reference it from there
 // TODO: this is development only
 
-include ":api"
-project(":api").projectDir = new File("../api")
+includeBuild("../api") {
+    dependencySubstitution {
+        substitute module('club.issizler.okyanus:api') with project(':')
+    }
+}
+
+includeBuild("../loader") {
+    dependencySubstitution {
+        substitute module('club.issizler.okyanus:loader') with project(':')
+    }
+}

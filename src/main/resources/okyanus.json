@@ -8,6 +8,8 @@
   "mixins": [
     "okyanus.mixins.json"
   ],
+  "transformers": {
+  },
   "depends": {
     "okyanus": ">=0.1.0"
   },
