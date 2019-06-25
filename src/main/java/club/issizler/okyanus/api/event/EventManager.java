@@ -33,9 +33,6 @@ public enum EventManager {
     }
 
     public Event trigger(Event e) {
-        System.out.println("Triggering event [" + e.getClass().getTypeName() + "]");
-
-        System.out.println("Handlers are " + handlers);
         List<EventHandler> handlerList = handlers.get(e.getClass().getTypeName());
 
         if (handlerList == null)
