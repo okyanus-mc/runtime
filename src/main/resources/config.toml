@@ -1,0 +1,11 @@
+#########################
+# Okyanus Configuration #
+#########################
+
+[chat]
+
+# Default chat message format
+# First %s is the player name,
+# Second %s is the messsage.
+# Color supported with the § character.
+defaultFormat = "<%s> %s"

@@ -1,12 +1,13 @@
 package club.issizler.okyanus.api.event;
 
 import club.issizler.okyanus.api.Player;
+import club.issizler.okyanus.runtime.Runtime;
 
 public class ChatEvent implements Event, Cancellable {
 
-    private String format = "<%s> %s";
-
     private Player player;
+
+    private String format;
     private String message;
 
     private boolean cancelled;
@@ -14,6 +15,8 @@ public class ChatEvent implements Event, Cancellable {
     public ChatEvent(Player player, String message) {
         this.player = player;
         this.message = message;
+
+        this.format = Runtime.config.get("chat.defaultFormat");
     }
 
     public String getMessage() {
@@ -39,6 +42,7 @@ public class ChatEvent implements Event, Cancellable {
     }
 
     public String getFormattedMessage() {
+        System.out.println(format);
         return String.format(format, this.player.getCustomName(), this.message);
     }
 
