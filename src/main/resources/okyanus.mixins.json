@@ -8,8 +8,19 @@
     "events.PlayerManagerMixin",
     "events.ServerPlayNetworkHandlerMixin",
 
+    "fixes.AreaEffectCloudEntityMixin",
+    "fixes.PlayerManagerMixin",
+
+    "optimizations.EntityMixin",
+    "optimizations.ExplosionMixin",
+    "optimizations.MinecraftServerMixin",
+    "optimizations.PackedIntegerArrayMixin",
+    "optimizations.RedstoneWireBlockMixin",
+    "optimizations.RegionFileMixin",
+    "optimizations.ServerPlayNetworkHandlerMixin",
     "optimizations.ServerWorldMixin",
     "optimizations.TameableEntityMixin",
+    "optimizations.WorldMixin",
 
     "CommandManagerMixin",
     "MinecraftDedicatedServerMixin",

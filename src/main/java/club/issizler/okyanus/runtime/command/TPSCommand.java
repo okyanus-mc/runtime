@@ -2,8 +2,7 @@ package club.issizler.okyanus.runtime.command;
 
 import club.issizler.okyanus.api.cmd.CommandRunnable;
 import club.issizler.okyanus.api.cmd.CommandSource;
-
-import static club.issizler.okyanus.runtime.SomeGlobals.recentTps;
+import club.issizler.okyanus.runtime.SomeGlobals;
 
 public class TPSCommand implements CommandRunnable {
 
@@ -15,14 +14,14 @@ public class TPSCommand implements CommandRunnable {
         if (isConsole)
             tps.append("§a");
 
-        tps.append("TPS (1m/5m/10m): ");
+        tps.append("TPS (1m/5m/15m): ");
 
         if (isConsole)
             tps.append("§r");
 
-        tps.append(String.format("%.02f", recentTps[0])).append(", ");
-        tps.append(String.format("%.02f", recentTps[1])).append(", ");
-        tps.append(String.format("%.02f", recentTps[2]));
+        tps.append(String.format("%.02f", SomeGlobals.tps1.getAverage())).append(", ");
+        tps.append(String.format("%.02f", SomeGlobals.tps5.getAverage())).append(", ");
+        tps.append(String.format("%.02f", SomeGlobals.tps15.getAverage()));
 
         source.send(tps.toString());
         return 1;

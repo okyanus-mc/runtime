@@ -8,8 +8,12 @@
   "mixins": [
     "okyanus.mixins.json"
   ],
-  "transformers": {
+
+  "_transformers_comment": "This is horrible and disabled. TODO work on this someday",
+  "_transformers": {
+    "net.minecraft.class_2631": "club.issizler.okyanus.transform.ers.SkullBlockEntityTransformer"
   },
+
   "depends": {
     "okyanus": ">=0.1.0"
   },

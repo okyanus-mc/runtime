@@ -9,3 +9,14 @@
 # Second %s is the messsage.
 # Color supported with the § character.
 defaultFormat = "<%s> %s"
+
+
+[optimizations]
+
+maxBookPageSize = 2560
+maxBookTotalSizeMultiplier = 0.98
+
+fastExplosions = true
+
+# Probably buggy, be careful!
+fastRedstone = true

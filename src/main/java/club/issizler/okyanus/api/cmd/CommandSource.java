@@ -19,7 +19,7 @@ public class CommandSource {
     }
 
     public boolean isConsole() {
-        return !(context.getSource().getEntity() instanceof ServerPlayerEntity);
+        return context.getSource().getEntity() instanceof ServerPlayerEntity;
     }
 
     public void send(String string) {

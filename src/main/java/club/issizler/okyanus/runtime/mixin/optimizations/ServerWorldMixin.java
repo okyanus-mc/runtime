@@ -2,6 +2,7 @@
 
 package club.issizler.okyanus.runtime.mixin.optimizations;
 
+import club.issizler.okyanus.runtime.Runtime;
 import net.minecraft.client.network.packet.EntityVelocityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -37,11 +38,19 @@ public abstract class ServerWorldMixin extends World {
 
     @Redirect(at = @At(value = "FIELD", target = "Lnet/minecraft/server/world/ServerWorld;players:Ljava/util/List;", opcode = Opcodes.GETFIELD), method = "createExplosion")
     private List<ServerPlayerEntity> oky$createExplosion$playersFieldAccess(ServerWorld serverWorld) {
+        if (!Runtime.USE_FAST_EXPLOSIONS)
+            return serverWorld.getPlayers();
+
         return Collections.emptyList();
     }
 
-    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/Explosion;affectWorld(Z)V"), method = "createExplosion")
-    private void oky$createExplosion$affectWorld(Explosion explosion, ServerWorld serverWorld) {
+    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/explosion/Explosion;affectWorld(Z)V"), method = "createExplosion")
+    private void oky$createExplosion$affectWorld(Explosion explosion, boolean bool) {
+        if (!Runtime.USE_FAST_EXPLOSIONS) {
+            explosion.affectWorld(bool);
+            return;
+        }
+
         explosion.affectWorld(true); // Forced to be true
 
         for (ServerPlayerEntity player : this.players) {
