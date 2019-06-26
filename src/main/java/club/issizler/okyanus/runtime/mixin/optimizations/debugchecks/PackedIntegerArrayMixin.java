@@ -1,4 +1,6 @@
-package club.issizler.okyanus.runtime.mixin.optimizations;
+// https://github.com/PaperMC/Paper/blob/ver/1.14/Spigot-Server-Patches/0087-Remove-Debug-checks-from-DataBits.patch
+
+package club.issizler.okyanus.runtime.mixin.optimizations.debugchecks;
 
 import net.minecraft.util.PackedIntegerArray;
 import org.spongepowered.asm.mixin.Mixin;

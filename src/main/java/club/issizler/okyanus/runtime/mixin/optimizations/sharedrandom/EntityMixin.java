@@ -1,6 +1,6 @@
 // https://github.com/PaperMC/Paper/blob/ver/1.14/Spigot-Server-Patches/0070-Use-a-Shared-Random-for-Entities.patch
 
-package club.issizler.okyanus.runtime.mixin.optimizations;
+package club.issizler.okyanus.runtime.mixin.optimizations.sharedrandom;
 
 import club.issizler.okyanus.runtime.SomeGlobals;
 import net.minecraft.entity.Entity;

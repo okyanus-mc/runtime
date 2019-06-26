@@ -1,4 +1,6 @@
-package club.issizler.okyanus.runtime.mixin.optimizations;
+// https://github.com/SpongePowered/SpongeCommon/blob/1.13/src/main/java/org/spongepowered/common/mixin/optimization/entity/MixinEntityTameable_Cached_Owner.java
+
+package club.issizler.okyanus.runtime.mixin.optimizations.tameable;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.TrackedData;
@@ -29,7 +31,7 @@ public abstract class TameableEntityMixin extends AnimalEntity {
     }
 
     /**
-     * @author gabizou @ https://github.com/SpongePowered/SpongeCommon/blob/1.13/src/main/java/org/spongepowered/common/mixin/optimization/entity/MixinEntityTameable_Cached_Owner.java
+     * @author gabizou @ Sponge
      * @reason Uses the cached owner id to save constant lookups from the data watcher
      */
     @Nullable
@@ -43,7 +45,7 @@ public abstract class TameableEntityMixin extends AnimalEntity {
     }
 
     /**
-     * @author gabizou @ https://github.com/SpongePowered/SpongeCommon/blob/1.13/src/main/java/org/spongepowered/common/mixin/optimization/entity/MixinEntityTameable_Cached_Owner.java
+     * @author gabizou @ Sponge
      * @reason stores the cached owner id
      */
     @Overwrite

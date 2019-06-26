@@ -1,6 +1,6 @@
 // https://github.com/PaperMC/Paper/blob/ver/1.14/Spigot-Server-Patches/0343-Book-Size-Limits.patch
 
-package club.issizler.okyanus.runtime.mixin.optimizations;
+package club.issizler.okyanus.runtime.mixin.optimizations.booksizelimits;
 
 import club.issizler.okyanus.runtime.Runtime;
 import net.minecraft.item.ItemStack;

@@ -1,6 +1,6 @@
 // https://github.com/PaperMC/Paper/blob/ver/1.14/Spigot-Server-Patches/0032-Optimize-explosions.patch
 
-package club.issizler.okyanus.runtime.mixin.optimizations;
+package club.issizler.okyanus.runtime.mixin.optimizations.explosion;
 
 import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
 import net.minecraft.server.MinecraftServer;

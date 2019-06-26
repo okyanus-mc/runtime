@@ -1,6 +1,6 @@
 // https://github.com/SpongePowered/SpongeCommon/blob/1.13/src/main/java/org/spongepowered/common/mixin/optimization/MixinWorldServer_Explosion.java
 
-package club.issizler.okyanus.runtime.mixin.optimizations;
+package club.issizler.okyanus.runtime.mixin.optimizations.explosion;
 
 import club.issizler.okyanus.runtime.Runtime;
 import net.minecraft.client.network.packet.EntityVelocityUpdateS2CPacket;

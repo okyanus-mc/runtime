@@ -1,6 +1,6 @@
 // https://github.com/PaperMC/Paper/blob/ver/1.14/Spigot-Server-Patches/0341-Optimize-redstone-algorithm.patch
 
-package club.issizler.okyanus.runtime.mixin.optimizations;
+package club.issizler.okyanus.runtime.mixin.optimizations.redstone;
 
 import club.issizler.okyanus.runtime.Runtime;
 import club.issizler.okyanus.runtime.utils.FastRedstoneWire;

@@ -1,16 +1,13 @@
-package club.issizler.okyanus.runtime.mixin.optimizations;
+// https://github.com/PaperMC/Paper/blob/ver/1.14/Spigot-Server-Patches/0078-Reduce-IO-ops-opening-a-new-region-file.patch
+
+package club.issizler.okyanus.runtime.mixin.optimizations.reduceio;
 
 import net.minecraft.world.storage.RegionFile;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.EOFException;
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;

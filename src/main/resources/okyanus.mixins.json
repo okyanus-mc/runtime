@@ -11,16 +11,22 @@
     "fixes.AreaEffectCloudEntityMixin",
     "fixes.PlayerManagerMixin",
 
-    "optimizations.EntityMixin",
-    "optimizations.ExplosionMixin",
-    "optimizations.MinecraftServerMixin",
-    "optimizations.PackedIntegerArrayMixin",
-    "optimizations.RedstoneWireBlockMixin",
-    "optimizations.RegionFileMixin",
-    "optimizations.ServerPlayNetworkHandlerMixin",
-    "optimizations.ServerWorldMixin",
-    "optimizations.TameableEntityMixin",
-    "optimizations.WorldMixin",
+    "optimizations.booksizelimits.ServerPlayNetworkHandlerMixin",
+    "optimizations.debugchecks.PackedIntegerArrayMixin",
+
+    "optimizations.explosion.ExplosionMixin",
+    "optimizations.explosion.MinecraftServerMixin",
+    "optimizations.explosion.ServerWorldMixin",
+    "optimizations.explosion.WorldMixin",
+
+    "optimizations.redstone.RedstoneWireBlockMixin",
+    "optimizations.reduceio.RegionFileMixin",
+    "optimizations.sharedrandom.EntityMixin",
+    "optimizations.tameable.TameableEntityMixin",
+
+    "optimizations.tileentity.WorldMixin",
+    "optimizations.unneccesarychunks.WorldMixin",
+    "optimizations.unused.WorldMixin",
 
     "CommandManagerMixin",
     "MinecraftDedicatedServerMixin",
