@@ -1,9 +1,15 @@
 package club.issizler.okyanus.api.cmd;
 
+import net.minecraft.util.Pair;
+
+import java.util.ArrayList;
+import java.util.List;
+
 // We'll definitely need to add more stuff as time goes
 public class CommandBuilder {
 
     private String name;
+    private List<Pair<String, ArgumentType>> args = new ArrayList<>();
 
     private CommandRunnable runnable;
 
@@ -24,6 +30,11 @@ public class CommandBuilder {
         return this;
     }
 
+    public CommandBuilder arg(String name, ArgumentType type) {
+        this.args.add(new Pair<>(name, type));
+        return this;
+    }
+
     public String __internal_name() {
         return this.name;
     }
@@ -34,6 +45,10 @@ public class CommandBuilder {
 
     public CommandRunnable __internal_runnable() {
         return this.runnable;
+    }
+
+    public List<Pair<String, ArgumentType>> __internal_args() {
+        return this.args;
     }
 
 }

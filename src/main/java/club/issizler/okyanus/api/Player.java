@@ -19,6 +19,10 @@ public class Player {
         player = SomeGlobals.dedicatedServer.getPlayerManager().getPlayer(uuid);
     }
 
+    public Player(ServerPlayerEntity e) {
+        player = e;
+    }
+
     public String getName() {
         return player.getName().asFormattedString();
     }
