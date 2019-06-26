@@ -37,7 +37,8 @@ public abstract class TameableEntityMixin extends AnimalEntity {
     @Nullable
     @Overwrite
     public UUID getOwnerUuid() {
-        if (!this.cachedOwnerId.isPresent()) {
+        //noinspection OptionalAssignedToNull
+        if (this.cachedOwnerId == null) {
             this.cachedOwnerId = this.dataTracker.get(OWNER_UUID);
         }
 
