@@ -3,12 +3,18 @@
   "package": "club.issizler.okyanus.runtime.mixin",
   "compatibilityLevel": "JAVA_8",
   "server": [
+    "events.MinecraftDedicatedServerMixin",
+    "events.MinecraftServerMixin",
+    "events.PlayerManagerMixin",
+    "events.ServerPlayNetworkHandlerMixin",
+
+    "optimizations.ServerWorldMixin",
+    "optimizations.TameableEntityMixin",
+
     "CommandManagerMixin",
     "MinecraftDedicatedServerMixin",
     "MinecraftServerMixin",
-    "PlayerManagerMixin",
-    "ServerCommandOutputMixin",
-    "ServerPlayNetworkHandlerMixin"
+    "ServerCommandOutputMixin"
   ],
   "injectors": {
     "defaultRequire": 1
