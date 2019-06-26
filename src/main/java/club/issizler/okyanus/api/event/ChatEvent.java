@@ -4,6 +4,8 @@ import club.issizler.okyanus.api.Player;
 
 public class ChatEvent implements Event, Cancellable {
 
+    private String format = "<%s> %s";
+
     private Player player;
     private String message;
 
@@ -34,5 +36,13 @@ public class ChatEvent implements Event, Cancellable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public String getFormattedMessage() {
+        return String.format(format, this.player.getCustomName(), this.message);
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
     }
 }

@@ -29,7 +29,7 @@ public class Player {
 
     public String getCustomName() {
         if (player.getCustomName() == null)
-            return null;
+            return getName();
 
         return player.getCustomName().asFormattedString();
     }
