@@ -63,4 +63,8 @@ public class Player {
 
         player.sendChatMessage(new LiteralText(message), nmsType);
     }
+
+    public void kick(String message) {
+        player.networkHandler.disconnect(new LiteralText(message));
+    }
 }

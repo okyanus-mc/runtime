@@ -19,11 +19,21 @@ public class CommandSource {
     }
 
     public boolean isConsole() {
-        return context.getSource().getEntity() instanceof ServerPlayerEntity;
+        return !(context.getSource().getEntity() instanceof ServerPlayerEntity);
     }
 
     public void send(String string) {
         context.getSource().sendFeedback(new LiteralText(string), false);
+    }
+
+    public Player getPlayer() {
+        try {
+            return new Player(context.getSource().getPlayer());
+        } catch (CommandSyntaxException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public String getArgText(String arg) {

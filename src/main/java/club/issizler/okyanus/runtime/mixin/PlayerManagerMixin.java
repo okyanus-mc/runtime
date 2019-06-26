@@ -2,8 +2,11 @@ package club.issizler.okyanus.runtime.mixin;
 
 import club.issizler.okyanus.api.Player;
 import club.issizler.okyanus.api.event.ChatEvent;
+import club.issizler.okyanus.api.event.ConnectEvent;
 import club.issizler.okyanus.api.event.EventManager;
+import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -18,6 +21,11 @@ public abstract class PlayerManagerMixin {
 
     private Text newMessage;
     private boolean isSystem;
+
+    @Inject(at = @At("TAIL"), method = "onPlayerConnect")
+    private void oky$onPlayerConnect(ClientConnection connection, ServerPlayerEntity playerEntity, CallbackInfo ci) {
+        EventManager.INSTANCE.trigger(new ConnectEvent(connection, playerEntity));
+    }
 
     @Inject(at = @At("HEAD"), method = "broadcastChatMessage", cancellable = true)
     private void oky$broadcastChatMessage(Text message, boolean isSystem, CallbackInfo ci) {
