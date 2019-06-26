@@ -11,6 +11,7 @@
     "fixes.AreaEffectCloudEntityMixin",
     "fixes.PlayerManagerMixin",
 
+    "optimizations.blockpos.BlockPosMixin",
     "optimizations.booksizelimits.ServerPlayNetworkHandlerMixin",
     "optimizations.debugchecks.PackedIntegerArrayMixin",
 
@@ -19,8 +20,10 @@
     "optimizations.explosion.ServerWorldMixin",
     "optimizations.explosion.WorldMixin",
 
+    "optimizations.itemstack.ItemStackMixin",
     "optimizations.redstone.RedstoneWireBlockMixin",
     "optimizations.reduceio.RegionFileMixin",
+    "optimizations.registryid.Int2ObjectBiMapMixin",
     "optimizations.sharedrandom.EntityMixin",
     "optimizations.tameable.TameableEntityMixin",
 
