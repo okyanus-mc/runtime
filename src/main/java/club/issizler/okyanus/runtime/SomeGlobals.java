@@ -4,6 +4,7 @@ import club.issizler.okyanus.runtime.utils.RollingAverage;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Random;
 
@@ -14,6 +15,7 @@ public class SomeGlobals {
     public static final RollingAverage tps15 = new RollingAverage(60 * 15);
 
     public static final Random SHARED_RANDOM = new Random() {
+
         private boolean locked = false;
 
         @Override
@@ -21,6 +23,7 @@ public class SomeGlobals {
             if (locked)
                 return;
 
+            LogManager.getLogger().debug("Okyanus: Set shared random seed = " + seed);
             super.setSeed(seed);
             locked = true;
         }

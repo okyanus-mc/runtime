@@ -1,5 +1,6 @@
 package club.issizler.okyanus.runtime.mixin;
 
+import club.issizler.okyanus.runtime.Runtime;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
@@ -17,6 +18,9 @@ public abstract class ServerCommandOutputMixin {
     @Inject(at = @At("RETURN"), method = "<init>")
     private void oky$init(MinecraftServer minecraftServer, CallbackInfo ci) {
         SomeGlobals.dedicatedServer = (MinecraftDedicatedServer) minecraftServer;
+
+        if (Runtime.DEBUG)
+            SomeGlobals.dedicatedServer.log("Set dedicatedServer to " + minecraftServer);
     }
 
 }

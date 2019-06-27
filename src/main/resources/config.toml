@@ -2,6 +2,9 @@
 # Okyanus Configuration #
 #########################
 
+# Displays more output on the command line
+debug = false
+
 [chat]
 
 # Default chat message format

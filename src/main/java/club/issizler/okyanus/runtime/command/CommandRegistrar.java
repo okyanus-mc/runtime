@@ -26,15 +26,20 @@ public class CommandRegistrar {
 
     public static void register() {
         LOGGER.info("Okyanus: Late command registration");
+
         for (CommandBuilder command : club.issizler.okyanus.api.cmd.CommandManager.INSTANCE.__internal_getCommands()) {
+            LOGGER.debug("Okyanus: Creating brigadier command for " + command.__internal_name());
+
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.__internal_name());
             ArgumentBuilder argumentBuilder = null;
 
             List<Pair<String, ArgumentType>> args = command.__internal_args();
             Command<ServerCommandSource> cmd = context -> command.__internal_runnable().run(new CommandSource(context));
 
-            if (command.__internal_isOpOnly())
+            if (command.__internal_isOpOnly()) {
+                LOGGER.debug("  - Marked as OP only");
                 builder = builder.requires(source -> source.hasPermissionLevel(3));
+            }
 
             Collections.reverse(args);
             for (Pair<String, ArgumentType> arg : args) {
@@ -50,6 +55,8 @@ public class CommandRegistrar {
                         break;
                 }
 
+                LOGGER.debug("  - Set up argument " + arg.getLeft() + " typeExample=" + type.getExamples().toArray()[0]);
+
                 if (argumentBuilder == null) {
                     argumentBuilder = CommandManager.argument(arg.getLeft(), type).executes(cmd);
                 } else {
@@ -63,6 +70,7 @@ public class CommandRegistrar {
                 builder = builder.executes(cmd);
             }
 
+            LOGGER.debug("  - Register the command");
             SomeGlobals.commandDispatcher.register(builder);
         }
     }

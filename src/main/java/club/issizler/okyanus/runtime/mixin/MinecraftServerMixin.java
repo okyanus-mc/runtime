@@ -2,10 +2,12 @@
 
 package club.issizler.okyanus.runtime.mixin;
 
+import club.issizler.okyanus.runtime.Runtime;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import club.issizler.okyanus.runtime.utils.RollingAverage;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -44,6 +46,15 @@ public abstract class MinecraftServerMixin {
             SomeGlobals.tps15.add(currentTps, diff);
             tickSection = curTime;
         }
+    }
+    
+    /**
+     * @author Okyanus
+     * @reason Debug messages
+     */
+    @Overwrite
+    public boolean isDebuggingEnabled() {
+        return Runtime.DEBUG;
     }
 
 }

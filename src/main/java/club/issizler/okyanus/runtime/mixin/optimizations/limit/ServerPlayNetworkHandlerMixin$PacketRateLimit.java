@@ -63,7 +63,7 @@ public abstract class ServerPlayNetworkHandlerMixin$PacketRateLimit implements P
             this.spamKicked = true;
             this.server.executeSync(() -> {
                 this.disconnect(new LiteralText("Too fast!"));
-                LOGGER.warn(player.getName().asFormattedString() + " was kicked for sending too many packets!");
+                LOGGER.warn("Okyanus: " + player.getName().asFormattedString() + " was kicked for sending too many packets!");
             });
         }
 
