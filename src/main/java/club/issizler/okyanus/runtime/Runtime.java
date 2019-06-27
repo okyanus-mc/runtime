@@ -19,6 +19,9 @@ public class Runtime implements Mod {
     public static boolean USE_FAST_REDSTONE;
     public static boolean USE_FAST_EXPLOSIONS;
 
+    public static int PACKET_RATE_LIMIT;
+    public static double PACKET_RATE_LIMIT_INTERVAL;
+
     public static FileConfig config;
 
     @Override
@@ -28,6 +31,9 @@ public class Runtime implements Mod {
 
         USE_FAST_REDSTONE = Runtime.config.get("optimizations.fastRedstone");
         USE_FAST_EXPLOSIONS = Runtime.config.get("optimizations.fastExplosions");
+
+        PACKET_RATE_LIMIT = Runtime.config.get("limits.packetRateLimit");
+        PACKET_RATE_LIMIT_INTERVAL = Runtime.config.get("limits.packetRateLimitInterval");
 
         if (USE_FAST_REDSTONE)
             logger.warn("Okyanus: Fast redstone is currently experimental! Disable it from okyanus.toml if you have any redstone issues!");

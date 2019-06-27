@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Mixin(ServerPlayNetworkHandler.class)
-public abstract class ServerPlayNetworkHandlerMixin {
+public abstract class ServerPlayNetworkHandlerMixin$BookSizeLimit {
 
     @Shadow @Final private MinecraftServer server;
 
@@ -38,8 +38,8 @@ public abstract class ServerPlayNetworkHandlerMixin {
 
         if (!server.isOnThread() && !testStack.isEmpty() && testStack.getTag() != null) {
             ListTag pageList = testStack.getTag().getList("pages", 8);
-            int maxBookPageSize = Runtime.config.get("optimizations.maxBookPageSize");
-            double multiplier = Math.max(0.3d, Math.min(1d, Runtime.config.get("optimizations.maxBookTotalSizeMultiplier")));
+            int maxBookPageSize = Runtime.config.get("limits.maxBookPageSize");
+            double multiplier = Math.max(0.3d, Math.min(1d, Runtime.config.get("limits.maxBookTotalSizeMultiplier")));
 
             long byteAllowed = maxBookPageSize;
             long byteTotal = 0;

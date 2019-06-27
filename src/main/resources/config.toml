@@ -13,10 +13,17 @@ defaultFormat = "<%s> %s"
 
 [optimizations]
 
+fastExplosions = true
+fastRedstone = true   # needs testing!
+
+
+[limits]
+
 maxBookPageSize = 2560
 maxBookTotalSizeMultiplier = 0.98
 
-fastExplosions = true
+# per second
+packetRateLimit = 250
 
-# Probably buggy, be careful!
-fastRedstone = true
+# seconds
+packetRateLimitInterval = 10.0

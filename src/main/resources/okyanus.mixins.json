@@ -30,7 +30,11 @@
     "optimizations.explosion.WorldMixin",
 
     "optimizations.item.ItemStackMixin",
-    "optimizations.limit.ServerPlayNetworkHandlerMixin",
+
+    "optimizations.limit.ClientConnectionMixin",
+    "optimizations.limit.ServerPlayNetworkHandlerMixin$BookSizeLimit",
+    "optimizations.limit.ServerPlayNetworkHandlerMixin$PacketRateLimit",
+
     "optimizations.reduceio.RegionFileMixin",
 
     "optimizations.registry.Int2ObjectBiMapMixin",
