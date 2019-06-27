@@ -34,67 +34,77 @@ public class CommandRegistrar {
             LOGGER.debug("Okyanus: Creating brigadier command for " + command.__internal_name());
 
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.__internal_name());
-            ArgumentBuilder argumentBuilder = null;
 
-            List<Triple<String, ArgumentType, Boolean>> args = command.__internal_args();
-            Command<ServerCommandSource> cmd = context -> command.__internal_runnable().run(new CommandSource(context));
-
-            boolean wasPreviousOptional = false;
-
-            if (command.__internal_isOpOnly()) {
-                LOGGER.debug("  - Marked as OP only");
-                builder = builder.requires(source -> source.hasPermissionLevel(3));
-            }
-
-            Collections.reverse(args);
-            for (Triple<String, ArgumentType, Boolean> arg : args) {
-                com.mojang.brigadier.arguments.ArgumentType type;
-
-                switch (arg.getMiddle()) {
-                    case PLAYER:
-                        type = EntityArgumentType.players();
-                        break;
-                    case TEXT:
-                    default:
-                        type = StringArgumentType.string();
-                        break;
-                }
-
-                LOGGER.debug("  - Set up argument " + arg.getLeft() + " typeExample=" + type.getExamples().toArray()[0] + " optional=" + arg.getRight());
-
-                ArgumentBuilder argument = CommandManager.argument(arg.getLeft(), type);
-
-                if (argumentBuilder == null) {
-                    argumentBuilder = argument.executes(cmd);
-                } else {
-                    if (wasPreviousOptional)
-                        argument = argument.executes(cmd);
-
-                    argumentBuilder = argument.then(argumentBuilder);
-                }
-
-                wasPreviousOptional = arg.getRight();
-            }
-
-            if (argumentBuilder != null) {
-                builder = builder.then(argumentBuilder);
-
-                if (wasPreviousOptional)
-                    builder = builder.executes(cmd);
-            } else {
-                builder = builder.executes(cmd);
-            }
-
-            LOGGER.debug("  - Register the command");
-
-            CommandNode<ServerCommandSource> vanillaCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.__internal_name());
-            if (vanillaCommand != null) {
-                LOGGER.info("Okyanus: Overwriting a vanilla command (/" + command.__internal_name() + "). Just letting you know");
-                SomeGlobals.commandDispatcher.getRoot().getChildren().remove(vanillaCommand);
-            }
-
+            builder = registerCommand(command, builder);
             SomeGlobals.commandDispatcher.register(builder);
         }
+    }
+
+    private static LiteralArgumentBuilder<ServerCommandSource> registerCommand(CommandBuilder command, LiteralArgumentBuilder<ServerCommandSource> builder) {
+        ArgumentBuilder argumentBuilder = null;
+
+        List<Triple<String, ArgumentType, Boolean>> args = command.__internal_args();
+        Command<ServerCommandSource> cmd = context -> command.__internal_runnable().run(new CommandSource(context));
+
+        boolean wasPreviousOptional = false;
+
+        for (CommandBuilder subcommand : command.__internal_subCommands()) {
+            LOGGER.debug("  - Registering subcommand " + subcommand.__internal_name());
+            builder.then(registerCommand(subcommand, literal(subcommand.__internal_name())));
+        }
+
+        if (command.__internal_isOpOnly()) {
+            LOGGER.debug("  - Marked as OP only");
+            builder = builder.requires(source -> source.hasPermissionLevel(3));
+        }
+
+        Collections.reverse(args);
+        for (Triple<String, ArgumentType, Boolean> arg : args) {
+            com.mojang.brigadier.arguments.ArgumentType type;
+
+            switch (arg.getMiddle()) {
+                case PLAYER:
+                    type = EntityArgumentType.players();
+                    break;
+                case TEXT:
+                default:
+                    type = StringArgumentType.string();
+                    break;
+            }
+
+            LOGGER.debug("  - Set up argument " + arg.getLeft() + " typeExample=" + type.getExamples().toArray()[0] + " optional=" + arg.getRight());
+
+            ArgumentBuilder argument = CommandManager.argument(arg.getLeft(), type);
+
+            if (argumentBuilder == null) {
+                argumentBuilder = argument.executes(cmd);
+            } else {
+                if (wasPreviousOptional)
+                    argument = argument.executes(cmd);
+
+                argumentBuilder = argument.then(argumentBuilder);
+            }
+
+            wasPreviousOptional = arg.getRight();
+        }
+
+        if (argumentBuilder != null) {
+            builder = builder.then(argumentBuilder);
+
+            if (wasPreviousOptional)
+                builder = builder.executes(cmd);
+        } else {
+            builder = builder.executes(cmd);
+        }
+
+        LOGGER.debug("  - Register the command");
+
+        CommandNode<ServerCommandSource> vanillaCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.__internal_name());
+        if (vanillaCommand != null) {
+            LOGGER.info("Okyanus: Overwriting a vanilla command (/" + command.__internal_name() + "). Just letting you know");
+            SomeGlobals.commandDispatcher.getRoot().getChildren().remove(vanillaCommand);
+        }
+        return builder;
     }
 
 }

@@ -10,11 +10,12 @@ import java.util.List;
 public class CommandBuilder {
 
     private String name;
-    private List<Triple<String, ArgumentType, Boolean>> args = new ArrayList<>();
+    private boolean isOpOnly = false;
 
     private CommandRunnable runnable;
 
-    private boolean isOpOnly = false;
+    private List<Triple<String, ArgumentType, Boolean>> args = new ArrayList<>();
+    private List<CommandBuilder> subCommands = new ArrayList<>();
 
     public CommandBuilder name(String name) {
         this.name = name;
@@ -40,6 +41,11 @@ public class CommandBuilder {
         return this;
     }
 
+    public CommandBuilder subcommand(CommandBuilder subcommand) {
+        this.subCommands.add(subcommand);
+        return this;
+    }
+
     public String __internal_name() {
         return this.name;
     }
@@ -56,4 +62,7 @@ public class CommandBuilder {
         return this.args;
     }
 
+    public List<CommandBuilder> __internal_subCommands() {
+        return this.subCommands;
+    }
 }

@@ -58,13 +58,6 @@ public class Runtime implements Mod {
 
         CommandManager.INSTANCE.register(
                 new CommandBuilder()
-                        .name("mods")
-                        .opOnly()
-                        .run(new ModsCommand())
-        );
-
-        CommandManager.INSTANCE.register(
-                new CommandBuilder()
                         .name("tps")
                         .opOnly()
                         .run(new TPSCommand())
@@ -74,6 +67,11 @@ public class Runtime implements Mod {
                 new CommandBuilder()
                         .name("okyanus")
                         .opOnly()
+                        .subcommand(new CommandBuilder()
+                                .name("mods")
+                                .arg("modId", ArgumentType.TEXT, true)
+                                .opOnly()
+                                .run(new ModsCommand()))
                         .run(new OkyanusCommand())
         );
     }
