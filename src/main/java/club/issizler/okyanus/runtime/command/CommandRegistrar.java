@@ -8,6 +8,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.tree.CommandNode;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -71,6 +72,13 @@ public class CommandRegistrar {
             }
 
             LOGGER.debug("  - Register the command");
+
+            CommandNode<ServerCommandSource> vanillaCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.__internal_name());
+            if (vanillaCommand != null) {
+                LOGGER.info("Okyanus: Overwriting a vanilla command (/" + command.__internal_name() + "). Just letting you know");
+                SomeGlobals.commandDispatcher.getRoot().getChildren().remove(vanillaCommand);
+            }
+
             SomeGlobals.commandDispatcher.register(builder);
         }
     }
