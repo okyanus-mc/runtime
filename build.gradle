@@ -25,7 +25,6 @@ dependencies {
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 	
 	compile 'club.issizler.okyanus:loader'
-	compile 'club.issizler.okyanus:api'
 
 	fatJar 'com.electronwill.night-config:toml:3.4.0'
 }
