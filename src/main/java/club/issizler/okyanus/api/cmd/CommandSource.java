@@ -37,7 +37,11 @@ public class CommandSource {
     }
 
     public String getArgText(String arg) {
-        return StringArgumentType.getString(context, arg);
+        try {
+            return StringArgumentType.getString(context, arg);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     public Player getArgPlayer(String arg) {
@@ -47,6 +51,8 @@ public class CommandSource {
         } catch (CommandSyntaxException e) {
             send(e.toString());
             throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            return null;
         }
     }
 

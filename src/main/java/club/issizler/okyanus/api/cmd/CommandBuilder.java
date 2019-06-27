@@ -1,6 +1,7 @@
 package club.issizler.okyanus.api.cmd;
 
-import net.minecraft.util.Pair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public class CommandBuilder {
 
     private String name;
-    private List<Pair<String, ArgumentType>> args = new ArrayList<>();
+    private List<Triple<String, ArgumentType, Boolean>> args = new ArrayList<>();
 
     private CommandRunnable runnable;
 
@@ -31,7 +32,11 @@ public class CommandBuilder {
     }
 
     public CommandBuilder arg(String name, ArgumentType type) {
-        this.args.add(new Pair<>(name, type));
+        return arg(name, type, false);
+    }
+
+    public CommandBuilder arg(String name, ArgumentType type, boolean isOptional) {
+        this.args.add(new ImmutableTriple<>(name, type, isOptional));
         return this;
     }
 
@@ -47,7 +52,7 @@ public class CommandBuilder {
         return this.runnable;
     }
 
-    public List<Pair<String, ArgumentType>> __internal_args() {
+    public List<Triple<String, ArgumentType, Boolean>> __internal_args() {
         return this.args;
     }
 

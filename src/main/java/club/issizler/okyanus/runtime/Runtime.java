@@ -1,6 +1,7 @@
 package club.issizler.okyanus.runtime;
 
 import club.issizler.okyanus.api.Mod;
+import club.issizler.okyanus.api.cmd.ArgumentType;
 import club.issizler.okyanus.api.cmd.CommandBuilder;
 import club.issizler.okyanus.api.cmd.CommandManager;
 import club.issizler.okyanus.runtime.command.ModsCommand;
@@ -47,7 +48,6 @@ public class Runtime implements Mod {
             Configuration config = ctx.getConfiguration();
             LoggerConfig loggerConfig = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
             loggerConfig.setLevel(Level.TRACE);
-
             ctx.updateLoggers();  // This causes all Loggers to refetch information from their LoggerConfig.
 
             logger.debug("Okyanus: Debugging enabled");

@@ -8,11 +8,13 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,8 +36,10 @@ public class CommandRegistrar {
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.__internal_name());
             ArgumentBuilder argumentBuilder = null;
 
-            List<Pair<String, ArgumentType>> args = command.__internal_args();
+            List<Triple<String, ArgumentType, Boolean>> args = command.__internal_args();
             Command<ServerCommandSource> cmd = context -> command.__internal_runnable().run(new CommandSource(context));
+
+            boolean wasPreviousOptional = false;
 
             if (command.__internal_isOpOnly()) {
                 LOGGER.debug("  - Marked as OP only");
@@ -43,10 +47,10 @@ public class CommandRegistrar {
             }
 
             Collections.reverse(args);
-            for (Pair<String, ArgumentType> arg : args) {
+            for (Triple<String, ArgumentType, Boolean> arg : args) {
                 com.mojang.brigadier.arguments.ArgumentType type;
 
-                switch (arg.getRight()) {
+                switch (arg.getMiddle()) {
                     case PLAYER:
                         type = EntityArgumentType.players();
                         break;
@@ -56,17 +60,27 @@ public class CommandRegistrar {
                         break;
                 }
 
-                LOGGER.debug("  - Set up argument " + arg.getLeft() + " typeExample=" + type.getExamples().toArray()[0]);
+                LOGGER.debug("  - Set up argument " + arg.getLeft() + " typeExample=" + type.getExamples().toArray()[0] + " optional=" + arg.getRight());
+
+                ArgumentBuilder argument = CommandManager.argument(arg.getLeft(), type);
 
                 if (argumentBuilder == null) {
-                    argumentBuilder = CommandManager.argument(arg.getLeft(), type).executes(cmd);
+                    argumentBuilder = argument.executes(cmd);
                 } else {
-                    argumentBuilder = CommandManager.argument(arg.getLeft(), type).then(argumentBuilder);
+                    if (wasPreviousOptional)
+                        argument = argument.executes(cmd);
+
+                    argumentBuilder = argument.then(argumentBuilder);
                 }
+
+                wasPreviousOptional = arg.getRight();
             }
 
             if (argumentBuilder != null) {
-                builder.then(argumentBuilder);
+                builder = builder.then(argumentBuilder);
+
+                if (wasPreviousOptional)
+                    builder = builder.executes(cmd);
             } else {
                 builder = builder.executes(cmd);
             }
