@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ServerCommandOutputMixin {
 
     @Inject(at = @At("RETURN"), method = "<init>")
-    private void oky$setupServer(MinecraftServer minecraftServer, CallbackInfo ci) {
+    private void oky$init(MinecraftServer minecraftServer, CallbackInfo ci) {
         SomeGlobals.dedicatedServer = (MinecraftDedicatedServer) minecraftServer;
     }
 

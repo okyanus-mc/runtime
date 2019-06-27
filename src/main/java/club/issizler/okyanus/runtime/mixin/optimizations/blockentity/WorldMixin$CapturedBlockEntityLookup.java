@@ -30,9 +30,11 @@ public abstract class WorldMixin$CapturedBlockEntityLookup implements WorldDensi
     @Shadow
     @Final
     public boolean isClient;
+
     @Shadow
     @Final
     private Thread thread;
+
     @Shadow
     protected boolean iteratingTickingBlockEntities;
 

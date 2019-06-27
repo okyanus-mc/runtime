@@ -2,18 +2,22 @@ package club.issizler.okyanus.api.event;
 
 import club.issizler.okyanus.api.Player;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.network.packet.PlayerMoveC2SPacket;
+import net.minecraft.server.network.packet.PlayerActionC2SPacket;
 
-public class MoveEvent implements PlayerEvent, Cancellable {
+public class BreakEvent implements PlayerEvent, Cancellable {
 
+    private PlayerActionC2SPacket packet;
     private Player player;
-    private PlayerMoveC2SPacket packet;
 
-    private boolean isCancelled = false;
+    private boolean isCancelled;
 
-    public MoveEvent(PlayerMoveC2SPacket packet, ServerPlayerEntity player) {
+    public BreakEvent(PlayerActionC2SPacket packet, ServerPlayerEntity playerEntity) {
         this.packet = packet;
-        this.player = new Player(player);
+        this.player = new Player(playerEntity);
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     @Override
@@ -24,10 +28,6 @@ public class MoveEvent implements PlayerEvent, Cancellable {
     @Override
     public void setCancelled(boolean isCancelled) {
         this.isCancelled = isCancelled;
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 
 }

@@ -3,7 +3,7 @@ package club.issizler.okyanus.api.event;
 import club.issizler.okyanus.api.Player;
 import club.issizler.okyanus.runtime.Runtime;
 
-public class ChatEvent implements Event, Cancellable {
+public class ChatEvent implements PlayerEvent, Cancellable {
 
     private Player player;
 
@@ -48,4 +48,5 @@ public class ChatEvent implements Event, Cancellable {
     public void setFormat(String format) {
         this.format = format;
     }
+
 }

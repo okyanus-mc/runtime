@@ -12,14 +12,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayNetworkHandler.class)
-public abstract class ServerPlayNetworkHandlerMixin {
+public abstract class ServerPlayNetworkHandlerMixin$MoveEvent {
 
     @Shadow
-    private ServerPlayerEntity player;
+    public ServerPlayerEntity player;
 
     @Inject(at = @At("HEAD"), method = "onPlayerMove", cancellable = true)
     private void oky$onPlayerMove(PlayerMoveC2SPacket packet, CallbackInfo ci) {
-        MoveEvent e = (MoveEvent) EventManager.INSTANCE.trigger(new MoveEvent(packet, player));
+        MoveEvent e = EventManager.INSTANCE.trigger(new MoveEvent(packet, player));
 
         if (e.isCancelled()) {
             ci.cancel(); // TODO: Alert client of this cancellation.

@@ -32,7 +32,7 @@ public enum EventManager {
         }
     }
 
-    public Event trigger(Event e) {
+    public <E extends Event> E trigger(E e) {
         List<EventHandler> handlerList = handlers.get(e.getClass().getTypeName());
 
         if (handlerList == null)

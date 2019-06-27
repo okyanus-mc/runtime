@@ -5,8 +5,13 @@
   "server": [
     "events.MinecraftDedicatedServerMixin",
     "events.MinecraftServerMixin",
-    "events.PlayerManagerMixin",
-    "events.ServerPlayNetworkHandlerMixin",
+
+    "events.PlayerManagerMixin$ChatEvent",
+    "events.PlayerManagerMixin$ConnectEvent",
+    "events.PlayerManagerMixin$DisconnectEvent",
+
+    "events.ServerPlayNetworkHandlerMixin$MoveEvent",
+    "events.ServerPlayNetworkHandlerMixin$BreakEvent",
 
     "fixes.AreaEffectCloudEntityMixin",
     "fixes.PlayerManagerMixin",

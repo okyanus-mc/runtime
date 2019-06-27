@@ -20,7 +20,7 @@ public abstract class MinecraftServerMixin {
 
     @Inject(at = @At("HEAD"), method = "shutdown")
     private void oky$shutdown(CallbackInfo ci) {
-        LOGGER.info("Okyanus: Sending stop event...");
+        LOGGER.info("Okyanus: Stopping all plugins");
         EventManager.INSTANCE.trigger(new StopEvent());
     }
 
