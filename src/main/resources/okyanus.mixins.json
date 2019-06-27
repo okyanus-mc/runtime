@@ -10,8 +10,9 @@
     "events.PlayerManagerMixin$ConnectEvent",
     "events.PlayerManagerMixin$DisconnectEvent",
 
-    "events.ServerPlayNetworkHandlerMixin$MoveEvent",
     "events.ServerPlayNetworkHandlerMixin$BreakEvent",
+    "events.ServerPlayNetworkHandlerMixin$DropEvent",
+    "events.ServerPlayNetworkHandlerMixin$MoveEvent",
 
     "fixes.AreaEffectCloudEntityMixin",
     "fixes.PlayerManagerMixin",

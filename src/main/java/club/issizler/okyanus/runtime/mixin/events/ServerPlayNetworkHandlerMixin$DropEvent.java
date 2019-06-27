@@ -19,10 +19,7 @@ public abstract class ServerPlayNetworkHandlerMixin$DropEvent {
 
     @Inject(at = @At("HEAD"), method = "onPlayerAction", cancellable = true)
     private void oky$onPlayerAction(PlayerActionC2SPacket playerActionC2SPacket_1, CallbackInfo ci) {
-        if (!(
-                playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.DROP_ITEM
-                        || playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.DROP_ALL_ITEMS
-        ))
+        if (!(playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.DROP_ITEM|| playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.DROP_ALL_ITEMS))
             return;
 
         DropEvent e = EventManager.INSTANCE.trigger(new DropEvent(playerActionC2SPacket_1, player));
