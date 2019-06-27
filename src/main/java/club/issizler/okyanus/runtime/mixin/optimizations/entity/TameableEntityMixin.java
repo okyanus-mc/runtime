@@ -1,6 +1,6 @@
 // https://github.com/SpongePowered/SpongeCommon/blob/1.13/src/main/java/org/spongepowered/common/mixin/optimization/entity/MixinEntityTameable_Cached_Owner.java
 
-package club.issizler.okyanus.runtime.mixin.optimizations.tameable;
+package club.issizler.okyanus.runtime.mixin.optimizations.entity;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.TrackedData;

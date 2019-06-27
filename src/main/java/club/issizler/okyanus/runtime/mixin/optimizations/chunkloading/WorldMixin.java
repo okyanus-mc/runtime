@@ -1,6 +1,6 @@
 // https://github.com/PaperMC/Paper/blob/ver/1.14/Spigot-Server-Patches/0082-Do-not-load-chunks-for-light-checks.patch
 
-package club.issizler.okyanus.runtime.mixin.optimizations.unneccesarychunks;
+package club.issizler.okyanus.runtime.mixin.optimizations.chunkloading;
 
 import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
 import net.minecraft.util.math.BlockPos;

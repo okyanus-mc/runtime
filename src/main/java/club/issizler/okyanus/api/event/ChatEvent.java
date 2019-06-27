@@ -42,7 +42,6 @@ public class ChatEvent implements Event, Cancellable {
     }
 
     public String getFormattedMessage() {
-        System.out.println(format);
         return String.format(format, this.player.getCustomName(), this.message);
     }
 

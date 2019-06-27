@@ -1,4 +1,4 @@
-package club.issizler.okyanus.runtime.mixin.optimizations.registryid;
+package club.issizler.okyanus.runtime.mixin.optimizations.registry;
 
 import net.minecraft.util.Int2ObjectBiMap;
 import org.spongepowered.asm.mixin.Mixin;

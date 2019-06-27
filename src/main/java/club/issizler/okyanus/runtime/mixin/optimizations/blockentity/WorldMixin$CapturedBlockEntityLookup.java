@@ -1,6 +1,6 @@
 // https://github.com/PaperMC/Paper/blob/ver/1.14/Spigot-Server-Patches/0379-Optimize-Captured-TileEntity-Lookup.patch
 
-package club.issizler.okyanus.runtime.mixin.optimizations.tileentity;
+package club.issizler.okyanus.runtime.mixin.optimizations.blockentity;
 
 import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
 import com.google.common.collect.Maps;
@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 @Mixin(World.class)
-public abstract class WorldMixin implements WorldDensityCacheable {
+public abstract class WorldMixin$CapturedBlockEntityLookup implements WorldDensityCacheable {
 
     @Shadow
     public static boolean isHeightInvalid(BlockPos blockPos_1) {

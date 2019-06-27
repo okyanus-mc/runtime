@@ -11,25 +11,32 @@
     "fixes.AreaEffectCloudEntityMixin",
     "fixes.PlayerManagerMixin",
 
-    "optimizations.blockpos.BlockPosMixin",
-    "optimizations.booksizelimits.ServerPlayNetworkHandlerMixin",
+    "optimizations.block.BlockPosMixin",
+    "optimizations.block.RedstoneWireBlockMixin",
+
+    "optimizations.blockentity.WorldMixin$CapturedBlockEntityLookup",
+    "optimizations.blockentity.WorldMixin$UnusedBlockEntityList",
+
+    "optimizations.chunkloading.WorldMixin",
+
     "optimizations.debugchecks.PackedIntegerArrayMixin",
+
+    "optimizations.entity.EntityMixin",
+    "optimizations.entity.TameableEntityMixin",
 
     "optimizations.explosion.ExplosionMixin",
     "optimizations.explosion.MinecraftServerMixin",
     "optimizations.explosion.ServerWorldMixin",
     "optimizations.explosion.WorldMixin",
 
-    "optimizations.itemstack.ItemStackMixin",
-    "optimizations.redstone.RedstoneWireBlockMixin",
+    "optimizations.item.ItemStackMixin",
+    "optimizations.limit.ServerPlayNetworkHandlerMixin",
     "optimizations.reduceio.RegionFileMixin",
-    "optimizations.registryid.Int2ObjectBiMapMixin",
-    "optimizations.sharedrandom.EntityMixin",
-    "optimizations.tameable.TameableEntityMixin",
 
-    "optimizations.tileentity.WorldMixin",
-    "optimizations.unneccesarychunks.WorldMixin",
-    "optimizations.unused.WorldMixin",
+    "optimizations.registry.Int2ObjectBiMapMixin",
+    "optimizations.registry.MaterialsRegistryMixin",
+
+    "optimizations.world.MinecraftServerMixin",
 
     "CommandManagerMixin",
     "MinecraftDedicatedServerMixin",

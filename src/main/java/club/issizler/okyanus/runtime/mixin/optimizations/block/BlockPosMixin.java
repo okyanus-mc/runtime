@@ -1,4 +1,4 @@
-package club.issizler.okyanus.runtime.mixin.optimizations.blockpos;
+package club.issizler.okyanus.runtime.mixin.optimizations.block;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;

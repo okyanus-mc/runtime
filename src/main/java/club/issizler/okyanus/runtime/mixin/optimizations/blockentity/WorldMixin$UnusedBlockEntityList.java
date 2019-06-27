@@ -1,6 +1,6 @@
 // https://github.com/PaperMC/Paper/blob/ver/1.14/Spigot-Server-Patches/0090-Remove-unused-World-Tile-Entity-List.patch
 
-package club.issizler.okyanus.runtime.mixin.optimizations.unused;
+package club.issizler.okyanus.runtime.mixin.optimizations.blockentity;
 
 import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
 import net.minecraft.block.entity.BlockEntity;
@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Mixin(World.class)
-public abstract class WorldMixin implements WorldDensityCacheable {
+public abstract class WorldMixin$UnusedBlockEntityList implements WorldDensityCacheable {
 
     @Shadow
     @Final

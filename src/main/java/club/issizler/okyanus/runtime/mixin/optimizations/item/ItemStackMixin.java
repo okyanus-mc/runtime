@@ -1,4 +1,4 @@
-package club.issizler.okyanus.runtime.mixin.optimizations.itemstack;
+package club.issizler.okyanus.runtime.mixin.optimizations.item;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,6 +19,7 @@ public abstract class ItemStackMixin {
 
     /**
      * @author Aikar @ Paper & Okyanus
+     * @reason Optimization
      */
     @Overwrite
     public boolean isEmpty() {
