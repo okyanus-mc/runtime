@@ -1,6 +1,7 @@
 package club.issizler.okyanus.api;
 
 import club.issizler.okyanus.api.chat.MessageType;
+import club.issizler.okyanus.api.math.Vec3d;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
@@ -40,6 +41,20 @@ public class Player {
 
     public UUID getUUID() {
         return player.getUuid();
+    }
+
+    public Vec3d getPos() {
+        net.minecraft.util.math.Vec3d pos = player.getPos();
+
+        return new Vec3d(pos.x, pos.y, pos.z);
+    }
+
+    public World getWorld() {
+        return new World(player.world);
+    }
+
+    public void teleport(Vec3d pos) {
+        player.teleport(pos.x, pos.y, pos.z, true);
     }
 
     public void send(String message) {

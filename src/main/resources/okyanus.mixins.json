@@ -13,6 +13,7 @@
     "events.ServerPlayNetworkHandlerMixin$BreakEvent",
     "events.ServerPlayNetworkHandlerMixin$DropEvent",
     "events.ServerPlayNetworkHandlerMixin$MoveEvent",
+    "events.ServerPlayNetworkHandlerMixin$PlaceEvent",
 
     "fixes.AreaEffectCloudEntityMixin",
     "fixes.PlayerManagerMixin",
