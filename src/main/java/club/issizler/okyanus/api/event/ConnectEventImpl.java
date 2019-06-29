@@ -10,6 +10,7 @@ public class ConnectEventImpl implements ConnectEvent {
     private PlayerImpl player;
 
     private boolean isCancelled = false;
+    public String cancelReason = "Disconnected";
 
     public ConnectEventImpl(ClientConnection connection, ServerPlayerEntity playerEntity) {
         this.connection = connection;
@@ -30,4 +31,8 @@ public class ConnectEventImpl implements ConnectEvent {
         this.isCancelled = isCancelled;
     }
 
+    @Override
+    public void setCancelReason(String reason) {
+        cancelReason = reason;
+    }
 }
