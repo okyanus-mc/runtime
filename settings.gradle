@@ -12,9 +12,11 @@ pluginManagement {
 // TODO: Publish Loader on some maven repo and reference it from there
 // TODO: this is development only
 
-includeBuild("../loader") {
-    dependencySubstitution {
-        substitute module('club.issizler.okyanus:loader') with project(':')
+if (new File("../loader").exists()) {
+    includeBuild("../loader") {
+        dependencySubstitution {
+            substitute module('com.github.okyanus-mc:loader') with project(':')
+        }
     }
 }
 

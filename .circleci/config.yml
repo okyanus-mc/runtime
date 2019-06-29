@@ -17,6 +17,7 @@ jobs:
 
     steps:
       - checkout
+      - run: git clone https://github.com/okyanus-mc/api ../api
       - run: git clone https://github.com/okyanus-mc/loader ../loader
 
       # Download and cache dependencies
