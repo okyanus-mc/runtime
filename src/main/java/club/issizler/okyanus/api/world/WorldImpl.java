@@ -11,8 +11,12 @@ public class WorldImpl implements World {
         this.world = world;
     }
 
-    public void setBlockAt(Vec3d pos, Block block) {
-        world.setBlockState(new BlockPos(pos.x, pos.y, pos.z), ((BlockImpl) block).__internal_getBlock().getDefaultState());
+    public void setBlockAt(Vec3d pos, Blocks block) {
+        world.setBlockState(new BlockPos(pos.x, pos.y, pos.z), InternalBlockConverter.convertBlock(block).getDefaultState());
+    }
+
+    public Block getBlockAt(Vec3d pos) {
+        return new BlockImpl(world.getBlockState(new BlockPos(pos.x, pos.y, pos.z)));
     }
 
 }

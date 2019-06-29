@@ -1,14 +1,13 @@
 package club.issizler.okyanus.api.world;
 
+import net.minecraft.block.BlockState;
+
 public class BlockImpl implements Block {
 
-    private final net.minecraft.block.Block block;
+    private final BlockState block;
 
-    BlockImpl(net.minecraft.block.Block block) {
+    BlockImpl(BlockState block) {
         this.block = block;
     }
 
-    net.minecraft.block.Block __internal_getBlock() {
-        return block;
-    }
 }

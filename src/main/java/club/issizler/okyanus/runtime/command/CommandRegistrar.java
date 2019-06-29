@@ -52,7 +52,7 @@ public class CommandRegistrar {
             builder.then(registerCommand(subcommand, literal(subcommand.getName())));
         }
 
-        if (command.getIsOpOnly()) {
+        if (command.isOpOnly()) {
             LOGGER.debug("  - Marked as OP only");
             builder = builder.requires(source -> source.hasPermissionLevel(3));
         }
