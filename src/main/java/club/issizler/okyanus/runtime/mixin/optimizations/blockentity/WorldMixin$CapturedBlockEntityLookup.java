@@ -2,7 +2,6 @@
 
 package club.issizler.okyanus.runtime.mixin.optimizations.blockentity;
 
-import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
 import com.google.common.collect.Maps;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
@@ -20,16 +19,19 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 @Mixin(World.class)
-public abstract class WorldMixin$CapturedBlockEntityLookup implements WorldDensityCacheable {
+public abstract class WorldMixin$CapturedBlockEntityLookup {
 
     @Shadow
     @Final
     public boolean isClient;
+
     @Shadow
     protected boolean iteratingTickingBlockEntities;
+
     @Shadow
     @Final
     private Thread thread;
+
     private Map<BlockPos, BlockEntity> capturedTileEntities = Maps.newHashMap();
 
     @Shadow

@@ -27,8 +27,10 @@ public abstract class ServerPlayNetworkHandlerMixin$BookSizeLimit {
     @Shadow
     @Final
     private static Logger LOGGER;
+
     @Shadow
     public ServerPlayerEntity player;
+
     @Shadow
     @Final
     private MinecraftServer server;

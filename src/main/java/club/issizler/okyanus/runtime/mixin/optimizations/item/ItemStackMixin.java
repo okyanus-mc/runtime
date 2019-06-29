@@ -15,6 +15,7 @@ public abstract class ItemStackMixin {
     @Final
     @Deprecated
     private Item item;
+
     @Shadow
     private int count;
 

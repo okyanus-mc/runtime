@@ -1,5 +1,6 @@
 package club.issizler.okyanus.runtime.utils;
 
+import club.issizler.okyanus.runtime.mixin.accessors.ExplosionAccessorMixin;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
@@ -9,7 +10,7 @@ public class ExplosionCacheKey {
     private final double minX, minY, minZ;
     private final double maxX, maxY, maxZ;
 
-    public ExplosionCacheKey(ExplosionPublicable explosion, Box aabb) {
+    public ExplosionCacheKey(ExplosionAccessorMixin explosion, Box aabb) {
         this.world = explosion.getWorld();
         this.posX = explosion.getX();
         this.posY = explosion.getY();

@@ -26,11 +26,14 @@ public abstract class ServerPlayNetworkHandlerMixin$PacketRateLimit implements P
     @Shadow
     @Final
     private static Logger LOGGER;
+
     @Shadow
     public ServerPlayerEntity player;
+
     @Shadow
     @Final
     private MinecraftServer server;
+
     private PacketLimiter limiter;
     private boolean spamKicked;
 

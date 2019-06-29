@@ -2,7 +2,6 @@
 
 package club.issizler.okyanus.runtime.mixin.optimizations.chunkloading;
 
-import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
@@ -11,7 +10,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(World.class)
-public abstract class WorldMixin implements WorldDensityCacheable {
+public abstract class WorldMixin {
 
     @Shadow
     public abstract boolean isHeightValidAndBlockLoaded(BlockPos blockPos_1);

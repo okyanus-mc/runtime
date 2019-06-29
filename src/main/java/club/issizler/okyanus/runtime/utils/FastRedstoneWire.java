@@ -624,6 +624,7 @@ public class FastRedstoneWire {
         int layer;                      // Highest layer this node is scheduled in
         boolean visited;                // To keep track of information flow direction, visited restone wire is marked
         int xbias, zbias;               // Remembers directionality of ancestor nodes; helps eliminate directional ambiguities.
+
         public enum Type {
             UNKNOWN, REDSTONE, OTHER
         }

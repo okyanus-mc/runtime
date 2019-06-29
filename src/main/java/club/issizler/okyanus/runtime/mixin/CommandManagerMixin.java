@@ -18,6 +18,7 @@ public abstract class CommandManagerMixin {
     @Shadow
     @Final
     private static Logger LOGGER;
+
     @Final
     @Shadow
     private CommandDispatcher<ServerCommandSource> dispatcher;

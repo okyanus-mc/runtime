@@ -28,23 +28,21 @@ public abstract class RedstoneWireBlockMixin implements RedstoneWireFastable {
     @Shadow
     @Final
     public static IntProperty POWER;
+
     @Shadow
     private boolean wiresGivePower;
+
     @Shadow
     @Final
     private Set<BlockPos> affectedNeighbors;
-    private FastRedstoneWire turbo;
+
+    private FastRedstoneWire turbo = new FastRedstoneWire(this);
 
     @Shadow
     protected abstract int increasePower(int int_1, BlockState blockState_1);
 
     @Shadow
     protected abstract BlockState update(World world_1, BlockPos blockPos_1, BlockState blockState_1);
-
-    @Inject(at = @At("RETURN"), method = "<init>")
-    private void oky$init(CallbackInfo ci) {
-        turbo = new FastRedstoneWire(this);
-    }
 
     public boolean canProvidePower() {
         return this.wiresGivePower;

@@ -31,6 +31,7 @@ public abstract class Int2ObjectBiMapMixin<K> {
 
     @Shadow
     private int size;
+
     private BitSet usedIds;
 
     @Shadow

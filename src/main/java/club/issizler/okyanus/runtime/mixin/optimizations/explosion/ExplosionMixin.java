@@ -3,8 +3,8 @@
 package club.issizler.okyanus.runtime.mixin.optimizations.explosion;
 
 import club.issizler.okyanus.runtime.Runtime;
+import club.issizler.okyanus.runtime.mixin.accessors.ExplosionAccessorMixin;
 import club.issizler.okyanus.runtime.utils.ExplosionCacheKey;
-import club.issizler.okyanus.runtime.utils.ExplosionPublicable;
 import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Explosion.class)
-public abstract class ExplosionMixin implements ExplosionPublicable {
+public abstract class ExplosionMixin {
 
     @Shadow
     @Final
@@ -44,7 +44,7 @@ public abstract class ExplosionMixin implements ExplosionPublicable {
     }
 
     private float getBlockDensity(Vec3d vec3d_1, Entity entity_1) {
-        ExplosionCacheKey key = new ExplosionCacheKey(this, entity_1.getBoundingBox());
+        ExplosionCacheKey key = new ExplosionCacheKey((ExplosionAccessorMixin) this, entity_1.getBoundingBox());
 
         Float blockDensity = ((WorldDensityCacheable) world).getExplosionDensityCache().get(key);
         if (blockDensity == null) {
@@ -53,23 +53,6 @@ public abstract class ExplosionMixin implements ExplosionPublicable {
         }
 
         return blockDensity;
-    }
-
-
-    public World getWorld() {
-        return world;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getZ() {
-        return z;
     }
 
 }

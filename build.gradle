@@ -34,7 +34,7 @@ dependencies {
 	compile 'com.github.okyanus-mc:loader:f78f1e77f7' // always TODO: increment the loader version
 
 	fatJar 'com.electronwill.night-config:toml:3.4.0'
-	fatJar ('com.github.okyanus-mc:api:9a02613') { // always TODO: increment the API version
+	fatJar ('com.github.okyanus-mc:api:b6049ea') { // always TODO: increment the API version
 		exclude group: "org.apache.commons"
 	}
 }

@@ -2,7 +2,6 @@
 
 package club.issizler.okyanus.runtime.mixin.optimizations.blockentity;
 
-import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
@@ -14,8 +13,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import java.util.Collection;
 import java.util.List;
 
-@Mixin(World.class)
-public abstract class WorldMixin$UnusedBlockEntityList implements WorldDensityCacheable {
+@Mixin(value = World.class, priority = 999) // Default priority is 1000
+public abstract class WorldMixin$UnusedBlockEntityList {
 
     @Shadow
     @Final
