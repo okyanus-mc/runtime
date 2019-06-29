@@ -2,6 +2,7 @@ package club.issizler.okyanus.runtime;
 
 import club.issizler.okyanus.runtime.utils.RollingAverage;
 import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import org.apache.logging.log4j.LogManager;
@@ -30,6 +31,5 @@ public class SomeGlobals {
 
     };
 
-    public static MinecraftDedicatedServer dedicatedServer;
     public static CommandDispatcher<ServerCommandSource> commandDispatcher;
 }

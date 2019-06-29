@@ -2,7 +2,7 @@
 
 package club.issizler.okyanus.runtime.mixin.optimizations.limit;
 
-import club.issizler.okyanus.runtime.utils.PacketRateLimitable;
+import club.issizler.okyanus.runtime.utils.accessors.PacketRateLimitable;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.PacketListener;

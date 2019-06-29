@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(ExperienceOrbEntity.class)
 public abstract class ExperienceOrbEntityMixin {
 
-    // I just don't give a damn about overwriting anymore, and that's a bad perspective at Mixins
+    // I just don't give a damn about overwriting anymore, and that's a disappointing perspective at Mixins
 
     @Shadow
     private int health;

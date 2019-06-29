@@ -1,4 +1,4 @@
-package club.issizler.okyanus.runtime.utils;
+package club.issizler.okyanus.runtime.utils.accessors;
 
 import net.minecraft.network.Packet;
 

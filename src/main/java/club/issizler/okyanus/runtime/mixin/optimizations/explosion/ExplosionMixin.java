@@ -5,7 +5,7 @@ package club.issizler.okyanus.runtime.mixin.optimizations.explosion;
 import club.issizler.okyanus.runtime.Runtime;
 import club.issizler.okyanus.runtime.mixin.accessors.ExplosionAccessorMixin;
 import club.issizler.okyanus.runtime.utils.ExplosionCacheKey;
-import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
+import club.issizler.okyanus.runtime.utils.accessors.WorldDensityCacheable;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;

@@ -2,7 +2,7 @@
 
 package club.issizler.okyanus.runtime.mixin.optimizations.explosion;
 
-import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
+import club.issizler.okyanus.runtime.utils.accessors.WorldDensityCacheable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.dimension.DimensionType;

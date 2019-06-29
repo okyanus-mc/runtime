@@ -4,7 +4,6 @@ import club.issizler.okyanus.api.chat.MessageType;
 import club.issizler.okyanus.api.math.Vec3d;
 import club.issizler.okyanus.api.world.Block;
 import club.issizler.okyanus.api.world.WorldImpl;
-import club.issizler.okyanus.runtime.SomeGlobals;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.hit.HitResult;
@@ -16,11 +15,11 @@ public class PlayerImpl implements Player {
     private ServerPlayerEntity player;
 
     public PlayerImpl(String name) {
-        player = SomeGlobals.dedicatedServer.getPlayerManager().getPlayer(name);
+        player = ((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name);
     }
 
     public PlayerImpl(UUID uuid) {
-        player = SomeGlobals.dedicatedServer.getPlayerManager().getPlayer(uuid);
+        player = ((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(uuid);
     }
 
     public PlayerImpl(ServerPlayerEntity e) {

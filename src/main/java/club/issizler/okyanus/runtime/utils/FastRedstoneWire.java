@@ -2,6 +2,7 @@
 
 package club.issizler.okyanus.runtime.utils;
 
+import club.issizler.okyanus.runtime.utils.accessors.RedstoneWireFastable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;

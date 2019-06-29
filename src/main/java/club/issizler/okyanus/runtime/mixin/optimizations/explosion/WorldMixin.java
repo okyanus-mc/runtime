@@ -3,7 +3,7 @@
 package club.issizler.okyanus.runtime.mixin.optimizations.explosion;
 
 import club.issizler.okyanus.runtime.utils.ExplosionCacheKey;
-import club.issizler.okyanus.runtime.utils.WorldDensityCacheable;
+import club.issizler.okyanus.runtime.utils.accessors.WorldDensityCacheable;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 

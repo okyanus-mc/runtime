@@ -4,7 +4,7 @@ package club.issizler.okyanus.runtime.mixin.optimizations.block;
 
 import club.issizler.okyanus.runtime.Runtime;
 import club.issizler.okyanus.runtime.utils.FastRedstoneWire;
-import club.issizler.okyanus.runtime.utils.RedstoneWireFastable;
+import club.issizler.okyanus.runtime.utils.accessors.RedstoneWireFastable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneWireBlock;
@@ -16,9 +16,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Set;
 
