@@ -2,6 +2,7 @@ package club.issizler.okyanus.api;
 
 import club.issizler.okyanus.api.chat.MessageType;
 import club.issizler.okyanus.api.math.Vec3d;
+import club.issizler.okyanus.api.world.World;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
