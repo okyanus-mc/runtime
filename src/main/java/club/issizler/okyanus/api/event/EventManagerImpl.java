@@ -10,8 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum EventManagerImpl implements EventManager {
-    INSTANCE;
+public class EventManagerImpl implements EventManager {
 
     private Map<String, List<EventHandler>> handlers = new HashMap<>();
     private Logger logger = LogManager.getLogger();
@@ -40,12 +39,13 @@ public enum EventManagerImpl implements EventManager {
     }
 
     public <E> E trigger(E e) {
-        List<EventHandler> handlerList = handlers.get(e.getClass().getTypeName());
+        String eventName = e.getClass().getInterfaces()[0].getTypeName();
+        List<EventHandler> handlerList = handlers.get(eventName);
 
         if (handlerList == null)
             return e;
 
-        logger.debug("Okyanus: Triggering event " + e.getClass().getName());
+        logger.debug("Okyanus: Triggering event " + eventName);
         handlerList.forEach(handler -> handler.handle(e));
 
         return e;

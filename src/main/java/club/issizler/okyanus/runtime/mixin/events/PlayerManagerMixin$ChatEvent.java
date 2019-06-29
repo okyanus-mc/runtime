@@ -2,6 +2,7 @@ package club.issizler.okyanus.runtime.mixin.events;
 
 import club.issizler.okyanus.api.PlayerImpl;
 import club.issizler.okyanus.api.event.ChatEventImpl;
+import club.issizler.okyanus.api.event.EventManager;
 import club.issizler.okyanus.api.event.EventManagerImpl;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.text.LiteralText;
@@ -29,7 +30,7 @@ public abstract class PlayerManagerMixin$ChatEvent {
         String playerName = ((Text) text.getArgs()[0]).asFormattedString();
         String textMessage = ((String) text.getArgs()[1]);
 
-        ChatEventImpl e = EventManagerImpl.INSTANCE.trigger(new ChatEventImpl(new PlayerImpl(playerName), textMessage));
+        ChatEventImpl e = EventManager.getInstance().trigger(new ChatEventImpl(new PlayerImpl(playerName), textMessage));
 
         if (e.isCancelled())
             ci.cancel();

@@ -1,5 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
+import club.issizler.okyanus.api.event.EventManager;
 import club.issizler.okyanus.api.event.EventManagerImpl;
 import club.issizler.okyanus.api.event.StopEventImpl;
 import net.minecraft.server.MinecraftServer;
@@ -21,7 +22,7 @@ public abstract class MinecraftServerMixin {
     @Inject(at = @At("HEAD"), method = "shutdown")
     private void oky$shutdown(CallbackInfo ci) {
         LOGGER.info("Okyanus: Stopping all plugins");
-        EventManagerImpl.INSTANCE.trigger(new StopEventImpl());
+        EventManager.getInstance().trigger(new StopEventImpl());
     }
 
 }

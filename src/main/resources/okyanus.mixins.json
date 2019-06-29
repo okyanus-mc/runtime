@@ -2,59 +2,45 @@
   "required": true,
   "package": "club.issizler.okyanus.runtime.mixin",
   "compatibilityLevel": "JAVA_8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.7.11",
   "server": [
     "events.MinecraftDedicatedServerMixin",
     "events.MinecraftServerMixin",
-
     "events.PlayerManagerMixin$ChatEvent",
     "events.PlayerManagerMixin$ConnectEvent",
     "events.PlayerManagerMixin$DisconnectEvent",
-
     "events.ServerPlayNetworkHandlerMixin$BreakEvent",
     "events.ServerPlayNetworkHandlerMixin$DropEvent",
     "events.ServerPlayNetworkHandlerMixin$MoveEvent",
     "events.ServerPlayNetworkHandlerMixin$PlaceEvent",
-
     "fixes.AreaEffectCloudEntityMixin",
     "fixes.PlayerManagerMixin",
-
     "optimizations.block.BlockPosMixin",
     "optimizations.block.RedstoneWireBlockMixin",
-
     "optimizations.blockentity.WorldMixin$CapturedBlockEntityLookup",
     "optimizations.blockentity.WorldMixin$UnusedBlockEntityList",
-
     "optimizations.chunkloading.WorldMixin",
-
     "optimizations.debugchecks.PackedIntegerArrayMixin",
-
     "optimizations.entity.EntityMixin",
     "optimizations.entity.TameableEntityMixin",
-
     "optimizations.explosion.ExplosionMixin",
     "optimizations.explosion.MinecraftServerMixin",
     "optimizations.explosion.ServerWorldMixin",
     "optimizations.explosion.WorldMixin",
-
     "optimizations.item.ItemStackMixin",
-
     "optimizations.limit.ClientConnectionMixin",
     "optimizations.limit.ServerPlayNetworkHandlerMixin$BookSizeLimit",
     "optimizations.limit.ServerPlayNetworkHandlerMixin$PacketRateLimit",
-
     "optimizations.reduceio.RegionFileMixin",
-
     "optimizations.registry.Int2ObjectBiMapMixin",
     "optimizations.registry.MaterialsRegistryMixin",
-
     "optimizations.world.MinecraftServerMixin",
-
     "CommandManagerMixin",
     "MinecraftDedicatedServerMixin",
     "MinecraftServerMixin",
     "ServerCommandOutputMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+  ]
 }

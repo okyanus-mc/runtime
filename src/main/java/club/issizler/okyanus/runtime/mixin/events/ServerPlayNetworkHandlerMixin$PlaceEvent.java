@@ -1,6 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
-import club.issizler.okyanus.api.event.EventManagerImpl;
+import club.issizler.okyanus.api.event.EventManager;
 import club.issizler.okyanus.api.event.PlaceEventImpl;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -19,7 +19,7 @@ public abstract class ServerPlayNetworkHandlerMixin$PlaceEvent {
 
     @Inject(at = @At("HEAD"), method = "onPlayerInteractBlock", cancellable = true)
     private void oky$onPlayerAction(PlayerInteractBlockC2SPacket playerInteractBlockC2SPacket_1, CallbackInfo ci) {
-        PlaceEventImpl e = EventManagerImpl.INSTANCE.trigger(new PlaceEventImpl(playerInteractBlockC2SPacket_1, player));
+        PlaceEventImpl e = EventManager.getInstance().trigger(new PlaceEventImpl(playerInteractBlockC2SPacket_1, player));
 
         if (e.isCancelled()) {
             ci.cancel(); // TODO: Alert client of this cancellation.
