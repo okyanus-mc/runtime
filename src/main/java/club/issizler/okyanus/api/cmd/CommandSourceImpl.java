@@ -1,20 +1,19 @@
 package club.issizler.okyanus.api.cmd;
 
-import club.issizler.okyanus.api.Player;
+import club.issizler.okyanus.api.PlayerImpl;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.arguments.EntityArgumentType;
-import net.minecraft.command.arguments.TextArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 
-public class CommandSource {
+public class CommandSourceImpl implements CommandSource {
 
     private CommandContext<ServerCommandSource> context;
 
-    public CommandSource(CommandContext<ServerCommandSource> context) {
+    public CommandSourceImpl(CommandContext<ServerCommandSource> context) {
         this.context = context;
     }
 
@@ -26,9 +25,9 @@ public class CommandSource {
         context.getSource().sendFeedback(new LiteralText(string), false);
     }
 
-    public Player getPlayer() {
+    public PlayerImpl getPlayer() {
         try {
-            return new Player(context.getSource().getPlayer());
+            return new PlayerImpl(context.getSource().getPlayer());
         } catch (CommandSyntaxException e) {
             e.printStackTrace();
         }
@@ -44,10 +43,10 @@ public class CommandSource {
         }
     }
 
-    public Player getArgPlayer(String arg) {
+    public PlayerImpl getArgPlayer(String arg) {
         try {
             ServerPlayerEntity e = EntityArgumentType.getPlayer(context, arg);
-            return new Player(e);
+            return new PlayerImpl(e);
         } catch (CommandSyntaxException e) {
             send(e.toString());
             throw new RuntimeException(e);

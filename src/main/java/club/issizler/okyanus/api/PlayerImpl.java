@@ -2,26 +2,26 @@ package club.issizler.okyanus.api;
 
 import club.issizler.okyanus.api.chat.MessageType;
 import club.issizler.okyanus.api.math.Vec3d;
-import club.issizler.okyanus.api.world.World;
+import club.issizler.okyanus.api.world.WorldImpl;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 
 import java.util.UUID;
 
-public class Player {
+public class PlayerImpl implements Player {
 
     private ServerPlayerEntity player;
 
-    public Player(String name) {
+    public PlayerImpl(String name) {
         player = SomeGlobals.dedicatedServer.getPlayerManager().getPlayer(name);
     }
 
-    public Player(UUID uuid) {
+    public PlayerImpl(UUID uuid) {
         player = SomeGlobals.dedicatedServer.getPlayerManager().getPlayer(uuid);
     }
 
-    public Player(ServerPlayerEntity e) {
+    public PlayerImpl(ServerPlayerEntity e) {
         player = e;
     }
 
@@ -50,8 +50,8 @@ public class Player {
         return new Vec3d(pos.x, pos.y, pos.z);
     }
 
-    public World getWorld() {
-        return new World(player.world);
+    public WorldImpl getWorld() {
+        return new WorldImpl(player.world);
     }
 
     public void teleport(Vec3d pos) {

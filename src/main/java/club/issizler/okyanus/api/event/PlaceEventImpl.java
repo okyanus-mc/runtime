@@ -1,23 +1,23 @@
 package club.issizler.okyanus.api.event;
 
-import club.issizler.okyanus.api.Player;
+import club.issizler.okyanus.api.PlayerImpl;
 import club.issizler.okyanus.api.math.Vec3d;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerInteractBlockC2SPacket;
 
-public class PlaceEvent implements PlayerEvent, Cancellable, Locateable {
+public class PlaceEventImpl implements PlaceEvent {
 
     private PlayerInteractBlockC2SPacket packet;
-    private Player player;
+    private PlayerImpl player;
 
     private boolean isCancelled;
 
-    public PlaceEvent(PlayerInteractBlockC2SPacket packet, ServerPlayerEntity playerEntity) {
+    public PlaceEventImpl(PlayerInteractBlockC2SPacket packet, ServerPlayerEntity playerEntity) {
         this.packet = packet;
-        this.player = new Player(playerEntity);
+        this.player = new PlayerImpl(playerEntity);
     }
 
-    public Player getPlayer() {
+    public PlayerImpl getPlayer() {
         return player;
     }
 

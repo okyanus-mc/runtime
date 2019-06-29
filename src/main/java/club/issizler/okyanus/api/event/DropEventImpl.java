@@ -1,23 +1,22 @@
 package club.issizler.okyanus.api.event;
 
-import club.issizler.okyanus.api.Player;
-import club.issizler.okyanus.api.math.Vec3d;
+import club.issizler.okyanus.api.PlayerImpl;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerActionC2SPacket;
 
-public class BreakEvent implements PlayerEvent, Cancellable, Locateable {
+public class DropEventImpl implements DropEvent {
 
     private PlayerActionC2SPacket packet;
-    private Player player;
+    private PlayerImpl player;
 
     private boolean isCancelled;
 
-    public BreakEvent(PlayerActionC2SPacket packet, ServerPlayerEntity playerEntity) {
+    public DropEventImpl(PlayerActionC2SPacket packet, ServerPlayerEntity playerEntity) {
         this.packet = packet;
-        this.player = new Player(playerEntity);
+        this.player = new PlayerImpl(playerEntity);
     }
 
-    public Player getPlayer() {
+    public PlayerImpl getPlayer() {
         return player;
     }
 
@@ -29,11 +28,6 @@ public class BreakEvent implements PlayerEvent, Cancellable, Locateable {
     @Override
     public void setCancelled(boolean isCancelled) {
         this.isCancelled = isCancelled;
-    }
-
-    @Override
-    public Vec3d getLocation() {
-        return new Vec3d(packet.getPos().getX(), packet.getPos().getY(), packet.getPos().getZ());
     }
 
 }

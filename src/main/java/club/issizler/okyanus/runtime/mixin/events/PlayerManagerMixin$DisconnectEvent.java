@@ -1,7 +1,7 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
-import club.issizler.okyanus.api.event.DisconnectEvent;
-import club.issizler.okyanus.api.event.EventManager;
+import club.issizler.okyanus.api.event.DisconnectEventImpl;
+import club.issizler.okyanus.api.event.EventManagerImpl;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,7 +14,7 @@ public abstract class PlayerManagerMixin$DisconnectEvent {
 
     @Inject(at = @At("TAIL"), method = "remove")
     private void oky$remove(ServerPlayerEntity serverPlayerEntity_1, CallbackInfo ci) {
-        EventManager.INSTANCE.trigger(new DisconnectEvent(serverPlayerEntity_1));
+        EventManagerImpl.INSTANCE.trigger(new DisconnectEventImpl(serverPlayerEntity_1));
     }
 
 }

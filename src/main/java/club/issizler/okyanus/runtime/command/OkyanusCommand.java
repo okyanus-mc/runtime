@@ -3,7 +3,6 @@ package club.issizler.okyanus.runtime.command;
 import club.issizler.okyanus.api.cmd.CommandRunnable;
 import club.issizler.okyanus.api.cmd.CommandSource;
 import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
 
 public class OkyanusCommand implements CommandRunnable {
 

@@ -56,14 +56,14 @@ public class Runtime implements Mod {
         if (USE_FAST_REDSTONE)
             logger.warn("Okyanus: Fast redstone is currently experimental! Disable it from okyanus.toml if you have any redstone issues!");
 
-        CommandManager.INSTANCE.register(
+        CommandManager.getInstance().register(
                 new CommandBuilder()
                         .name("tps")
                         .opOnly()
                         .run(new TPSCommand())
         );
 
-        CommandManager.INSTANCE.register(
+        CommandManager.getInstance().register(
                 new CommandBuilder()
                         .name("okyanus")
                         .opOnly()

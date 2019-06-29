@@ -2,8 +2,8 @@ package club.issizler.okyanus.runtime.command;
 
 import club.issizler.okyanus.api.cmd.ArgumentType;
 import club.issizler.okyanus.api.cmd.CommandBuilder;
-import club.issizler.okyanus.api.cmd.CommandSource;
-import club.issizler.okyanus.api.event.EventManager;
+import club.issizler.okyanus.api.cmd.CommandManagerImpl;
+import club.issizler.okyanus.api.cmd.CommandSourceImpl;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -29,10 +29,10 @@ public class CommandRegistrar {
     public static void register() {
         LOGGER.info("Okyanus: Late command registration");
 
-        for (CommandBuilder command : club.issizler.okyanus.api.cmd.CommandManager.INSTANCE.__internal_getCommands()) {
-            LOGGER.debug("Okyanus: Creating brigadier command for " + command.__internal_name());
+        for (CommandBuilder command : ((CommandManagerImpl) club.issizler.okyanus.api.cmd.CommandManager.getInstance()).__internal_getCommands()) {
+            LOGGER.debug("Okyanus: Creating brigadier command for " + command.getName());
 
-            LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.__internal_name());
+            LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getName());
 
             builder = registerCommand(command, builder);
             SomeGlobals.commandDispatcher.register(builder);
@@ -42,17 +42,17 @@ public class CommandRegistrar {
     private static LiteralArgumentBuilder<ServerCommandSource> registerCommand(CommandBuilder command, LiteralArgumentBuilder<ServerCommandSource> builder) {
         ArgumentBuilder argumentBuilder = null;
 
-        List<Triple<String, ArgumentType, Boolean>> args = command.__internal_args();
-        Command<ServerCommandSource> cmd = context -> command.__internal_runnable().run(new CommandSource(context));
+        List<Triple<String, ArgumentType, Boolean>> args = command.getArgs();
+        Command<ServerCommandSource> cmd = context -> command.getRunnable().run(new CommandSourceImpl(context));
 
         boolean wasPreviousOptional = false;
 
-        for (CommandBuilder subcommand : command.__internal_subCommands()) {
-            LOGGER.debug("  - Registering subcommand " + subcommand.__internal_name());
-            builder.then(registerCommand(subcommand, literal(subcommand.__internal_name())));
+        for (CommandBuilder subcommand : command.getSubCommands()) {
+            LOGGER.debug("  - Registering subcommand " + subcommand.getName());
+            builder.then(registerCommand(subcommand, literal(subcommand.getName())));
         }
 
-        if (command.__internal_isOpOnly()) {
+        if (command.getIsOpOnly()) {
             LOGGER.debug("  - Marked as OP only");
             builder = builder.requires(source -> source.hasPermissionLevel(3));
         }
@@ -98,9 +98,9 @@ public class CommandRegistrar {
 
         LOGGER.debug("  - Register the command");
 
-        CommandNode<ServerCommandSource> vanillaCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.__internal_name());
+        CommandNode<ServerCommandSource> vanillaCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.getName());
         if (vanillaCommand != null) {
-            LOGGER.info("Okyanus: Overwriting a vanilla command (/" + command.__internal_name() + "). Just letting you know");
+            LOGGER.info("Okyanus: Overwriting a vanilla command (/" + command.getName() + "). Just letting you know");
             SomeGlobals.commandDispatcher.getRoot().getChildren().remove(vanillaCommand);
         }
         return builder;

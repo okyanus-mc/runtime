@@ -1,6 +1,5 @@
 package club.issizler.okyanus.api.event;
 
-import club.issizler.okyanus.runtime.Runtime;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum EventManager {
+public enum EventManagerImpl implements EventManager {
     INSTANCE;
 
     private Map<String, List<EventHandler>> handlers = new HashMap<>();
@@ -40,7 +39,7 @@ public enum EventManager {
         }
     }
 
-    public <E extends Event> E trigger(E e) {
+    public <E> E trigger(E e) {
         List<EventHandler> handlerList = handlers.get(e.getClass().getTypeName());
 
         if (handlerList == null)

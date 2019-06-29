@@ -17,3 +17,11 @@ includeBuild("../loader") {
         substitute module('club.issizler.okyanus:loader') with project(':')
     }
 }
+
+if (new File("../api").exists()) {
+    includeBuild("../api") {
+        dependencySubstitution {
+            substitute module('com.github.okyanus-mc:api') with project(':')
+        }
+    }
+}

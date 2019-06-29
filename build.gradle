@@ -18,6 +18,12 @@ configurations {
 	compile.extendsFrom fatJar
 }
 
+repositories {
+	mavenCentral()
+	
+	maven { url 'https://jitpack.io' }
+}
+
 dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -27,6 +33,7 @@ dependencies {
 	compile 'club.issizler.okyanus:loader'
 
 	fatJar 'com.electronwill.night-config:toml:3.4.0'
+	fatJar 'com.github.okyanus-mc:api:-SNAPSHOT'
 }
 
 processResources {
