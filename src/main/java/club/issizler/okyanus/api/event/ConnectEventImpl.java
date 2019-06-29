@@ -1,6 +1,7 @@
 package club.issizler.okyanus.api.event;
 
-import club.issizler.okyanus.api.PlayerImpl;
+import club.issizler.okyanus.api.entity.EntityImpl;
+import club.issizler.okyanus.api.entity.PlayerImpl;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -13,7 +14,10 @@ public class ConnectEventImpl implements ConnectEvent {
 
     public ConnectEventImpl(ClientConnection connection, ServerPlayerEntity playerEntity) {
         this.connection = connection;
-        this.player = new PlayerImpl(playerEntity);
+        this.player = new PlayerImpl(
+            playerEntity,
+            new EntityImpl(playerEntity)
+        );
     }
 
     public PlayerImpl getPlayer() {

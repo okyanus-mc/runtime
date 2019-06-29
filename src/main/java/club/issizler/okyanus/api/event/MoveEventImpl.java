@@ -1,6 +1,7 @@
 package club.issizler.okyanus.api.event;
 
-import club.issizler.okyanus.api.PlayerImpl;
+import club.issizler.okyanus.api.entity.EntityImpl;
+import club.issizler.okyanus.api.entity.PlayerImpl;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerMoveC2SPacket;
 
@@ -11,9 +12,12 @@ public class MoveEventImpl implements MoveEvent {
 
     private boolean isCancelled = false;
 
-    public MoveEventImpl(PlayerMoveC2SPacket packet, ServerPlayerEntity player) {
+    public MoveEventImpl(PlayerMoveC2SPacket packet, ServerPlayerEntity playerEntity) {
         this.packet = packet;
-        this.player = new PlayerImpl(player);
+        this.player = new PlayerImpl(
+            playerEntity,
+            new EntityImpl(playerEntity)
+        );
     }
 
     @Override

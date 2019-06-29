@@ -1,9 +1,11 @@
-package club.issizler.okyanus.api;
+package club.issizler.okyanus.api.entity;
 
+import club.issizler.okyanus.api.Server;
+import club.issizler.okyanus.api.ServerImpl;
 import club.issizler.okyanus.api.chat.MessageType;
 import club.issizler.okyanus.api.math.Vec3d;
 import club.issizler.okyanus.api.world.Block;
-import club.issizler.okyanus.api.world.WorldImpl;
+import club.issizler.okyanus.api.world.World;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.hit.HitResult;
@@ -12,47 +14,51 @@ import java.util.UUID;
 
 public class PlayerImpl implements Player {
 
-    private ServerPlayerEntity player;
+    private final ServerPlayerEntity player;
+    private final Entity entity;
+
+    public PlayerImpl(ServerPlayerEntity player, Entity entity) {
+        this.player = player;
+        this.entity = entity;
+    }
+
+    public PlayerImpl(String name, Entity entity) {
+        this(((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name), entity);
+    }
+
+    public PlayerImpl(UUID uuid, Entity entity) {
+        this(((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(uuid), entity);
+    }
 
     public PlayerImpl(String name) {
-        player = ((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name);
-    }
-
-    public PlayerImpl(UUID uuid) {
-        player = ((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(uuid);
-    }
-
-    public PlayerImpl(ServerPlayerEntity e) {
-        player = e;
+        this(
+            ((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name),
+            new EntityImpl(((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name))
+        );
     }
 
     public String getName() {
-        return player.getName().asFormattedString();
+        return entity.getName();
     }
 
     public String getCustomName() {
-        if (player.getCustomName() == null)
-            return getName();
-
-        return player.getCustomName().asFormattedString();
+        return entity.getCustomName();
     }
 
     public void setCustomName(String name) {
-        player.setCustomName(new LiteralText(name));
+        entity.setCustomName(name);
     }
 
     public UUID getUUID() {
-        return player.getUuid();
+        return entity.getUUID();
     }
 
     public Vec3d getPos() {
-        net.minecraft.util.math.Vec3d pos = player.getPos();
-
-        return new Vec3d(pos.x, pos.y, pos.z);
+        return entity.getPos();
     }
 
-    public WorldImpl getWorld() {
-        return new WorldImpl(player.world);
+    public World getWorld() {
+        return entity.getWorld();
     }
 
     public Block getLookedBlock(double distance, boolean returnFluids) {
@@ -93,4 +99,5 @@ public class PlayerImpl implements Player {
     public void kick(String message) {
         player.networkHandler.disconnect(new LiteralText(message));
     }
+
 }

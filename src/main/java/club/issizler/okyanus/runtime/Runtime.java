@@ -63,7 +63,7 @@ public class Runtime implements Mod {
                 new CommandBuilder()
                         .name("okyanus")
                         .opOnly()
-                        .subcommand(new CommandBuilder()
+                        .subCommand(new CommandBuilder()
                                 .name("mods")
                                 .arg("modId", ArgumentType.TEXT, true)
                                 .opOnly()

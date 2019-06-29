@@ -1,6 +1,6 @@
 package club.issizler.okyanus.api.event;
 
-import club.issizler.okyanus.api.PlayerImpl;
+import club.issizler.okyanus.api.entity.PlayerImpl;
 import club.issizler.okyanus.runtime.Runtime;
 
 public class ChatEventImpl implements ChatEvent {
