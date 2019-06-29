@@ -6,11 +6,10 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 public class ConnectEventImpl implements ConnectEvent {
 
+    public String cancelReason = "Disconnected";
     private ClientConnection connection;
     private PlayerImpl player;
-
     private boolean isCancelled = false;
-    public String cancelReason = "Disconnected";
 
     public ConnectEventImpl(ClientConnection connection, ServerPlayerEntity playerEntity) {
         this.connection = connection;

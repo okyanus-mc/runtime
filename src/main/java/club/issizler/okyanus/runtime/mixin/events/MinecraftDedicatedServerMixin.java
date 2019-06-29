@@ -1,7 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
 import club.issizler.okyanus.api.event.EventManager;
-import club.issizler.okyanus.api.event.EventManagerImpl;
 import club.issizler.okyanus.api.event.ReadyEventImpl;
 import club.issizler.okyanus.runtime.command.CommandRegistrar;
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;

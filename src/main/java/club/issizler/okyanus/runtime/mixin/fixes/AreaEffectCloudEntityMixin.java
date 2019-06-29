@@ -20,9 +20,10 @@ public abstract class AreaEffectCloudEntityMixin extends Entity {
         super(entityType_1, world_1);
     }
 
-    @Shadow public abstract float getRadius();
+    @Shadow
+    public abstract float getRadius();
 
-    @Inject(at=@At(value = "INVOKE", target = "net.minecraft.entity.AreaEffectCloudEntity.getRadius()F"), method = "tick", cancellable = true)
+    @Inject(at = @At(value = "INVOKE", target = "net.minecraft.entity.AreaEffectCloudEntity.getRadius()F"), method = "tick", cancellable = true)
     private void oky$tick(CallbackInfo ci) {
         if (this.getRadius() < 0.0f) {
             this.kill();

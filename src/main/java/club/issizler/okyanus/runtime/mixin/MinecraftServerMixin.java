@@ -47,7 +47,7 @@ public abstract class MinecraftServerMixin {
             tickSection = curTime;
         }
     }
-    
+
     /**
      * @author Okyanus
      * @reason Debug messages

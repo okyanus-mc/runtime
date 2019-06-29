@@ -11,11 +11,15 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 
-    @Shadow public abstract Item getItem();
+    @Shadow
+    @Final
+    @Deprecated
+    private Item item;
+    @Shadow
+    private int count;
 
-    @Shadow @Final @Deprecated private Item item;
-
-    @Shadow private int count;
+    @Shadow
+    public abstract Item getItem();
 
     /**
      * @author Aikar @ Paper & Okyanus

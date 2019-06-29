@@ -24,39 +24,30 @@ public class FastRedstoneWire {
      *   Nodnam, BlockyPlays, Grumm, NeunEinser, HelVince.
      */
 
-    private final RedstoneWireBlock wire;
-
-    private List<UpdateNode> updateQueue0 = Lists.newArrayList();
-    private List<UpdateNode> updateQueue1 = Lists.newArrayList();
-    private List<UpdateNode> updateQueue2 = Lists.newArrayList();
-
-    private final Map<BlockPos, UpdateNode> nodeCache = Maps.newHashMap();
-
     private static final boolean[] updateRedstone = {
             true, true, false, false, true, true, // 0 to 5
             false, true, true, false, false, false, // 6 to 11
             true, true, false, false, false, true, // 12 to 17
             true, false, true, true, false, false // 18 to 23
     };
-
     private static final int north = 0;
     private static final int east = 1;
     private static final int south = 2;
     private static final int west = 3;
-
     private static final int[] forwardIsNorth = {2, 3, 16, 19, 0, 4, 1, 5, 7, 8, 17, 20, 12, 13, 18, 21, 6, 9, 22, 14, 11, 10, 23, 15};
     private static final int[] forwardIsEast = {2, 3, 16, 19, 4, 1, 5, 0, 17, 20, 12, 13, 18, 21, 7, 8, 22, 14, 11, 15, 23, 9, 6, 10};
     private static final int[] forwardIsSouth = {2, 3, 16, 19, 1, 5, 0, 4, 12, 13, 18, 21, 7, 8, 17, 20, 11, 15, 23, 10, 6, 14, 22, 9};
     private static final int[] forwardIsWest = {2, 3, 16, 19, 5, 0, 4, 1, 18, 21, 7, 8, 17, 20, 12, 13, 23, 10, 6, 9, 22, 15, 11, 14};
-
-    private static final int[][] reordering = { forwardIsNorth, forwardIsEast, forwardIsSouth, forwardIsWest };
-
+    private static final int[][] reordering = {forwardIsNorth, forwardIsEast, forwardIsSouth, forwardIsWest};
     private static final boolean old_current_change = false;
-
-    private static final int[] rs_neighbors =    {4, 5, 6, 7};
+    private static final int[] rs_neighbors = {4, 5, 6, 7};
     private static final int[] rs_neighbors_up = {9, 11, 13, 15};
     private static final int[] rs_neighbors_dn = {8, 10, 12, 14};
-
+    private final RedstoneWireBlock wire;
+    private final Map<BlockPos, UpdateNode> nodeCache = Maps.newHashMap();
+    private List<UpdateNode> updateQueue0 = Lists.newArrayList();
+    private List<UpdateNode> updateQueue1 = Lists.newArrayList();
+    private List<UpdateNode> updateQueue2 = Lists.newArrayList();
     private int currentWalkLayer = 0;
 
     public FastRedstoneWire(RedstoneWireFastable wire) {
@@ -107,51 +98,6 @@ public class FastRedstoneWire {
         for (int i = 0; i < 24; i++) {
             dst[i] = src[re[i]];
         }
-    }
-
-    private void identifyNode(final World worldIn, final UpdateNode upd1) {
-        final BlockPos pos = upd1.self;
-        final BlockState oldState = worldIn.getBlockState(pos);
-        upd1.currentState = oldState;
-
-        // Some neighbors of redstone wire are other kinds of blocks.
-        // These need to receive block updates to inform them that
-        // redstone wire values have changed.
-        final Block block = oldState.getBlock();
-        if (block != wire) {
-            // Mark this block as not redstone wire and therefore
-            // requiring updates
-            upd1.type = UpdateNode.Type.OTHER;
-
-            // Non-redstone blocks may propagate updates, but those updates
-            // are not handled by this accelerator.  Therefore, we do not
-            // expand this position's neighbors.
-            return;
-        }
-
-        // One job of BlockRedstoneWire.neighborChanged is to convert
-        // redstone wires to items if the block beneath was removed.
-        // With this accelerator, BlockRedstoneWire.neighborChanged
-        // is only typically called for a single wire block, while
-        // others are processed internally by the breadth first search
-        // algorithm.  To preserve this game behavior, this check must
-        // be replicated here.
-        if (!wire.canPlaceAt(null, worldIn, pos)) {
-            // Pop off the redstone dust
-            Block.dropStacks(oldState, worldIn, pos, null); // TODO: supposed to be dropNaturally
-            worldIn.breakBlock(pos, false);
-
-            // Mark this position as not being redstone wire
-            upd1.type = UpdateNode.Type.OTHER;
-
-            // Note: Sending updates to air blocks leads to an empty method.
-            // Testing shows this to be faster than explicitly avoiding updates to
-            // air blocks.
-            return;
-        }
-
-        // If the above conditions fail, then this is a redstone wire block.
-        upd1.type = UpdateNode.Type.REDSTONE;
     }
 
     static private int computeHeading(final int rx, final int rz) {
@@ -211,6 +157,57 @@ public class FastRedstoneWire {
         return ThreadLocalRandom.current().nextInt(0, 4);
     }
 
+    private static int getMaxCurrentStrength(final UpdateNode upd, final int strength) {
+        if (upd.type != UpdateNode.Type.REDSTONE) return strength;
+        final int i = upd.currentState.get(RedstoneWireBlock.POWER);
+        return i > strength ? i : strength;
+    }
+
+    private void identifyNode(final World worldIn, final UpdateNode upd1) {
+        final BlockPos pos = upd1.self;
+        final BlockState oldState = worldIn.getBlockState(pos);
+        upd1.currentState = oldState;
+
+        // Some neighbors of redstone wire are other kinds of blocks.
+        // These need to receive block updates to inform them that
+        // redstone wire values have changed.
+        final Block block = oldState.getBlock();
+        if (block != wire) {
+            // Mark this block as not redstone wire and therefore
+            // requiring updates
+            upd1.type = UpdateNode.Type.OTHER;
+
+            // Non-redstone blocks may propagate updates, but those updates
+            // are not handled by this accelerator.  Therefore, we do not
+            // expand this position's neighbors.
+            return;
+        }
+
+        // One job of BlockRedstoneWire.neighborChanged is to convert
+        // redstone wires to items if the block beneath was removed.
+        // With this accelerator, BlockRedstoneWire.neighborChanged
+        // is only typically called for a single wire block, while
+        // others are processed internally by the breadth first search
+        // algorithm.  To preserve this game behavior, this check must
+        // be replicated here.
+        if (!wire.canPlaceAt(null, worldIn, pos)) {
+            // Pop off the redstone dust
+            Block.dropStacks(oldState, worldIn, pos, null); // TODO: supposed to be dropNaturally
+            worldIn.breakBlock(pos, false);
+
+            // Mark this position as not being redstone wire
+            upd1.type = UpdateNode.Type.OTHER;
+
+            // Note: Sending updates to air blocks leads to an empty method.
+            // Testing shows this to be faster than explicitly avoiding updates to
+            // air blocks.
+            return;
+        }
+
+        // If the above conditions fail, then this is a redstone wire block.
+        upd1.type = UpdateNode.Type.REDSTONE;
+    }
+
     private void updateNode(final World worldIn, final UpdateNode upd1, final int layer) {
         final BlockPos pos = upd1.self;
 
@@ -262,7 +259,7 @@ public class FastRedstoneWire {
         // Target array of neighbors sorted left-to-right
         upd1.neighborNodes = new UpdateNode[24];
 
-        for (int i=0; i<24; i++) {
+        for (int i = 0; i < 24; i++) {
             // Look up each neighbor in the node cache
             final BlockPos pos2 = neighbors[i];
             UpdateNode upd2 = nodeCache.get(pos2);
@@ -301,12 +298,12 @@ public class FastRedstoneWire {
         if (fromSouth) cz -= 1;
 
         int heading;
-        if (cx==0 && cz==0) {
+        if (cx == 0 && cz == 0) {
             // If there is no clear direction, try to inherit the heading from ancestor nodes.
             heading = computeHeading(upd1.xbias, upd1.zbias);
 
             // Propagate that heading to descendant nodes.
-            for (int i=0; i<24; i++) {
+            for (int i = 0; i < 24; i++) {
                 final UpdateNode nn = neighborNodes[i];
                 if (nn != null) {
                     nn.xbias = upd1.xbias;
@@ -323,7 +320,7 @@ public class FastRedstoneWire {
             heading = computeHeading(cx, cz);
 
             // Propagate that heading to descendant nodes.
-            for (int i=0; i<24; i++) {
+            for (int i = 0; i < 24; i++) {
                 final UpdateNode nn = neighborNodes[i];
                 if (nn != null) {
                     nn.xbias = cx;
@@ -392,7 +389,7 @@ public class FastRedstoneWire {
         currentWalkLayer = 1;
 
         // Loop over all layers
-        while (updateQueue0.size()>0 || updateQueue1.size()>0) {
+        while (updateQueue0.size() > 0 || updateQueue1.size() > 0) {
             // Get the set of blocks in this layer
             final List<UpdateNode> thisLayer = updateQueue0;
 
@@ -460,7 +457,7 @@ public class FastRedstoneWire {
         // Therefore we clear the cached block info about all neighbors of
         // the position receiving the update and then re-identify what they are.
         if (upd.neighborNodes != null) {
-            for (int i=0; i<24; i++) {
+            for (int i = 0; i < 24; i++) {
                 final UpdateNode upd2 = upd.neighborNodes[i];
                 if (upd2 == null) continue;
                 upd2.type = UpdateNode.Type.UNKNOWN;
@@ -520,7 +517,7 @@ public class FastRedstoneWire {
         // already performs the update to the block at 'pos', so it is not added to the schedule.
         final UpdateNode upd = new UpdateNode();
         upd.self = pos;
-        upd.parent = source!=null ? source : pos;
+        upd.parent = source != null ? source : pos;
         upd.currentState = newState;
         upd.type = UpdateNode.Type.REDSTONE;
         upd.visited = true;
@@ -590,8 +587,7 @@ public class FastRedstoneWire {
                 if (!neighbor_is_cube) {
                     UpdateNode neighbor_down = upd.neighborNodes[rs_neighbors_dn[m]];
                     l = getMaxCurrentStrength(neighbor_down, l);
-                } else
-                if (!center_up_is_cube) {
+                } else if (!center_up_is_cube) {
                     UpdateNode neighbor_up = upd.neighborNodes[rs_neighbors_up[m]];
                     l = getMaxCurrentStrength(neighbor_up, l);
                 }
@@ -604,7 +600,7 @@ public class FastRedstoneWire {
         j = l - 1;
 
         // If 'l' turns out to be zero, then j will be set to -1, but then since 'k' will
-    // always be in the range of 0 to 15, the following if will correct that.
+        // always be in the range of 0 to 15, the following if will correct that.
         if (k > j) j = k;
 
         if (i != j) {
@@ -619,17 +615,7 @@ public class FastRedstoneWire {
         return state;
     }
 
-    private static int getMaxCurrentStrength(final UpdateNode upd, final int strength) {
-        if (upd.type != UpdateNode.Type.REDSTONE) return strength;
-        final int i = upd.currentState.get(RedstoneWireBlock.POWER);
-        return i > strength ? i : strength;
-    }
-
     private static class UpdateNode {
-        public enum Type {
-            UNKNOWN, REDSTONE, OTHER
-        }
-
         BlockState currentState;        // Keep track of redstone wire value
         UpdateNode[] neighborNodes;    // References to neighbors (directed graph edges)
         BlockPos self;                  // UpdateNode's own position
@@ -638,5 +624,8 @@ public class FastRedstoneWire {
         int layer;                      // Highest layer this node is scheduled in
         boolean visited;                // To keep track of information flow direction, visited restone wire is marked
         int xbias, zbias;               // Remembers directionality of ancestor nodes; helps eliminate directional ambiguities.
+        public enum Type {
+            UNKNOWN, REDSTONE, OTHER
+        }
     }
 }

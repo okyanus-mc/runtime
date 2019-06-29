@@ -3,7 +3,6 @@ package club.issizler.okyanus.runtime.mixin.events;
 import club.issizler.okyanus.api.PlayerImpl;
 import club.issizler.okyanus.api.event.ChatEventImpl;
 import club.issizler.okyanus.api.event.EventManager;
-import club.issizler.okyanus.api.event.EventManagerImpl;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;

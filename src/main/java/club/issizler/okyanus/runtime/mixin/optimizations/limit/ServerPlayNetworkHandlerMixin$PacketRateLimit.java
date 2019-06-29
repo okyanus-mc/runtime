@@ -25,15 +25,17 @@ public abstract class ServerPlayNetworkHandlerMixin$PacketRateLimit implements P
 
     @Shadow
     @Final
+    private static Logger LOGGER;
+    @Shadow
+    public ServerPlayerEntity player;
+    @Shadow
+    @Final
     private MinecraftServer server;
+    private PacketLimiter limiter;
+    private boolean spamKicked;
 
     @Shadow
     public abstract void disconnect(Text text_1);
-
-    @Shadow @Final private static Logger LOGGER;
-    @Shadow public ServerPlayerEntity player;
-    private PacketLimiter limiter;
-    private boolean spamKicked;
 
     @Inject(at = @At("RETURN"), method = "<init>")
     private void oky$init(MinecraftServer minecraftServer_1, ClientConnection clientConnection_1, ServerPlayerEntity serverPlayerEntity_1, CallbackInfo ci) {

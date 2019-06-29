@@ -24,13 +24,17 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkHandlerMixin$BookSizeLimit {
 
-    @Shadow @Final private MinecraftServer server;
+    @Shadow
+    @Final
+    private static Logger LOGGER;
+    @Shadow
+    public ServerPlayerEntity player;
+    @Shadow
+    @Final
+    private MinecraftServer server;
 
-    @Shadow @Final private static Logger LOGGER;
-
-    @Shadow public ServerPlayerEntity player;
-
-    @Shadow public abstract void disconnect(Text text_1);
+    @Shadow
+    public abstract void disconnect(Text text_1);
 
     @Inject(at = @At("HEAD"), method = "onBookUpdate", cancellable = true)
     private void oky$onBookUpdate(BookUpdateC2SPacket bookUpdateC2SPacket_1, CallbackInfo ci) {

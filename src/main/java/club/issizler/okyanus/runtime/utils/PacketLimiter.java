@@ -1,11 +1,12 @@
-
 package club.issizler.okyanus.runtime.utils;
 
 import java.util.Arrays;
 
 public class PacketLimiter {
 
-    /** multiplier to convert ns to ms */
+    /**
+     * multiplier to convert ns to ms
+     */
     private static final double NANOSECONDS_TO_MILLISECONDS = 1.0e-6; // 1e3 / 1e9
 
     /**
@@ -23,27 +24,36 @@ public class PacketLimiter {
      */
     public final int totalBuckets;
 
-    /**contains all packet data, note that indices of buckets will wrap around the array */
+    /**
+     * contains all packet data, note that indices of buckets will wrap around the array
+     */
     private final int[] data;
 
-    /** pointer which represents the bucket containing the newest data */
+    /**
+     * pointer which represents the bucket containing the newest data
+     */
     private int newestData;
 
-    /** the time attached to the bucket at newestData */
+    /**
+     * the time attached to the bucket at newestData
+     */
     private double lastBucketTime;
 
-    /** cached sum of all data */
+    /**
+     * cached sum of all data
+     */
     private int sum;
 
     /**
      * Constructs a packetlimiter which will record total packets sent over the specified
      * interval time (in ms) with the specified number of buckets
+     *
      * @param intervalTime The specified interval time, in ms
      * @param totalBuckets The total number of buckets
      */
     public PacketLimiter(final double intervalTime, final int totalBuckets) {
         this.intervalTime = intervalTime;
-        this.intervalResolution = intervalTime/(double)totalBuckets;
+        this.intervalResolution = intervalTime / (double) totalBuckets;
         this.totalBuckets = totalBuckets;
         this.data = new int[totalBuckets];
     }
@@ -70,6 +80,7 @@ public class PacketLimiter {
     /**
      * Adds to this limiter's packet count. Old data is automatically purged, and the current time from {@link System#nanoTime()}
      * is used to record this data. Returns the new packet count.
+     *
      * @param packets The number of packets to attach to the current time
      * @return The new packet count
      */

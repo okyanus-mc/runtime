@@ -2,10 +2,12 @@ package club.issizler.okyanus.api;
 
 import club.issizler.okyanus.api.chat.MessageType;
 import club.issizler.okyanus.api.math.Vec3d;
+import club.issizler.okyanus.api.world.Block;
 import club.issizler.okyanus.api.world.WorldImpl;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.hit.HitResult;
 
 import java.util.UUID;
 
@@ -52,6 +54,15 @@ public class PlayerImpl implements Player {
 
     public WorldImpl getWorld() {
         return new WorldImpl(player.world);
+    }
+
+    public Block getLookedBlock(double distance, boolean returnFluids) {
+        HitResult res = player.rayTrace(distance, 1.0f, returnFluids); // 1.0f = unknown
+
+        if (res.getType() != HitResult.Type.BLOCK)
+            return null;
+
+        return getWorld().getBlockAt(new Vec3d(res.getPos().x, res.getPos().y, res.getPos().z));
     }
 
     public void teleport(Vec3d pos) {

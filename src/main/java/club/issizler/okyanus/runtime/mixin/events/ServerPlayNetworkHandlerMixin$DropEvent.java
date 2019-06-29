@@ -2,7 +2,6 @@ package club.issizler.okyanus.runtime.mixin.events;
 
 import club.issizler.okyanus.api.event.DropEventImpl;
 import club.issizler.okyanus.api.event.EventManager;
-import club.issizler.okyanus.api.event.EventManagerImpl;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerActionC2SPacket;
@@ -20,7 +19,7 @@ public abstract class ServerPlayNetworkHandlerMixin$DropEvent {
 
     @Inject(at = @At("HEAD"), method = "onPlayerAction", cancellable = true)
     private void oky$onPlayerAction(PlayerActionC2SPacket playerActionC2SPacket_1, CallbackInfo ci) {
-        if (!(playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.DROP_ITEM|| playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.DROP_ALL_ITEMS))
+        if (!(playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.DROP_ITEM || playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.DROP_ALL_ITEMS))
             return;
 
         DropEventImpl e = EventManager.getInstance().trigger(new DropEventImpl(playerActionC2SPacket_1, player));

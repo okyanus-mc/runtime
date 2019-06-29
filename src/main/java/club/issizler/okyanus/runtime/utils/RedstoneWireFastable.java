@@ -6,9 +6,10 @@ import net.minecraft.world.World;
 
 public interface RedstoneWireFastable {
 
-    public BlockState calculateCurrentChanges(World worldIn, BlockPos pos1, BlockPos pos2, BlockState state);
+    BlockState calculateCurrentChanges(World worldIn, BlockPos pos1, BlockPos pos2, BlockState state);
 
-    public boolean canProvidePower();
-    public void setCanProvidePower(boolean value);
+    boolean canProvidePower();
+
+    void setCanProvidePower(boolean value);
 
 }

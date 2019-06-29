@@ -48,6 +48,7 @@ public abstract class BlockPosMixin extends Vec3i {
     public BlockPos down(int int_1) {
         return new BlockPos(this.getX(), this.getY() - int_1, this.getZ());
     }
+
     /**
      * @author Spottedleaf @ Paper & Okyanus
      * @reason Optimization
@@ -119,6 +120,7 @@ public abstract class BlockPosMixin extends Vec3i {
     public BlockPos east(int int_1) {
         return new BlockPos(this.getX() + int_1, this.getY(), this.getZ());
     }
+
     /**
      * @author Spottedleaf @ Paper & Okyanus
      * @reason Optimization

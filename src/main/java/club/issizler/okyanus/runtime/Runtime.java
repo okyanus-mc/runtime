@@ -19,17 +19,13 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 @SuppressWarnings("unused")
 public class Runtime implements Mod {
 
-    private Logger logger = LogManager.getLogger();
-
     public static boolean DEBUG;
-
     public static boolean USE_FAST_REDSTONE;
     public static boolean USE_FAST_EXPLOSIONS;
-
     public static int PACKET_RATE_LIMIT;
     public static double PACKET_RATE_LIMIT_INTERVAL;
-
     public static FileConfig config;
+    private Logger logger = LogManager.getLogger();
 
     @Override
     public void init() {

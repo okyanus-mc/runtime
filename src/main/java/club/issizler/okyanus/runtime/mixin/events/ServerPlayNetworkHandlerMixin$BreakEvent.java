@@ -2,7 +2,6 @@ package club.issizler.okyanus.runtime.mixin.events;
 
 import club.issizler.okyanus.api.event.BreakEventImpl;
 import club.issizler.okyanus.api.event.EventManager;
-import club.issizler.okyanus.api.event.EventManagerImpl;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerActionC2SPacket;

@@ -23,20 +23,19 @@ import java.util.Map;
 public abstract class WorldMixin$CapturedBlockEntityLookup implements WorldDensityCacheable {
 
     @Shadow
-    public static boolean isHeightInvalid(BlockPos blockPos_1) {
-        return false;
-    }
-
-    @Shadow
     @Final
     public boolean isClient;
-
+    @Shadow
+    protected boolean iteratingTickingBlockEntities;
     @Shadow
     @Final
     private Thread thread;
+    private Map<BlockPos, BlockEntity> capturedTileEntities = Maps.newHashMap();
 
     @Shadow
-    protected boolean iteratingTickingBlockEntities;
+    public static boolean isHeightInvalid(BlockPos blockPos_1) {
+        return false;
+    }
 
     @Shadow
     @Nullable
@@ -44,8 +43,6 @@ public abstract class WorldMixin$CapturedBlockEntityLookup implements WorldDensi
 
     @Shadow
     public abstract WorldChunk getWorldChunk(BlockPos blockPos_1);
-
-    private Map<BlockPos, BlockEntity> capturedTileEntities = Maps.newHashMap();
 
     /**
      * @author Aikar @ PaperSpigot & Okyanus

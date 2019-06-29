@@ -1,7 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
 import club.issizler.okyanus.api.event.EventManager;
-import club.issizler.okyanus.api.event.EventManagerImpl;
 import club.issizler.okyanus.api.event.StopEventImpl;
 import net.minecraft.server.MinecraftServer;
 import org.apache.logging.log4j.Logger;

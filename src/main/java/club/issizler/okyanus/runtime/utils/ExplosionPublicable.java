@@ -4,10 +4,12 @@ import net.minecraft.world.World;
 
 public interface ExplosionPublicable {
 
-    public World getWorld();
+    World getWorld();
 
-    public double getX();
-    public double getY();
-    public double getZ();
+    double getX();
+
+    double getY();
+
+    double getZ();
 
 }

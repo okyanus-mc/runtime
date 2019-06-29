@@ -2,20 +2,17 @@ package club.issizler.okyanus.runtime.utils;
 
 public class RollingAverage {
     public static final int SAMPLE_INTERVAL = 20;
+    public static final java.math.BigDecimal TPS_BASE = new java.math.BigDecimal(1E9).multiply(new java.math.BigDecimal(SAMPLE_INTERVAL));
     private static final int TPS = 20;
     public static final int TICK_TIME = 1000000000 / TPS;
-
     private static final long SEC_IN_NANO = 1000000000;
     private static final long MAX_CATCHUP_BUFFER = TICK_TIME * TPS * 60L;
-
-    public static final java.math.BigDecimal TPS_BASE = new java.math.BigDecimal(1E9).multiply(new java.math.BigDecimal(SAMPLE_INTERVAL));
-
     private final int size;
+    private final java.math.BigDecimal[] samples;
+    private final long[] times;
     private long time;
     private java.math.BigDecimal total;
     private int index = 0;
-    private final java.math.BigDecimal[] samples;
-    private final long[] times;
 
     public RollingAverage(int size) {
         this.size = size;
@@ -32,6 +29,7 @@ public class RollingAverage {
     private static java.math.BigDecimal dec(long t) {
         return new java.math.BigDecimal(t);
     }
+
     public void add(java.math.BigDecimal x, long t) {
         time -= times[index];
         total = total.subtract(samples[index].multiply(dec(times[index])));

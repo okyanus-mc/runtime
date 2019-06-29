@@ -31,12 +31,13 @@ public abstract class Int2ObjectBiMapMixin<K> {
 
     @Shadow
     private int size;
-
-    @Shadow protected abstract int findFree(int int_1);
-
-    @Shadow protected abstract int getIdealIndex(@Nullable K object_1);
-
     private BitSet usedIds;
+
+    @Shadow
+    protected abstract int findFree(int int_1);
+
+    @Shadow
+    protected abstract int getIdealIndex(@Nullable K object_1);
 
     @Inject(at = @At("RETURN"), method = "<init>")
     private void oky$init(int int_1, CallbackInfo ci) {
@@ -88,8 +89,8 @@ public abstract class Int2ObjectBiMapMixin<K> {
     public void put(K object_1, int int_1) {
         int int_2 = Math.max(int_1, this.size + 1);
         int int_3;
-        if ((float)int_2 >= (float)this.values.length * 0.8F) {
-            for(int_3 = this.values.length << 1; int_3 < int_1; int_3 <<= 1) {
+        if ((float) int_2 >= (float) this.values.length * 0.8F) {
+            for (int_3 = this.values.length << 1; int_3 < int_1; int_3 <<= 1) {
             }
 
             this.resize(int_3);
@@ -112,8 +113,8 @@ public abstract class Int2ObjectBiMapMixin<K> {
      */
     @Overwrite
     public void clear() {
-        Arrays.fill(this.values, (Object)null);
-        Arrays.fill(this.idToValues, (Object)null);
+        Arrays.fill(this.values, null);
+        Arrays.fill(this.idToValues, null);
         this.nextId = 0;
         this.size = 0;
 

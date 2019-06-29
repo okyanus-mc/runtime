@@ -20,7 +20,7 @@ public class EventManagerImpl implements EventManager {
             if (!(type instanceof ParameterizedType))
                 continue;
 
-            if(!type.getTypeName().contains(EventHandler.class.getTypeName()))
+            if (!type.getTypeName().contains(EventHandler.class.getTypeName()))
                 continue;
 
             Type[] genericTypes = ((ParameterizedType) type).getActualTypeArguments();

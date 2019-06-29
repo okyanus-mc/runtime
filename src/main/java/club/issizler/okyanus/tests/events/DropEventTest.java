@@ -1,6 +1,5 @@
 package club.issizler.okyanus.tests.events;
 
-import club.issizler.okyanus.api.event.DisconnectEvent;
 import club.issizler.okyanus.api.event.DropEvent;
 import club.issizler.okyanus.api.event.EventHandler;
 
