@@ -9,16 +9,22 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 
+import static club.issizler.okyanus.tests.Tests.RUN_TESTS;
+import static club.issizler.okyanus.tests.Tests.tests;
+
 public class CommandSourceImpl implements CommandSource {
 
     private CommandContext<ServerCommandSource> context;
 
     public CommandSourceImpl(CommandContext<ServerCommandSource> context) {
+        if (RUN_TESTS && !tests.get("Command execution"))
+            tests.put("Command execution", true);
+
         this.context = context;
     }
 
     public boolean isConsole() {
-        return context.getSource().getEntity() instanceof ServerPlayerEntity;
+        return context.getSource().getEntity() == null;
     }
 
     public void send(String string) {

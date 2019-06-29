@@ -13,7 +13,8 @@
   },
   "entrypoints": {
     "server": [
-      "club.issizler.okyanus.runtime.Runtime"
+      "club.issizler.okyanus.runtime.Runtime",
+      "club.issizler.okyanus.tests.Tests"
     ]
   }
 }

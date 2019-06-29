@@ -45,7 +45,6 @@ public class EventManagerImpl implements EventManager {
         if (handlerList == null)
             return e;
 
-        logger.debug("Okyanus: Triggering event " + eventName);
         handlerList.forEach(handler -> handler.handle(e));
 
         return e;

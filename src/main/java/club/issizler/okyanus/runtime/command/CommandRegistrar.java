@@ -43,7 +43,14 @@ public class CommandRegistrar {
         ArgumentBuilder argumentBuilder = null;
 
         List<Triple<String, ArgumentType, Boolean>> args = command.getArgs();
-        Command<ServerCommandSource> cmd = context -> command.getRunnable().run(new CommandSourceImpl(context));
+        Command<ServerCommandSource> cmd = context -> {
+            try {
+                return command.getRunnable().run(new CommandSourceImpl(context));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        };
 
         boolean wasPreviousOptional = false;
 
