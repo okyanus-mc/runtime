@@ -13,7 +13,7 @@ import java.util.*;
 
 public class ServerImpl implements Server {
 
-    private MinecraftServer server;
+    private final MinecraftServer server;
 
     public ServerImpl(MinecraftServer server) {
         this.server = server;
