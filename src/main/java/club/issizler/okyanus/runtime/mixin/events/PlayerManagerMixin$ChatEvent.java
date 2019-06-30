@@ -1,6 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
-import club.issizler.okyanus.api.PlayerImpl;
+import club.issizler.okyanus.api.entity.PlayerImpl;
 import club.issizler.okyanus.api.event.ChatEventImpl;
 import club.issizler.okyanus.api.event.EventManager;
 import net.minecraft.server.PlayerManager;
