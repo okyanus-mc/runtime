@@ -1,6 +1,5 @@
 plugins {
 	id 'fabric-loom' version '0.2.3-SNAPSHOT'
-	id 'maven-publish'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -21,8 +20,8 @@ configurations {
 
 repositories {
 	mavenCentral()
-	
-	maven { url 'https://jitpack.io' }
+
+	maven { url "https://maven.issizler.club/repository/maven-snapshots/" } // TODO: use maven-releases when we release
 }
 
 dependencies {
@@ -31,10 +30,10 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	compile 'com.github.okyanus-mc:loader:f78f1e77f7' // always TODO: increment the loader version
+	compile 'club.issizler.okyanus:loader:0.1.0-SNAPSHOT' // always TODO: increment the loader version
 
 	fatJar 'com.electronwill.night-config:toml:3.4.0'
-	fatJar ('com.github.okyanus-mc:api:b6049ea') { // always TODO: increment the API version
+	fatJar ('club.issizler.okyanus:api:0.1.0-SNAPSHOT') { // always TODO: increment the API version
 		exclude group: "org.apache.commons"
 	}
 }
