@@ -61,7 +61,7 @@ public class PlayerImpl implements Player {
         return entity.getWorld();
     }
 
-    public Block getLookedBlock(double distance, boolean returnFluids) {
+    public Block getTargetBlock(double distance, boolean returnFluids) {
         HitResult res = player.rayTrace(distance, 1.0f, returnFluids); // 1.0f = unknown
 
         if (res.getType() != HitResult.Type.BLOCK)
