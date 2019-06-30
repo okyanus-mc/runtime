@@ -42,12 +42,12 @@ processResources {
 	inputs.property "version", project.version
 
 	from(sourceSets.main.resources.srcDirs) {
-		include "okyanus.json"
+		include "fabric.mod.json"
 		expand "version": project.version
 	}
 
 	from(sourceSets.main.resources.srcDirs) {
-		exclude "okyanus.json"
+		exclude "fabric.mod.json"
 	}
 }
 
@@ -55,8 +55,6 @@ jar {
 	from {
 		configurations.fatJar.collect { it.isDirectory() ? it : zipTree(it) }
 	}
-
-	exclude "**/club/issizler/okyanus/api/Mod*" // Provided by loader
 }
 
 // ensure that the encoding is set to UTF-8, no matter what the system default is

@@ -8,7 +8,6 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-
 // If you want to pair this runtime with your own versions of loader and API, you can
 // Just clone them into ../loader and ../api respectively
 

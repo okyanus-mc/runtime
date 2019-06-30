@@ -1,19 +1,19 @@
 package club.issizler.okyanus.tests;
 
-import club.issizler.okyanus.api.Mod;
 import club.issizler.okyanus.api.cmd.CommandBuilder;
 import club.issizler.okyanus.api.cmd.CommandManager;
 import club.issizler.okyanus.api.cmd.CommandManagerImpl;
 import club.issizler.okyanus.api.event.EventManager;
 import club.issizler.okyanus.runtime.command.OkyanusCommand;
 import club.issizler.okyanus.tests.events.*;
+import net.fabricmc.api.DedicatedServerModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Tests implements Mod {
+public class Tests implements DedicatedServerModInitializer {
 
     public static boolean RUN_TESTS = false;
     public static Map<String, Boolean> tests = new HashMap<String, Boolean>() {{
@@ -54,7 +54,7 @@ public class Tests implements Mod {
     private Logger logger = LogManager.getLogger();
 
     @Override
-    public void init() {
+    public void onInitializeServer() {
         RUN_TESTS = !System.getProperty("okyanus.test", "false").equals("false");
         if (!RUN_TESTS)
             return;

@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "okyanus-runtime",
+  "id": "okyanus",
   "version": "${version}",
-  "name": "Okyanus Runtime",
+  "name": "Okyanus",
   "description": "Okyanus server runtime.",
   "environment": "server",
   "mixins": [
     "okyanus.mixins.json"
   ],
   "depends": {
-    "okyanus": ">=0.1.0"
+    "fabricloader": ">=0.4.8"
   },
   "entrypoints": {
     "server": [
