@@ -64,7 +64,7 @@ public class Tests implements Mod {
         // oh god
         ((CommandManagerImpl) CommandManager.getInstance()).__internal_getCommands().forEach(bld -> {
             if (bld.getRunnable() instanceof OkyanusCommand) {
-                bld.subcommand(new CommandBuilder()
+                bld.subCommand(new CommandBuilder()
                         .name("test")
                         .opOnly()
                         .run(new TestCommand())
