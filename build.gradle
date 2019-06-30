@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.3-SNAPSHOT'
+	id 'fabric-loom' version '0.2.4-SNAPSHOT'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -29,8 +29,6 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	compile 'club.issizler.okyanus:loader:0.1.0-SNAPSHOT' // always TODO: increment the loader version
 
 	fatJar 'com.electronwill.night-config:toml:3.4.0'
 	fatJar ('club.issizler.okyanus:api:0.1.0-SNAPSHOT') { // always TODO: increment the API version

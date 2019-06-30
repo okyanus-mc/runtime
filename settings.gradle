@@ -11,14 +11,6 @@ pluginManagement {
 // If you want to pair this runtime with your own versions of loader and API, you can
 // Just clone them into ../loader and ../api respectively
 
-if (new File("../loader").exists()) {
-    includeBuild("../loader") {
-        dependencySubstitution {
-            substitute module('club.issizler.okyanus:loader') with project(':')
-        }
-    }
-}
-
 if (new File("../api").exists()) {
     includeBuild("../api") {
         dependencySubstitution {
