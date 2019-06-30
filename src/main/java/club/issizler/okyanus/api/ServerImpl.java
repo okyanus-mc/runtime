@@ -42,8 +42,7 @@ public class ServerImpl implements Server {
             players.add(new PlayerImpl(
                 e,
                 new EntityImpl(e)
-                )
-            )
+            ))
         );
 
         return players;
