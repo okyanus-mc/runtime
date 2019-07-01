@@ -13,10 +13,10 @@ public abstract class ExperienceOrbEntityMixin {
     // I just don't give a damn about overwriting anymore, and that's a disappointing perspective at Mixins
 
     @Shadow
-    private int health;
+    public int orbAge;
 
     @Shadow
-    public int orbAge;
+    private int health;
 
     @Shadow
     private int amount;
@@ -27,10 +27,11 @@ public abstract class ExperienceOrbEntityMixin {
      */
     @Overwrite
     public void writeCustomDataToTag(CompoundTag compoundTag_1) {
-        compoundTag_1.putShort("Health", (short)this.health);
-        compoundTag_1.putShort("Age", (short)this.orbAge);
+        compoundTag_1.putShort("Health", (short) this.health);
+        compoundTag_1.putShort("Age", (short) this.orbAge);
         compoundTag_1.putInt("Value", this.amount);
     }
+
     /**
      * @author Aikar @ Paper & Okyanus
      * @reason Fix MC-135506

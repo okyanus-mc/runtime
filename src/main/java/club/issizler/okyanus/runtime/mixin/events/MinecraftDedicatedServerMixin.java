@@ -1,6 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
-import club.issizler.okyanus.api.event.EventManager;
+import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.event.ReadyEventImpl;
 import club.issizler.okyanus.runtime.command.CommandRegistrar;
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
@@ -23,7 +23,7 @@ public abstract class MinecraftDedicatedServerMixin {
     private void oky$setupServer$ready(CallbackInfoReturnable<Boolean> cir) {
         CommandRegistrar.register();
         LOGGER.info("Okyanus: Starting all plugins");
-        EventManager.getInstance().trigger(new ReadyEventImpl());
+        Okyanus.getServer().triggerEvent(new ReadyEventImpl());
     }
 
 }

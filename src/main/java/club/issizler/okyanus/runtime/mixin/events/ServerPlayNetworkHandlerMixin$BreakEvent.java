@@ -1,8 +1,8 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
+import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.Server;
 import club.issizler.okyanus.api.event.BreakEventImpl;
-import club.issizler.okyanus.api.event.EventManager;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerActionC2SPacket;
@@ -23,11 +23,11 @@ public abstract class ServerPlayNetworkHandlerMixin$BreakEvent {
         if (playerActionC2SPacket_1.getAction() != PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK)
             return;
 
-        if (!Server.getInstance().isMainThread())
+        Server s = Okyanus.getServer();
+        if (!s.isMainThread())
             return;
 
-        BreakEventImpl e = EventManager.getInstance().trigger(new BreakEventImpl(playerActionC2SPacket_1, player));
-
+        BreakEventImpl e = s.triggerEvent(new BreakEventImpl(playerActionC2SPacket_1, player));
         if (e.isCancelled()) {
             ci.cancel(); // TODO: Alert client of this cancellation.
         }

@@ -3,10 +3,10 @@ package club.issizler.okyanus.runtime;
 import club.issizler.okyanus.api.Mod;
 import club.issizler.okyanus.api.cmd.ArgumentType;
 import club.issizler.okyanus.api.cmd.CommandBuilder;
-import club.issizler.okyanus.api.cmd.CommandManager;
 import club.issizler.okyanus.runtime.command.ModsCommand;
 import club.issizler.okyanus.runtime.command.OkyanusCommand;
 import club.issizler.okyanus.runtime.command.TPSCommand;
+import club.issizler.okyanus.tests.TestCommand;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.file.FileConfig;
 import org.apache.logging.log4j.Level;
@@ -16,7 +16,6 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 
-@SuppressWarnings("unused")
 public class Runtime extends Mod {
 
     public static boolean DEBUG;
@@ -52,23 +51,25 @@ public class Runtime extends Mod {
         if (USE_FAST_REDSTONE)
             logger.warn("Okyanus: Fast redstone is currently experimental! Disable it from okyanus.toml if you have any redstone issues!");
 
-        CommandManager.getInstance().register(
-                new CommandBuilder()
-                        .name("tps")
+        registerCommand(
+                new CommandBuilder("tps")
                         .opOnly()
                         .run(new TPSCommand())
         );
 
-        CommandManager.getInstance().register(
-                new CommandBuilder()
-                        .name("okyanus")
+        registerCommand(
+                new CommandBuilder("okyanus")
                         .opOnly()
-                        .subCommand(new CommandBuilder()
-                                .name("mods")
+                        .run(new OkyanusCommand())
+                        .subCommand(new CommandBuilder("mods")
                                 .arg("modId", ArgumentType.TEXT, true)
                                 .opOnly()
                                 .run(new ModsCommand()))
-                        .run(new OkyanusCommand())
+
+                        .subCommand(new CommandBuilder("test")
+                                .opOnly()
+                                .run(new TestCommand())
+                        )
         );
     }
 

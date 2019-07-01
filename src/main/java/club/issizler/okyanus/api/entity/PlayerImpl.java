@@ -1,73 +1,31 @@
 package club.issizler.okyanus.api.entity;
 
-import club.issizler.okyanus.api.Server;
-import club.issizler.okyanus.api.ServerImpl;
 import club.issizler.okyanus.api.chat.MessageType;
 import club.issizler.okyanus.api.math.Vec3d;
 import club.issizler.okyanus.api.world.Block;
-import club.issizler.okyanus.api.world.World;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.hit.HitResult;
 
-import java.util.UUID;
+import java.util.Optional;
 
-public class PlayerImpl implements Player {
+public class PlayerImpl extends EntityImpl implements Player {
 
     private final ServerPlayerEntity player;
-    private final Entity entity;
 
-    public PlayerImpl(ServerPlayerEntity player, Entity entity) {
+    public PlayerImpl(ServerPlayerEntity player) {
+        super(player);
+
         this.player = player;
-        this.entity = entity;
     }
 
-    public PlayerImpl(String name, Entity entity) {
-        this(((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name), entity);
-    }
-
-    public PlayerImpl(UUID uuid, Entity entity) {
-        this(((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(uuid), entity);
-    }
-
-    public PlayerImpl(String name) {
-        this(
-            ((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name),
-            new EntityImpl(((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name))
-        );
-    }
-
-    public String getName() {
-        return entity.getName();
-    }
-
-    public String getCustomName() {
-        return entity.getCustomName();
-    }
-
-    public void setCustomName(String name) {
-        entity.setCustomName(name);
-    }
-
-    public UUID getUUID() {
-        return entity.getUUID();
-    }
-
-    public Vec3d getPos() {
-        return entity.getPos();
-    }
-
-    public World getWorld() {
-        return entity.getWorld();
-    }
-
-    public Block getTargetBlock(double distance, boolean returnFluids) {
+    public Optional<Block> getTargetBlock(double distance, boolean returnFluids) {
         HitResult res = player.rayTrace(distance, 1.0f, returnFluids); // 1.0f = unknown
 
         if (res.getType() != HitResult.Type.BLOCK)
-            return null;
+            return Optional.empty();
 
-        return getWorld().getBlockAt(new Vec3d(res.getPos().x, res.getPos().y, res.getPos().z));
+        return Optional.ofNullable(getWorld().getBlockAt(new Vec3d(res.getPos().x, res.getPos().y, res.getPos().z)));
     }
 
     public void teleport(Vec3d pos) {

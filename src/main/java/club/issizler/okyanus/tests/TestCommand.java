@@ -31,6 +31,11 @@ public class TestCommand implements CommandRunnable {
 
     @Override
     public int run(CommandSource source) {
+        if (!Tests.RUN_TESTS) {
+            source.send("Tests are disabled. Run the server with -Dokyanus.test=true to enable tests");
+            return -1;
+        }
+
         tests.put("Subcommand execution", true);
 
         for (String line : generateReport(!source.isConsole()).split("\n")) {

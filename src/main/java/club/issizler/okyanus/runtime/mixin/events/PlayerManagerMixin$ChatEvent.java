@@ -1,8 +1,9 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
-import club.issizler.okyanus.api.entity.PlayerImpl;
+import club.issizler.okyanus.api.Okyanus;
+import club.issizler.okyanus.api.Server;
+import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.event.ChatEventImpl;
-import club.issizler.okyanus.api.event.EventManager;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -12,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Optional;
 
 @Mixin(PlayerManager.class)
 public abstract class PlayerManagerMixin$ChatEvent {
@@ -29,7 +32,13 @@ public abstract class PlayerManagerMixin$ChatEvent {
         String playerName = ((Text) text.getArgs()[0]).asFormattedString();
         String textMessage = ((String) text.getArgs()[1]);
 
-        ChatEventImpl e = EventManager.getInstance().trigger(new ChatEventImpl(new PlayerImpl(playerName), textMessage));
+        Server s = Okyanus.getServer();
+
+        Optional<Player> player = s.getPlayerByName(playerName);
+        if (!player.isPresent())
+            return;
+
+        ChatEventImpl e = s.triggerEvent(new ChatEventImpl(player.get(), textMessage));
 
         if (e.isCancelled())
             ci.cancel();

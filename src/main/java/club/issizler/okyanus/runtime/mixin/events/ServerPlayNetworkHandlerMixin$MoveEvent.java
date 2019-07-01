@@ -1,6 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
-import club.issizler.okyanus.api.event.EventManager;
+import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.event.MoveEventImpl;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -19,7 +19,7 @@ public abstract class ServerPlayNetworkHandlerMixin$MoveEvent {
 
     @Inject(at = @At("HEAD"), method = "onPlayerMove", cancellable = true)
     private void oky$onPlayerMove(PlayerMoveC2SPacket packet, CallbackInfo ci) {
-        MoveEventImpl e = EventManager.getInstance().trigger(new MoveEventImpl(packet, player));
+        MoveEventImpl e = Okyanus.getServer().triggerEvent(new MoveEventImpl(packet, player));
 
         if (e.isCancelled()) {
             ci.cancel(); // TODO: Alert client of this cancellation.

@@ -1,6 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
-import club.issizler.okyanus.api.event.EventManager;
+import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.event.PlaceEventImpl;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -17,7 +17,7 @@ public abstract class BlockItem$PlaceEvent {
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemPlacementContext;getBlockPos()Lnet/minecraft/util/math/BlockPos;"), method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;")
     private void oky$place(ItemPlacementContext itemPlacementContext_1, CallbackInfoReturnable<ActionResult> cir) {
         PlayerEntity player = itemPlacementContext_1.getPlayer();
-        PlaceEventImpl e = EventManager.getInstance().trigger(new PlaceEventImpl(itemPlacementContext_1, player));
+        PlaceEventImpl e = Okyanus.getServer().triggerEvent(new PlaceEventImpl(itemPlacementContext_1, player));
 
         if (e.isCancelled()) {
             cir.setReturnValue(ActionResult.FAIL);

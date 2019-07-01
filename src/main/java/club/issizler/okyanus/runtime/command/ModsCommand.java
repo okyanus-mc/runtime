@@ -14,15 +14,12 @@ public class ModsCommand implements CommandRunnable {
     public int run(CommandSource source) {
         boolean isConsole = source.isConsole();
 
-        String modId = source.getArgText("modId");
-        if (modId != null) {
-            return singleMod(modId, source, isConsole);
-        }
-
-        return allMods(source, isConsole);
+        return source.getArgText("modId")
+                .map(id -> singleMod(id, source, isConsole))
+                .orElseGet(() -> allMods(source, isConsole));
     }
 
-    private int singleMod(String modId, CommandSource source, boolean isConsole) {
+    private int singleMod(String modId, CommandSource source, boolean isConsole) { // TODO: Ignore color codes in console
         Optional<ModContainer> mod = FabricLoader.getInstance().getModContainer(modId);
 
         if (!mod.isPresent()) {
@@ -45,12 +42,12 @@ public class ModsCommand implements CommandRunnable {
         StringBuilder mods = new StringBuilder("Mods: ");
 
         for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
-            if (isConsole)
+            if (!isConsole)
                 mods.append("§a");
 
             mods.append(mod.getMetadata().getName());
 
-            if (isConsole)
+            if (!isConsole)
                 mods.append("§r");
 
             mods.append(", ");

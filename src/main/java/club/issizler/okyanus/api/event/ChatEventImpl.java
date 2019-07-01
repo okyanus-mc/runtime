@@ -1,18 +1,18 @@
 package club.issizler.okyanus.api.event;
 
-import club.issizler.okyanus.api.entity.PlayerImpl;
+import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.runtime.Runtime;
 
 public class ChatEventImpl implements ChatEvent {
 
-    private PlayerImpl player;
+    private Player player;
 
     private String format;
     private String message;
 
     private boolean cancelled;
 
-    public ChatEventImpl(PlayerImpl player, String message) {
+    public ChatEventImpl(Player player, String message) {
         this.player = player;
         this.message = message;
 
@@ -37,7 +37,7 @@ public class ChatEventImpl implements ChatEvent {
         cancelled = isCancelled;
     }
 
-    public PlayerImpl getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 

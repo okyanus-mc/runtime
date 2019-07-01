@@ -1,7 +1,7 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
+import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.event.ConnectEventImpl;
-import club.issizler.okyanus.api.event.EventManager;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -16,10 +16,10 @@ public abstract class PlayerManagerMixin$ConnectEvent {
 
     @Inject(at = @At("TAIL"), method = "onPlayerConnect", cancellable = true)
     private void oky$onPlayerConnect(ClientConnection connection, ServerPlayerEntity playerEntity, CallbackInfo ci) {
-        ConnectEventImpl e = EventManager.getInstance().trigger(new ConnectEventImpl(connection, playerEntity));
+        ConnectEventImpl e = Okyanus.getServer().triggerEvent(new ConnectEventImpl(connection, playerEntity));
 
         if (e.isCancelled()) {
-            connection.disconnect(new LiteralText(e.cancelReason));
+            connection.disconnect(new LiteralText(e.getCancelReason()));
             ci.cancel();
         }
     }

@@ -38,7 +38,7 @@ public class EventManagerImpl implements EventManager {
         }
     }
 
-    public <E> E trigger(E e) {
+    public <E extends Event> E trigger(E e) {
         String eventName = e.getClass().getInterfaces()[0].getTypeName();
         List<EventHandler> handlerList = handlers.get(eventName);
 

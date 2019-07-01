@@ -1,11 +1,6 @@
 package club.issizler.okyanus.tests;
 
 import club.issizler.okyanus.api.Mod;
-import club.issizler.okyanus.api.cmd.CommandBuilder;
-import club.issizler.okyanus.api.cmd.CommandManager;
-import club.issizler.okyanus.api.cmd.CommandManagerImpl;
-import club.issizler.okyanus.api.event.EventManager;
-import club.issizler.okyanus.runtime.command.OkyanusCommand;
 import club.issizler.okyanus.tests.events.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -60,31 +55,17 @@ public class Tests extends Mod {
             return;
 
         logger.info("Okyanus: Testing is enabled. Trigger every event and run /okyanus test to see the results.");
-
-        // oh god
-        ((CommandManagerImpl) CommandManager.getInstance()).__internal_getCommands().forEach(bld -> {
-            if (bld.getRunnable() instanceof OkyanusCommand) {
-                bld.subCommand(new CommandBuilder()
-                        .name("test")
-                        .opOnly()
-                        .run(new TestCommand())
-                );
-            }
-        });
-
         tests.put("Mod class init()", true);
 
-        EventManager mgr = EventManager.getInstance();
-
-        mgr.register(new BreakEventTest());
-        mgr.register(new ChatEventTest());
-        mgr.register(new ConnectEventTest());
-        mgr.register(new DisconnectEventTest());
-        mgr.register(new DropEventTest());
-        mgr.register(new MoveEventTest());
-        mgr.register(new PlaceEventTest());
-        mgr.register(new ReadyEventTest());
-        mgr.register(new StopEventTest());
+        registerEvent(new BreakEventTest());
+        registerEvent(new ChatEventTest());
+        registerEvent(new ConnectEventTest());
+        registerEvent(new DisconnectEventTest());
+        registerEvent(new DropEventTest());
+        registerEvent(new MoveEventTest());
+        registerEvent(new PlaceEventTest());
+        registerEvent(new ReadyEventTest());
+        registerEvent(new StopEventTest());
     }
 
 }

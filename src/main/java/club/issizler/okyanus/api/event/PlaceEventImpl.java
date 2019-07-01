@@ -1,6 +1,5 @@
 package club.issizler.okyanus.api.event;
 
-import club.issizler.okyanus.api.entity.EntityImpl;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import club.issizler.okyanus.api.math.Vec3d;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +16,7 @@ public class PlaceEventImpl implements PlaceEvent {
 
     public PlaceEventImpl(ItemUsageContext itemUsageContext_1, PlayerEntity player) {
         this.context = itemUsageContext_1;
-        this.player = new PlayerImpl((ServerPlayerEntity) player, new EntityImpl(player));
+        this.player = new PlayerImpl((ServerPlayerEntity) player);
     }
 
     public PlayerImpl getPlayer() {

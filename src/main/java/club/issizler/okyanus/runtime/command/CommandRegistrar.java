@@ -1,8 +1,9 @@
 package club.issizler.okyanus.runtime.command;
 
+import club.issizler.okyanus.api.Okyanus;
+import club.issizler.okyanus.api.ServerImpl;
 import club.issizler.okyanus.api.cmd.ArgumentType;
 import club.issizler.okyanus.api.cmd.CommandBuilder;
-import club.issizler.okyanus.api.cmd.CommandManagerImpl;
 import club.issizler.okyanus.api.cmd.CommandSourceImpl;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import com.mojang.brigadier.Command;
@@ -29,7 +30,8 @@ public class CommandRegistrar {
     public static void register() {
         LOGGER.info("Okyanus: Late command registration");
 
-        for (CommandBuilder command : ((CommandManagerImpl) club.issizler.okyanus.api.cmd.CommandManager.getInstance()).__internal_getCommands()) {
+        ServerImpl s = (ServerImpl) Okyanus.getServer();
+        for (CommandBuilder command : s.getCommandManager().__internal_getCommands()) {
             LOGGER.debug("Okyanus: Creating brigadier command for " + command.getName());
 
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getName());
@@ -105,10 +107,10 @@ public class CommandRegistrar {
 
         LOGGER.debug("  - Register the command");
 
-        CommandNode<ServerCommandSource> vanillaCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.getName());
-        if (vanillaCommand != null) {
-            LOGGER.info("Okyanus: Overwriting a vanilla command (/" + command.getName() + "). Just letting you know");
-            SomeGlobals.commandDispatcher.getRoot().getChildren().remove(vanillaCommand);
+        CommandNode<ServerCommandSource> overwriteCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.getName());
+        if (overwriteCommand != null) {
+            LOGGER.info("Okyanus: Overwriting a command (/" + command.getName() + "). Just letting you know");
+            SomeGlobals.commandDispatcher.getRoot().getChildren().remove(overwriteCommand);
         }
         return builder;
     }

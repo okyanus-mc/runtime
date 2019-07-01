@@ -1,6 +1,6 @@
 package club.issizler.okyanus.api.event;
 
-import club.issizler.okyanus.api.entity.EntityImpl;
+import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import club.issizler.okyanus.api.math.Vec3d;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -9,19 +9,16 @@ import net.minecraft.server.network.packet.PlayerActionC2SPacket;
 public class BreakEventImpl implements BreakEvent {
 
     private PlayerActionC2SPacket packet;
-    private PlayerImpl player;
+    private Player player;
 
     private boolean isCancelled;
 
     public BreakEventImpl(PlayerActionC2SPacket packet, ServerPlayerEntity playerEntity) {
         this.packet = packet;
-        this.player = new PlayerImpl(
-            playerEntity,
-            new EntityImpl(playerEntity)
-        );
+        this.player = new PlayerImpl(playerEntity);
     }
 
-    public PlayerImpl getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
