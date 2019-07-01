@@ -3,22 +3,21 @@ package club.issizler.okyanus.api.event;
 import club.issizler.okyanus.api.entity.EntityImpl;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import club.issizler.okyanus.api.math.Vec3d;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.network.packet.PlayerInteractBlockC2SPacket;
+import net.minecraft.util.math.BlockPos;
 
 public class PlaceEventImpl implements PlaceEvent {
 
-    private PlayerInteractBlockC2SPacket packet;
-    private PlayerImpl player;
+    private final PlayerImpl player;
+    private final ItemUsageContext context;
 
     private boolean isCancelled;
 
-    public PlaceEventImpl(PlayerInteractBlockC2SPacket packet, ServerPlayerEntity playerEntity) {
-        this.packet = packet;
-        this.player = new PlayerImpl(
-            playerEntity,
-            new EntityImpl(playerEntity)
-        );
+    public PlaceEventImpl(ItemUsageContext itemUsageContext_1, PlayerEntity player) {
+        this.context = itemUsageContext_1;
+        this.player = new PlayerImpl((ServerPlayerEntity) player, new EntityImpl(player));
     }
 
     public PlayerImpl getPlayer() {
@@ -37,7 +36,8 @@ public class PlaceEventImpl implements PlaceEvent {
 
     @Override
     public Vec3d getLocation() {
-        return new Vec3d(packet.getHitY().getBlockPos().getX(), packet.getHitY().getBlockPos().getY(), packet.getHitY().getBlockPos().getZ());
+        BlockPos pos = context.getBlockPos();
+        return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
     }
 
 }

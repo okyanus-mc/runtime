@@ -1,5 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
+import club.issizler.okyanus.api.Server;
 import club.issizler.okyanus.api.event.BreakEventImpl;
 import club.issizler.okyanus.api.event.EventManager;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -19,11 +20,10 @@ public abstract class ServerPlayNetworkHandlerMixin$BreakEvent {
 
     @Inject(at = @At("HEAD"), method = "onPlayerAction", cancellable = true)
     private void oky$onPlayerAction(PlayerActionC2SPacket playerActionC2SPacket_1, CallbackInfo ci) {
-        if (!(
-                playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.START_DESTROY_BLOCK
-                        || playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.ABORT_DESTROY_BLOCK
-                        || playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK
-        ))
+        if (playerActionC2SPacket_1.getAction() != PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK)
+            return;
+
+        if (!Server.getInstance().isMainThread())
             return;
 
         BreakEventImpl e = EventManager.getInstance().trigger(new BreakEventImpl(playerActionC2SPacket_1, player));

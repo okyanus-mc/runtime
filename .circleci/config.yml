@@ -18,7 +18,7 @@ jobs:
     steps:
       - checkout
       - run: git clone https://github.com/okyanus-mc/api ../api
-      - run: git clone https://github.com/okyanus-mc/loader ../loader
+
       - run: mkdir -p ../.gradle
       - run: echo "nexusPassword = 123456" > ../.gradle/gradle.properties
 

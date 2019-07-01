@@ -56,7 +56,13 @@ public class ServerImpl implements Server {
         return worlds;
     }
 
+    @Override
+    public boolean isMainThread() {
+        return Thread.currentThread().getName().equals("Server thread");
+    }
+
     public MinecraftServer getInternal() {
         return server;
     }
+
 }

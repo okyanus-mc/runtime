@@ -9,6 +9,7 @@
   "server": [
     "accessors.ExplosionAccessorMixin",
     "accessors.MinecraftServerAccessorMixin",
+    "events.BlockItem$PlaceEvent",
     "events.MinecraftDedicatedServerMixin",
     "events.MinecraftServerMixin",
     "events.PlayerManagerMixin$ChatEvent",
@@ -17,7 +18,6 @@
     "events.ServerPlayNetworkHandlerMixin$BreakEvent",
     "events.ServerPlayNetworkHandlerMixin$DropEvent",
     "events.ServerPlayNetworkHandlerMixin$MoveEvent",
-    "events.ServerPlayNetworkHandlerMixin$PlaceEvent",
     "fixes.AreaEffectCloudEntityMixin",
     "fixes.EndermanEntity$PlaceBlockGoalMixin",
     "fixes.EntityMixin",

@@ -1,5 +1,6 @@
 package club.issizler.okyanus.runtime;
 
+import club.issizler.okyanus.api.Mod;
 import club.issizler.okyanus.api.cmd.ArgumentType;
 import club.issizler.okyanus.api.cmd.CommandBuilder;
 import club.issizler.okyanus.api.cmd.CommandManager;
@@ -8,7 +9,6 @@ import club.issizler.okyanus.runtime.command.OkyanusCommand;
 import club.issizler.okyanus.runtime.command.TPSCommand;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.file.FileConfig;
-import net.fabricmc.api.DedicatedServerModInitializer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +17,7 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 
 @SuppressWarnings("unused")
-public class Runtime implements DedicatedServerModInitializer {
+public class Runtime extends Mod {
 
     public static boolean DEBUG;
     public static boolean USE_FAST_REDSTONE;
@@ -28,7 +28,7 @@ public class Runtime implements DedicatedServerModInitializer {
     private Logger logger = LogManager.getLogger();
 
     @Override
-    public void onInitializeServer() {
+    public void init() {
         config = CommentedFileConfig.builder("okyanus.toml").defaultResource("/config.toml").autosave().build();
         config.load();
 

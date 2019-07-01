@@ -29,7 +29,7 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
 
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
-	
+
 	compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 
 	fatJar 'com.electronwill.night-config:toml:3.4.0'
