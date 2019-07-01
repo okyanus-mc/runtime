@@ -16,25 +16,12 @@ public class OkyanusCommand implements CommandRunnable {
         if (isConsole)
             okyanus.append("§a");
 
-        okyanus.append("Okyanus Loader ");
-
-        if (isConsole)
-            okyanus.append("§r");
-
-        okyanus.append(loader.getModContainer("okyanus").get().getMetadata().getVersion().getFriendlyString());
-
-        source.send(okyanus.toString());
-        okyanus = new StringBuilder();
-
-        if (isConsole)
-            okyanus.append("§a");
-
         okyanus.append("Okyanus Runtime ");
 
         if (isConsole)
             okyanus.append("§r");
 
-        okyanus.append(loader.getModContainer("okyanus-runtime").get().getMetadata().getVersion().getFriendlyString());
+        okyanus.append(loader.getModContainer("okyanus").get().getMetadata().getVersion().getFriendlyString());
 
         source.send(okyanus.toString());
         return 1;
