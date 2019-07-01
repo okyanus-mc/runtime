@@ -3,8 +3,7 @@ package club.issizler.okyanus.api;
 import club.issizler.okyanus.api.entity.EntityImpl;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
-import club.issizler.okyanus.api.registry.CommandRegistryImpl;
-import club.issizler.okyanus.api.registry.EventRegistryImpl;
+import club.issizler.okyanus.api.registry.*;
 import club.issizler.okyanus.api.world.World;
 import club.issizler.okyanus.api.world.WorldImpl;
 import club.issizler.okyanus.runtime.utils.accessors.MinecraftServerLoggable;
@@ -17,6 +16,7 @@ public class ServerImpl implements Server {
 
     private final CommandRegistry commandRegistry = new CommandRegistryImpl();
     private final EventRegistry eventRegistry = new EventRegistryImpl();
+    private final PlayerRegistry playerRegistry = new PlayerRegistryImpl();
 
     private final MinecraftServer server;
 
@@ -66,10 +66,6 @@ public class ServerImpl implements Server {
         return Thread.currentThread().getName().equals("Server thread");
     }
 
-    public MinecraftServer getInternal() {
-        return server;
-    }
-
     @Override
     public CommandRegistry getCommandRegistry() {
         return commandRegistry;
@@ -78,6 +74,11 @@ public class ServerImpl implements Server {
     @Override
     public EventRegistry getEventRegistry() {
         return eventRegistry;
+    }
+
+    @Override
+    public PlayerRegistry getPlayerRegistry() {
+        return playerRegistry;
     }
 
     @Override

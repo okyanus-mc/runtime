@@ -1,6 +1,5 @@
 package club.issizler.okyanus.api.registry;
 
-import club.issizler.okyanus.api.CommandRegistry;
 import club.issizler.okyanus.api.cmdnew.Command;
 import org.cactoos.list.ListOf;
 

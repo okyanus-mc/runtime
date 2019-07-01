@@ -1,7 +1,6 @@
 package club.issizler.okyanus.api.entity;
 
-import club.issizler.okyanus.api.Server;
-import club.issizler.okyanus.api.ServerImpl;
+import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.chat.MessageType;
 import club.issizler.okyanus.api.math.Vec3d;
 import club.issizler.okyanus.api.world.Block;
@@ -23,17 +22,17 @@ public class PlayerImpl implements Player {
     }
 
     public PlayerImpl(String name, Entity entity) {
-        this(((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name), entity);
+        this(Okyanus.getServer().getPlayerRegistry().getPlayer(name), entity);
     }
 
     public PlayerImpl(UUID uuid, Entity entity) {
-        this(((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(uuid), entity);
+        this(Okyanus.getServer().getPlayerRegistry().getPlayer(uuid), entity);
     }
 
     public PlayerImpl(String name) {
         this(
-            ((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name),
-            new EntityImpl(((ServerImpl) Server.getInstance()).getInternal().getPlayerManager().getPlayer(name))
+            Okyanus.getServer().getPlayerRegistry().getPlayer(name),
+            new EntityImpl(Okyanus.getServer().getPlayerRegistry().getPlayer(name))
         );
     }
 

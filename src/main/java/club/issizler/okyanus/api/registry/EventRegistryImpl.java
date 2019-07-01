@@ -1,6 +1,5 @@
 package club.issizler.okyanus.api.registry;
 
-import club.issizler.okyanus.api.EventRegistry;
 import club.issizler.okyanus.api.event.EventHandler;
 import org.cactoos.list.ListOf;
 
