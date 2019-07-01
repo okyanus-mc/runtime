@@ -3,6 +3,7 @@ package club.issizler.okyanus.api.registry;
 import club.issizler.okyanus.api.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class PlayerRegistryImpl implements PlayerRegistry {
@@ -26,5 +27,10 @@ public class PlayerRegistryImpl implements PlayerRegistry {
     @Override
     public void removePlayer(Player player) {
         playerList.remove(player);
+    }
+
+    @Override
+    public Collection<Player> getPlayerList() {
+        return playerList;
     }
 }
