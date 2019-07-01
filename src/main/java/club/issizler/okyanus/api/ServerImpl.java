@@ -54,6 +54,16 @@ public class ServerImpl implements Server {
     }
 
     @Override
+    public Player getPlayer(String name) {
+        return new PlayerImpl(
+            server.getPlayerManager().getPlayer(name),
+            new EntityImpl(
+                server.getPlayerManager().getPlayer(name)
+            )
+        );
+    }
+
+    @Override
     public List<World> getWorlds() {
         List<World> worlds = new ArrayList<>();
         server.getWorlds().forEach(world -> worlds.add(new WorldImpl(world)));

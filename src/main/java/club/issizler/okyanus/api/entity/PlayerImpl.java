@@ -16,24 +16,23 @@ public class PlayerImpl implements Player {
     private final ServerPlayerEntity player;
     private final Entity entity;
 
+    public PlayerImpl(Player player) {
+        if (!(player instanceof PlayerImpl))
+            throw new IllegalStateException("The parameter named player is must be a PlayerImpl");
+
+        final PlayerImpl playerImpl = (PlayerImpl)player;
+
+        this.player = playerImpl.player;
+        this.entity = playerImpl.entity;
+    }
+
     public PlayerImpl(ServerPlayerEntity player, Entity entity) {
         this.player = player;
         this.entity = entity;
     }
 
-    public PlayerImpl(String name, Entity entity) {
-        this(Okyanus.getServer().getPlayerRegistry().getPlayer(name), entity);
-    }
-
-    public PlayerImpl(UUID uuid, Entity entity) {
-        this(Okyanus.getServer().getPlayerRegistry().getPlayer(uuid), entity);
-    }
-
     public PlayerImpl(String name) {
-        this(
-            Okyanus.getServer().getPlayerRegistry().getPlayer(name),
-            new EntityImpl(Okyanus.getServer().getPlayerRegistry().getPlayer(name))
-        );
+        this(Okyanus.getServer().getPlayer(name));
     }
 
     public String getName() {

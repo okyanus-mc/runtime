@@ -18,4 +18,9 @@ public class PlayerRegistryImpl implements PlayerRegistry {
         return null;
     }
 
+    @Override
+    public void addPlayer(Player player) {
+        playerList.add(player);
+    }
+
 }
