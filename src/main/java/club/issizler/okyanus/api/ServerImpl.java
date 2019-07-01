@@ -3,6 +3,7 @@ package club.issizler.okyanus.api;
 import club.issizler.okyanus.api.entity.EntityImpl;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
+import club.issizler.okyanus.api.registry.ModRegistryImpl;
 import club.issizler.okyanus.api.world.World;
 import club.issizler.okyanus.api.world.WorldImpl;
 import club.issizler.okyanus.runtime.utils.accessors.MinecraftServerLoggable;
@@ -12,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.*;
 
 public class ServerImpl implements Server {
+
+    private final ModRegistry modRegistry = new ModRegistryImpl();
 
     private final MinecraftServer server;
 
@@ -58,5 +61,45 @@ public class ServerImpl implements Server {
 
     public MinecraftServer getInternal() {
         return server;
+    }
+
+    @Override
+    public ModRegistry getModRegistry() {
+        return modRegistry;
+    }
+
+    @Override
+    public void runCommand(String command) {
+
+    }
+
+    @Override
+    public void sendMessage(String text) {
+
+    }
+
+    @Override
+    public boolean hasPermission(String permission) {
+        return false;
+    }
+
+    @Override
+    public void addPermission(String perm) {
+
+    }
+
+    @Override
+    public boolean removePermission(String perm) {
+        return false;
+    }
+
+    @Override
+    public void setOp(boolean op) {
+
+    }
+
+    @Override
+    public boolean isOp() {
+        return false;
     }
 }
