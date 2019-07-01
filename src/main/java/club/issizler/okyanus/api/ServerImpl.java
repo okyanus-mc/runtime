@@ -77,7 +77,7 @@ public class ServerImpl implements Server {
 
     @Override
     public EventRegistry getEventRegistry() {
-        return eventdRegistry;
+        return eventRegistry;
     }
 
     @Override
