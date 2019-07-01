@@ -3,6 +3,7 @@ package club.issizler.okyanus.runtime.mixin.events;
 import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.Server;
 import club.issizler.okyanus.api.event.BreakEventImpl;
+import net.minecraft.client.network.packet.BlockUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerActionC2SPacket;
@@ -29,6 +30,7 @@ public abstract class ServerPlayNetworkHandlerMixin$BreakEvent {
 
         BreakEventImpl e = s.triggerEvent(new BreakEventImpl(playerActionC2SPacket_1, player));
         if (e.isCancelled()) {
+            this.player.networkHandler.sendPacket(new BlockUpdateS2CPacket(player.world, playerActionC2SPacket_1.getPos()));
             ci.cancel(); // TODO: Alert client of this cancellation.
         }
     }
