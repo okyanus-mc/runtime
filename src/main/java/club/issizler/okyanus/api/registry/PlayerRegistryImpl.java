@@ -23,4 +23,8 @@ public class PlayerRegistryImpl implements PlayerRegistry {
         playerList.add(player);
     }
 
+    @Override
+    public void removePlayer(Player player) {
+        playerList.remove(player);
+    }
 }

@@ -55,7 +55,7 @@ public class ServerImpl implements Server {
 
     @Override
     public Player getPlayer(String name) {
-        return new PlayerImpl(playerRegistry.getPlayer(name));
+        return playerRegistry.getPlayer(name);
     }
 
     @Override
