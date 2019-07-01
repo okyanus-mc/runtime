@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EventManagerImpl implements EventManager {
+public class EventRegistryImpl implements EventRegistry {
 
     private Map<String, List<EventHandler>> handlers = new HashMap<>();
     private Logger logger = LogManager.getLogger();

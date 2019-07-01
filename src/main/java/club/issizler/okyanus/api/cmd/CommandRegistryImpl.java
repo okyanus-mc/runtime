@@ -3,7 +3,7 @@ package club.issizler.okyanus.api.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandManagerImpl implements CommandManager {
+public class CommandRegistryImpl implements CommandRegistry {
 
     private List<CommandBuilder> commands = new ArrayList<>();
 
@@ -11,7 +11,7 @@ public class CommandManagerImpl implements CommandManager {
         commands.add(cmd);
     }
 
-    public List<CommandBuilder> __internal_getCommands() {
+    public List<CommandBuilder> getCommands() {
         return commands;
     }
 

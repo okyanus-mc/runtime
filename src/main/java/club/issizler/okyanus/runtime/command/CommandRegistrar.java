@@ -31,7 +31,7 @@ public class CommandRegistrar {
         LOGGER.info("Okyanus: Late command registration");
 
         ServerImpl s = (ServerImpl) Okyanus.getServer();
-        for (CommandBuilder command : s.getCommandManager().__internal_getCommands()) {
+        for (CommandBuilder command : s.getCommandRegistry().getCommands()) {
             LOGGER.debug("Okyanus: Creating brigadier command for " + command.getName());
 
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getName());

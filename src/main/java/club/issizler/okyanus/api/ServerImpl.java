@@ -1,13 +1,13 @@
 package club.issizler.okyanus.api;
 
 import club.issizler.okyanus.api.cmd.CommandBuilder;
-import club.issizler.okyanus.api.cmd.CommandManager;
-import club.issizler.okyanus.api.cmd.CommandManagerImpl;
+import club.issizler.okyanus.api.cmd.CommandRegistry;
+import club.issizler.okyanus.api.cmd.CommandRegistryImpl;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import club.issizler.okyanus.api.event.Event;
 import club.issizler.okyanus.api.event.EventHandler;
-import club.issizler.okyanus.api.event.EventManager;
+import club.issizler.okyanus.api.event.EventRegistry;
 import club.issizler.okyanus.api.world.World;
 import club.issizler.okyanus.api.world.WorldImpl;
 import club.issizler.okyanus.runtime.utils.accessors.MinecraftServerLoggable;
@@ -21,14 +21,14 @@ public class ServerImpl implements Server {
 
     private final MinecraftServer server;
 
-    private final CommandManager commandManager;
-    private final EventManager eventManager;
+    private final CommandRegistry commandRegistry;
+    private final EventRegistry eventRegistry;
 
-    public ServerImpl(MinecraftServer server, CommandManager commandManager, EventManager eventManager) {
+    public ServerImpl(MinecraftServer server, CommandRegistry commandManager, EventRegistry eventManager) {
         this.server = server;
 
-        this.commandManager = commandManager;
-        this.eventManager = eventManager;
+        this.commandRegistry = commandManager;
+        this.eventRegistry = eventManager;
     }
 
     @Override
@@ -72,17 +72,17 @@ public class ServerImpl implements Server {
 
     @Override
     public void registerCommand(CommandBuilder cmd) {
-        commandManager.register(cmd);
+        commandRegistry.register(cmd);
     }
 
     @Override
     public void registerEvent(EventHandler e) {
-        eventManager.register(e);
+        eventRegistry.register(e);
     }
 
     @Override
     public <E extends Event> E triggerEvent(E e) {
-        return eventManager.trigger(e);
+        return eventRegistry.trigger(e);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class ServerImpl implements Server {
         return Optional.of(new PlayerImpl(e));
     }
 
-    public CommandManagerImpl getCommandManager() {
-        return (CommandManagerImpl) commandManager;
+    public CommandRegistryImpl getCommandRegistry() {
+        return (CommandRegistryImpl) commandRegistry;
     }
 }
