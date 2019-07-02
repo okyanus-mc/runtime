@@ -1,4 +1,7 @@
 plugins {
+    id 'signing'
+    id 'maven'
+    id 'maven-publish'
     id 'fabric-loom' version '0.2.4-SNAPSHOT'
 }
 
@@ -33,7 +36,7 @@ dependencies {
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 
     fatJar 'com.electronwill.night-config:toml:3.4.0'
-    fatJar ('club.issizler.okyanus:api:0.1.0-SNAPSHOT') { // always TODO: increment the API version
+    fatJar('club.issizler.okyanus:api:0.1.0-SNAPSHOT') { // always TODO: increment the API version
         exclude group: "org.apache.commons"
     }
 }
@@ -57,6 +60,7 @@ jar {
     }
 }
 
+
 // ensure that the encoding is set to UTF-8, no matter what the system default is
 // this fixes some edge cases with special characters not displaying correctly
 // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
@@ -70,4 +74,73 @@ tasks.withType(JavaCompile) {
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = "sources"
     from sourceSets.main.allSource
+}
+
+def releases = "https://maven.issizler.club/repository/maven-releases/"
+def snapshots = "https://maven.issizler.club/repository/maven-snapshots/"
+def currentRepo = version.endsWith("-SNAPSHOT") ? snapshots : releases
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = "Okyanus Runtime"
+                description = "Runtime for the Okyanus API"
+                url = "https://okyanus-mc.github.io/"
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'admicos'
+                        name = 'Ecmel Berk Canlıer'
+                        email = 'me@ecmelberk.com'
+                    }
+                }
+            }
+
+            groupId = "${group}"
+            artifactId = 'runtime'
+            version = getVersion()
+
+            artifact(jar.archivePath) {
+                builtBy remapJar
+            }
+
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url = currentRepo
+
+            if (project.hasProperty("nexusPassword")) {
+                credentials {
+                    username "admin"
+                    password "${nexusPassword}"
+                }
+            }
+        }
+    }
+}
+
+signing {
+    required { !version.endsWith("-SNAPSHOT") }
+    sign publishing.publications.mavenJava
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+        }
+    }
 }
