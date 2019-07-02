@@ -7,15 +7,15 @@ import java.util.List;
 
 public class OkyanusCommandRegistry implements CommandRegistry {
 
-    private List<Command> commands = new ArrayList<>();
+    private List<ICommand> commands = new ArrayList<>();
 
     // Override
-    public void register(Command cmd) {
+    public void register(ICommand cmd) {
         commands.add(cmd);
     }
 
     // Override
-    public List<Command> getCommandList() {
+    public List<ICommand> getCommandList() {
         return commands;
     }
 
