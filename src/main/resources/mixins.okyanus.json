@@ -19,6 +19,7 @@
     "events.ServerPlayNetworkHandlerMixin$DropEvent",
     "events.ServerPlayNetworkHandlerMixin$MoveEvent",
     "events.ServerPlayNetworkHandlerMixin$InteractItemEvent",
+    "events.ServerQueryNetworkHandlerMixin",
     "fixes.AreaEffectCloudEntityMixin",
     "fixes.EndermanEntity$PlaceBlockGoalMixin",
     "fixes.EntityMixin",
