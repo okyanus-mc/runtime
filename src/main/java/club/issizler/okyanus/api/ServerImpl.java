@@ -78,17 +78,8 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public void runCommand(CommandSource source, String command) {
-        String[] args = command.split(" ");
-
-        if (args.length == 0) return;
-
-        String sentCommandLabel = args[0].toLowerCase(Locale.ENGLISH);
-        ICommand target = getCommandRegistry().getCommand(sentCommandLabel);
-
-        if (target == null) return;
-
-        target.getRunnable().run(source, target);
+    public void runCommand(String command) {
+        server.getCommandManager().execute(server.getCommandSource(), command);
     }
 
     @Override
@@ -99,11 +90,6 @@ public class ServerImpl implements Server {
     @Override
     public EventRegistry getEventRegistry() {
         return eventRegistry;
-    }
-
-    @Override
-    public void sendMessage(String text) {
-        server.sendMessage(new LiteralText(text));
     }
 
 }

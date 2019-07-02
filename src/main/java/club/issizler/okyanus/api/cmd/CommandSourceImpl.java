@@ -14,14 +14,11 @@ import java.util.Optional;
 import static club.issizler.okyanus.tests.Tests.RUN_TESTS;
 import static club.issizler.okyanus.tests.Tests.tests;
 
-public class CommandSourceImpl implements CommandSource {
+public class CommandSourceImpl {
 
     private CommandContext<ServerCommandSource> context;
 
     public CommandSourceImpl(CommandContext<ServerCommandSource> context) {
-        if (RUN_TESTS && !tests.get("Command execution"))
-            tests.put("Command execution", true);
-
         this.context = context;
     }
 
