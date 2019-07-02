@@ -3,7 +3,6 @@ package club.issizler.okyanus.runtime.mixin.events;
 import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.event.PlaceEventImpl;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.network.packet.BlockUpdateS2CPacket;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -14,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockItem.class)
-public abstract class BlockItem$PlaceEvent {
+public abstract class BlockItemMixin {
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemPlacementContext;getBlockPos()Lnet/minecraft/util/math/BlockPos;"), method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;", cancellable = true)
     private void oky$place(ItemPlacementContext itemPlacementContext_1, CallbackInfoReturnable<ActionResult> cir) {
