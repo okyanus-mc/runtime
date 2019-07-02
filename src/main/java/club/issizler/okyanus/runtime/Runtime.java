@@ -16,6 +16,8 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 
+import java.io.File;
+
 public class Runtime extends Mod {
 
     public static boolean DEBUG;
@@ -47,6 +49,10 @@ public class Runtime extends Mod {
 
             logger.debug("Okyanus: Debugging enabled");
         }
+
+        File configFolder = new File("./config/");
+        if (!configFolder.exists())
+            configFolder.mkdir();
 
         if (USE_FAST_REDSTONE)
             logger.warn("Okyanus: Fast redstone is currently experimental! Disable it from okyanus.toml if you have any redstone issues!");
