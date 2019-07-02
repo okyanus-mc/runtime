@@ -13,6 +13,8 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.And;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,14 +43,23 @@ public class OkyanusCommandRegistrar {
 
         final LiteralArgumentBuilder<ServerCommandSource> finalBuilder = builder;
         Command<ServerCommandSource> cmd = context -> {
+            final CommandSource commandSource = new OkyanusCommandSource(context);
+            final String[] inputs = context.getInput().split(" ");
             try {
                 finalBuilder.requires(source -> {
                     final Scalar<Boolean> and = new And(
-
+                        requirement -> {
+                            return requirement.control(commandSource, inputs, location);
+                        },
+                        command.getRequirements()
                     );
-                    return and.value();
+                    try {
+                        return and.value();
+                    } catch (Exception e) {
+                        return false;
+                    }
                 });
-                return command.getRunnable().run(new OkyanusCommandSource(context));
+                return command.getRunnable().run(commandSource);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
@@ -60,7 +71,7 @@ public class OkyanusCommandRegistrar {
         boolean wasPreviousOptional = false;
 
         for (ICommand subcommand : subCommands)
-            builder.then(registerCommand(subcommand, literal(subcommand.getLabel())));
+            builder.then(registerCommand(subcommand, location + 1, literal(subcommand.getLabel())));
 
         Collections.reverse(subCommands);
         for (ICommand arg : subCommands) {

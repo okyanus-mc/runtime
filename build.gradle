@@ -35,6 +35,8 @@ dependencies {
 
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 
+    implementation 'org.cactoos:cactoos:0.41'
+
     fatJar 'com.electronwill.night-config:toml:3.4.0'
     fatJar('club.issizler.okyanus:api:0.1.0-SNAPSHOT') { // always TODO: increment the API version
         exclude group: "org.apache.commons"
