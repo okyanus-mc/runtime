@@ -1,6 +1,8 @@
 package club.issizler.okyanus.api;
 
-import club.issizler.okyanus.api.cmdnew.cmd.CommandRegistry;
+import club.issizler.okyanus.api.cmdnew.CommandRegistry;
+import club.issizler.okyanus.api.cmdnew.CommandSource;
+import club.issizler.okyanus.api.cmdnew.ICommand;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import club.issizler.okyanus.api.event.EventRegistry;
@@ -9,6 +11,7 @@ import club.issizler.okyanus.api.world.WorldImpl;
 import club.issizler.okyanus.runtime.utils.accessors.MinecraftServerLoggable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.LiteralText;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
@@ -76,6 +79,20 @@ public class ServerImpl implements Server {
     }
 
     @Override
+    public void runCommand(CommandSource source, String command) {
+        String[] args = command.split(" ");
+
+        if (args.length == 0) return;
+
+        String sentCommandLabel = args[0].toLowerCase(Locale.ENGLISH);
+        ICommand target = getCommandRegistry().getCommand(sentCommandLabel);
+
+        if (target == null) return;
+
+        target.getRunnable().run(source, sentCommandLabel, Arrays.copyOfRange(args, 1, args.length));
+    }
+
+    @Override
     public CommandRegistry getCommandRegistry() {
         return commandRegistry;
     }
@@ -85,8 +102,19 @@ public class ServerImpl implements Server {
         return eventRegistry;
     }
 
-    public void exec(String command) {
-        server.getCommandManager().execute(server.getCommandSource(), command);
+    @Override
+    public boolean isConsole() {
+        return true;
+    }
+
+    @Override
+    public Optional<Player> getPlayer() {
+        return Optional.empty();
+    }
+
+    @Override
+    public void sendMessage(String text) {
+        server.sendMessage(new LiteralText(text));
     }
 
 }

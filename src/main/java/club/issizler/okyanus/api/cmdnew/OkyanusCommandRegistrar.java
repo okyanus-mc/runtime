@@ -4,7 +4,6 @@ import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.Server;
 import club.issizler.okyanus.api.cmd.ArgumentType;
 import club.issizler.okyanus.api.cmd.CommandBuilder;
-import club.issizler.okyanus.api.cmd.CommandSourceImpl;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -44,7 +43,7 @@ public class OkyanusCommandRegistrar {
         List<Triple<String, ArgumentType, Boolean>> args = command.getArgs();
         Command<ServerCommandSource> cmd = context -> {
             try {
-                return command.getRunnable().run(new CommandSourceImpl(context));
+                return command.getRunnable().run(new OkyanusCommandSource(context), command.getName(), command);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);

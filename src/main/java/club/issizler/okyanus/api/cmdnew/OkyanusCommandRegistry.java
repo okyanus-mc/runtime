@@ -1,7 +1,5 @@
 package club.issizler.okyanus.api.cmdnew;
 
-import club.issizler.okyanus.api.cmdnew.cmd.CommandRegistry;
-
 import java.util.ArrayList;
 import java.util.List;
 
