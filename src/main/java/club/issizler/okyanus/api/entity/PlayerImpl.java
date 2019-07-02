@@ -58,4 +58,9 @@ public class PlayerImpl extends EntityImpl implements Player {
         player.networkHandler.disconnect(new LiteralText(message));
     }
 
+    @Override
+    public String getIdentifier() {
+        return getUUID().toString();
+    }
+
 }
