@@ -44,7 +44,7 @@ public class EntityImpl implements Entity {
     }
 
     public void teleport(Vec3d pos) {
-        entity.method_20620(pos.x, pos.y, pos.z);
+        entity.teleport(pos.x, pos.y, pos.z);
     }
 
 }
