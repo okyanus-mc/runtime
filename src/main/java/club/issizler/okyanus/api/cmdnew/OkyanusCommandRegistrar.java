@@ -2,8 +2,6 @@ package club.issizler.okyanus.api.cmdnew;
 
 import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.Server;
-import club.issizler.okyanus.api.cmd.ArgumentType;
-import club.issizler.okyanus.api.cmd.CommandBuilder;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -13,7 +11,6 @@ import com.mojang.brigadier.tree.CommandNode;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import org.apache.commons.lang3.tuple.Triple;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,18 +29,25 @@ public class OkyanusCommandRegistrar {
 
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getLabel());
 
-            builder = registerCommand(command, builder);
+            builder = registerCommand(command, 0, builder);
             SomeGlobals.commandDispatcher.register(builder);
         }
     }
 
-    private static LiteralArgumentBuilder<ServerCommandSource> registerCommand(ICommand command, LiteralArgumentBuilder<ServerCommandSource> builder) {
+    private static LiteralArgumentBuilder<ServerCommandSource> registerCommand(ICommand command, int location, LiteralArgumentBuilder<ServerCommandSource> builder) {
         ArgumentBuilder argumentBuilder = null;
 
         List<ICommand> subCommands = command.getSubCommands();
 
+        final LiteralArgumentBuilder<ServerCommandSource> finalBuilder = builder;
         Command<ServerCommandSource> cmd = context -> {
             try {
+                finalBuilder.requires(source -> {
+                    final Scalar<Boolean> and = new And(
+
+                    );
+                    return and.value();
+                });
                 return command.getRunnable().run(new OkyanusCommandSource(context));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -51,23 +55,19 @@ public class OkyanusCommandRegistrar {
             }
         };
 
+        builder = finalBuilder;
+
         boolean wasPreviousOptional = false;
 
-        for (ICommand subcommand : subCommands) {
-            LOGGER.debug("  - Registering subcommand " + subcommand.getName());
-            builder.then(registerCommand(subcommand, literal(subcommand.getName())));
-        }
+        for (ICommand subcommand : subCommands)
+            builder.then(registerCommand(subcommand, literal(subcommand.getLabel())));
 
-        if (command.isOpOnly()) {
-            LOGGER.debug("  - Marked as OP only");
-            builder = builder.requires(source -> source.hasPermissionLevel(3));
-        }
-
-        Collections.reverse(args);
-        for (Triple<String, ArgumentType, Boolean> arg : args) {
+        Collections.reverse(subCommands);
+        for (ICommand arg : subCommands) {
             com.mojang.brigadier.arguments.ArgumentType type;
 
-            switch (arg.getMiddle()) {
+            // TODO Improve with all ArgumentTypes
+            switch (arg.getType()) {
                 case PLAYER:
                     type = EntityArgumentType.players();
                     break;
@@ -77,9 +77,7 @@ public class OkyanusCommandRegistrar {
                     break;
             }
 
-            LOGGER.debug("  - Set up argument " + arg.getLeft() + " typeExample=" + type.getExamples().toArray()[0] + " optional=" + arg.getRight());
-
-            ArgumentBuilder argument = CommandManager.argument(arg.getLeft(), type);
+            ArgumentBuilder argument = CommandManager.argument(arg.getLabel(), type);
 
             if (argumentBuilder == null) {
                 argumentBuilder = argument.executes(cmd);
@@ -90,7 +88,7 @@ public class OkyanusCommandRegistrar {
                 argumentBuilder = argument.then(argumentBuilder);
             }
 
-            wasPreviousOptional = arg.getRight();
+            wasPreviousOptional = arg.isOptional();
         }
 
         if (argumentBuilder != null) {
@@ -98,15 +96,12 @@ public class OkyanusCommandRegistrar {
 
             if (wasPreviousOptional)
                 builder = builder.executes(cmd);
-        } else {
+        } else
             builder = builder.executes(cmd);
-        }
 
-        LOGGER.debug("  - Register the command");
-
-        CommandNode<ServerCommandSource> overwriteCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.getName());
+        CommandNode<ServerCommandSource> overwriteCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.getLabel());
         if (overwriteCommand != null) {
-            LOGGER.info("Okyanus: Overwriting a command (/" + command.getName() + "). Just letting you know");
+            LOGGER.info("Okyanus: Overwriting a command (/" + command.getLabel() + "). Just letting you know");
             SomeGlobals.commandDispatcher.getRoot().getChildren().remove(overwriteCommand);
         }
         return builder;
