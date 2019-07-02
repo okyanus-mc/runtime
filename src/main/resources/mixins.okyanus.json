@@ -7,6 +7,10 @@
   },
   "minVersion": "0.7.11",
   "server": [
+    "CommandManagerMixin",
+    "MinecraftDedicatedServerMixin",
+    "MinecraftServerMixin",
+    "ServerCommandOutputMixin",
     "accessors.ExplosionAccessorMixin",
     "accessors.MinecraftServerAccessorMixin",
     "events.BlockItemMixin",
@@ -17,8 +21,10 @@
     "events.PlayerManagerMixin$DisconnectEvent",
     "events.ServerPlayNetworkHandlerMixin$BreakEvent",
     "events.ServerPlayNetworkHandlerMixin$DropEvent",
-    "events.ServerPlayNetworkHandlerMixin$MoveEvent",
+    "events.ServerPlayNetworkHandlerMixin$InteractBlockEvent",
+    "events.ServerPlayNetworkHandlerMixin$InteractEntityEvent",
     "events.ServerPlayNetworkHandlerMixin$InteractItemEvent",
+    "events.ServerPlayNetworkHandlerMixin$MoveEvent",
     "events.ServerQueryNetworkHandlerMixin",
     "fixes.AreaEffectCloudEntityMixin",
     "fixes.EndermanEntity$PlaceBlockGoalMixin",
@@ -47,10 +53,6 @@
     "optimizations.reduceio.RegionFileMixin",
     "optimizations.registry.Int2ObjectBiMapMixin",
     "optimizations.registry.MaterialsRegistryMixin",
-    "optimizations.world.MinecraftServerMixin",
-    "CommandManagerMixin",
-    "MinecraftDedicatedServerMixin",
-    "MinecraftServerMixin",
-    "ServerCommandOutputMixin"
+    "optimizations.world.MinecraftServerMixin"
   ]
 }

@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerQueryNetworkHandler.class)
 public abstract class ServerQueryNetworkHandlerMixin {
 
-    @Inject(at=@At("HEAD"), method = "onRequest")
+    @Inject(at = @At("HEAD"), method = "onRequest")
     private void oky$onRequest(QueryRequestC2SPacket queryRequestC2SPacket_1, CallbackInfo ci) {
         Okyanus.getServer().triggerEvent(new PingEventImpl());
     }
