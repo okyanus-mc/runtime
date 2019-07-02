@@ -30,4 +30,8 @@ public class SomeGlobals {
     };
 
     public static CommandDispatcher<ServerCommandSource> commandDispatcher;
+
+    private SomeGlobals() {
+    }
+
 }

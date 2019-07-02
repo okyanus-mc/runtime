@@ -25,7 +25,6 @@ public class ServerImpl implements Server {
 
     public ServerImpl(MinecraftServer server, CommandRegistry commandManager, EventRegistry eventManager) {
         this.server = server;
-
         this.commandRegistry = commandManager;
         this.eventRegistry = eventManager;
     }
@@ -89,7 +88,7 @@ public class ServerImpl implements Server {
 
         if (target == null) return;
 
-        target.getRunnable().run(source, sentCommandLabel, Arrays.copyOfRange(args, 1, args.length));
+        target.getRunnable().run(source, target);
     }
 
     @Override
@@ -100,16 +99,6 @@ public class ServerImpl implements Server {
     @Override
     public EventRegistry getEventRegistry() {
         return eventRegistry;
-    }
-
-    @Override
-    public boolean isConsole() {
-        return true;
-    }
-
-    @Override
-    public Optional<Player> getPlayer() {
-        return Optional.empty();
     }
 
     @Override

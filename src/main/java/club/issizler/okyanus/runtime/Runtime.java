@@ -58,24 +58,24 @@ public class Runtime extends Mod {
             logger.warn("Okyanus: Fast redstone is currently experimental! Disable it from okyanus.toml if you have any redstone issues!");
 
         registerCommand(
-                new CommandBuilder("tps")
-                        .opOnly()
-                        .run(new TPSCommand())
+            new CommandBuilder("tps")
+                .opOnly()
+                .run(new TPSCommand())
         );
 
         registerCommand(
-                new CommandBuilder("okyanus")
-                        .opOnly()
-                        .run(new OkyanusCommand())
-                        .subCommand(new CommandBuilder("mods")
-                                .arg("modId", ArgumentType.TEXT, true)
-                                .opOnly()
-                                .run(new ModsCommand()))
+            new CommandBuilder("okyanus")
+                .opOnly()
+                .run(new OkyanusCommand())
+                .subCommand(new CommandBuilder("mods")
+                    .arg("modId", ArgumentType.TEXT, true)
+                    .opOnly()
+                    .run(new ModsCommand()))
 
-                        .subCommand(new CommandBuilder("test")
-                                .opOnly()
-                                .run(new TestCommand())
-                        )
+                .subCommand(new CommandBuilder("test")
+                    .opOnly()
+                    .run(new TestCommand())
+                )
         );
     }
 

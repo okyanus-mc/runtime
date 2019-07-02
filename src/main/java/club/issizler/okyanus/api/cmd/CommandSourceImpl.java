@@ -52,7 +52,11 @@ public class CommandSourceImpl implements CommandSource {
 
     public Optional<Player> getArgPlayer(String arg) {
         try {
-            return Optional.of(new PlayerImpl(EntityArgumentType.getPlayer(context, arg)));
+            return Optional.of(
+                new PlayerImpl(
+                    EntityArgumentType.getPlayer(context, arg)
+                )
+            );
         } catch (CommandSyntaxException e) {
             send(e.toString());
             throw new RuntimeException(e);

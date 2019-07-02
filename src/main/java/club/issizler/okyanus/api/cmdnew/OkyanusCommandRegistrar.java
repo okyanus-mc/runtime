@@ -30,7 +30,7 @@ public class OkyanusCommandRegistrar {
         Server s = Okyanus.getServer();
         for (ICommand command : s.getCommandRegistry().getCommandList()) {
 
-            LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getName());
+            LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getLabel());
 
             builder = registerCommand(command, builder);
             SomeGlobals.commandDispatcher.register(builder);
@@ -40,10 +40,11 @@ public class OkyanusCommandRegistrar {
     private static LiteralArgumentBuilder<ServerCommandSource> registerCommand(ICommand command, LiteralArgumentBuilder<ServerCommandSource> builder) {
         ArgumentBuilder argumentBuilder = null;
 
-        List<Triple<String, ArgumentType, Boolean>> args = command.getArgs();
+        List<ICommand> subCommands = command.getSubCommands();
+
         Command<ServerCommandSource> cmd = context -> {
             try {
-                return command.getRunnable().run(new OkyanusCommandSource(context), command.getName(), command);
+                return command.getRunnable().run(new OkyanusCommandSource(context));
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
@@ -52,7 +53,7 @@ public class OkyanusCommandRegistrar {
 
         boolean wasPreviousOptional = false;
 
-        for (CommandBuilder subcommand : command.getSubCommands()) {
+        for (ICommand subcommand : subCommands) {
             LOGGER.debug("  - Registering subcommand " + subcommand.getName());
             builder.then(registerCommand(subcommand, literal(subcommand.getName())));
         }
