@@ -1,12 +1,8 @@
 package club.issizler.okyanus.api;
 
-import club.issizler.okyanus.api.cmd.CommandBuilder;
-import club.issizler.okyanus.api.cmd.CommandRegistry;
-import club.issizler.okyanus.api.cmd.CommandRegistryImpl;
+import club.issizler.okyanus.api.cmdnew.cmd.CommandRegistry;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
-import club.issizler.okyanus.api.event.Event;
-import club.issizler.okyanus.api.event.EventHandler;
 import club.issizler.okyanus.api.event.EventRegistry;
 import club.issizler.okyanus.api.world.World;
 import club.issizler.okyanus.api.world.WorldImpl;
@@ -71,21 +67,6 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public void registerCommand(CommandBuilder cmd) {
-        commandRegistry.register(cmd);
-    }
-
-    @Override
-    public void registerEvent(EventHandler e) {
-        eventRegistry.register(e);
-    }
-
-    @Override
-    public <E extends Event> E triggerEvent(E e) {
-        return eventRegistry.trigger(e);
-    }
-
-    @Override
     public Optional<Player> getPlayerByName(String playerName) {
         ServerPlayerEntity e = server.getPlayerManager().getPlayer(playerName);
         if (e == null)
@@ -94,8 +75,14 @@ public class ServerImpl implements Server {
         return Optional.of(new PlayerImpl(e));
     }
 
-    public CommandRegistryImpl getCommandRegistry() {
-        return (CommandRegistryImpl) commandRegistry;
+    @Override
+    public CommandRegistry getCommandRegistry() {
+        return commandRegistry;
+    }
+
+    @Override
+    public EventRegistry getEventRegistry() {
+        return eventRegistry;
     }
 
     public void exec(String command) {
