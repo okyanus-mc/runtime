@@ -97,4 +97,9 @@ public class ServerImpl implements Server {
     public CommandRegistryImpl getCommandRegistry() {
         return (CommandRegistryImpl) commandRegistry;
     }
+
+    public void exec(String command) {
+        server.getCommandManager().execute(server.getCommandSource(), command);
+    }
+
 }

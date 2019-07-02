@@ -6,7 +6,7 @@
   "description": "Okyanus server runtime.",
   "environment": "server",
   "mixins": [
-    "okyanus.mixins.json"
+    "mixins.okyanus.json"
   ],
   "depends": {
     "fabricloader": ">=0.4.8"
