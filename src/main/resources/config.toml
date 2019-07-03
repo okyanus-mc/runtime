@@ -12,21 +12,3 @@ debug = false
 # Second %s is the messsage.
 # Color supported with the § character.
 defaultFormat = "<%s> %s"
-
-
-[optimizations]
-
-fastExplosions = true
-fastRedstone = true   # needs testing!
-
-
-[limits]
-
-maxBookPageSize = 2560
-maxBookTotalSizeMultiplier = 0.98
-
-# per second
-packetRateLimit = 250
-
-# seconds
-packetRateLimitInterval = 10.0
