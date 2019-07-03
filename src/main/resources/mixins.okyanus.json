@@ -13,6 +13,7 @@
     "accessors.EntityAccessorMixin",
     "accessors.MinecraftServerAccessorMixin",
     "events.BlockItemMixin",
+    "events.CommandManagerMixin$RawCommandEvent",
     "events.MinecraftDedicatedServerMixin",
     "events.MinecraftServerMixin",
     "events.PlayerManagerMixin$ChatEvent",
