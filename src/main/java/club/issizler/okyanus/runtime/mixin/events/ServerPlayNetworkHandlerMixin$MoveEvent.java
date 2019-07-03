@@ -1,6 +1,7 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
 import club.issizler.okyanus.api.Okyanus;
+import club.issizler.okyanus.api.Server;
 import club.issizler.okyanus.api.event.MoveEventImpl;
 import net.minecraft.client.network.packet.PlayerPositionLookS2CPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -24,7 +25,11 @@ public abstract class ServerPlayNetworkHandlerMixin$MoveEvent {
 
     @Inject(at = @At("HEAD"), method = "onPlayerMove", cancellable = true)
     private void oky$onPlayerMove(PlayerMoveC2SPacket packet, CallbackInfo ci) {
-        MoveEventImpl e = Okyanus.getServer().triggerEvent(new MoveEventImpl(packet, player));
+        Server s = Okyanus.getServer();
+        if (!s.isMainThread())
+            return;
+
+        MoveEventImpl e = s.triggerEvent(new MoveEventImpl(packet, player));
 
         if (e.isCancelled()) {
             moveCancelSendTimer++;
