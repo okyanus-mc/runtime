@@ -10,6 +10,7 @@
     "CommandManagerMixin",
     "MinecraftServerMixin",
     "ServerCommandOutputMixin",
+    "accessors.EntityAccessorMixin",
     "accessors.MinecraftServerAccessorMixin",
     "events.BlockItemMixin",
     "events.MinecraftDedicatedServerMixin",
