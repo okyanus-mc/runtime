@@ -40,7 +40,7 @@ public abstract class ServerPlayNetworkHandlerMixin$MoveEvent {
             float yaw = this.player.yaw;
             float pitch = this.player.pitch;
 
-            if (moveCancelSendTimer > 5) { // If we don't do this, clients might potentially get kicked out due to our packet rate limits
+            if (moveCancelSendTimer > 5) { // If we don't do this, clients might potentially get kicked out due potential packet rate limits
                 this.player.networkHandler.sendPacket(new PlayerPositionLookS2CPacket(x, y, z, yaw, pitch, Collections.emptySet(), 0));
                 moveCancelSendTimer = 0;
             }
