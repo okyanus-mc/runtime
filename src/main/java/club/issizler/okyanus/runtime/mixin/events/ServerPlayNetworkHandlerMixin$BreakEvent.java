@@ -21,8 +21,9 @@ public abstract class ServerPlayNetworkHandlerMixin$BreakEvent {
 
     @Inject(at = @At("HEAD"), method = "onPlayerAction", cancellable = true)
     private void oky$onPlayerAction(PlayerActionC2SPacket playerActionC2SPacket_1, CallbackInfo ci) {
-        if (playerActionC2SPacket_1.getAction() != PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK)
-            return;
+        if (!player.isCreative())
+            if (playerActionC2SPacket_1.getAction() != PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK)
+                return;
 
         Server s = Okyanus.getServer();
         if (!s.isMainThread())

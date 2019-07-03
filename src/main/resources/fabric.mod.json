@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "okyanus",
-  "version": "${version}",
+  "version": "0.1.0",
   "name": "Okyanus",
   "description": "Okyanus server runtime.",
   "environment": "server",
