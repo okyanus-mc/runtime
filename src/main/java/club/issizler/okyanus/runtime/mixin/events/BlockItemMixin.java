@@ -39,7 +39,7 @@ public abstract class BlockItemMixin {
         Vec3d pos = new Vec3d(mcPos.getX(), mcPos.getY(), mcPos.getZ());
 
         club.issizler.okyanus.api.world.Block block = new BlockImpl(new WorldImpl(itemPlacementContext_1.getWorld()), getPlacementState(itemPlacementContext_1), pos);
-        PlaceEventImpl e = Okyanus.getServer().triggerEvent(new PlaceEventImpl(itemPlacementContext_1, player, block));
+        PlaceEventImpl e = Okyanus.getServer().getEventRegistry().trigger(new PlaceEventImpl(itemPlacementContext_1, player, block));
 
         if (e.isCancelled()) {
             player.world.setBlockState(itemPlacementContext_1.getBlockPos(), Blocks.AIR.getDefaultState()); // This might be bad, not sure
