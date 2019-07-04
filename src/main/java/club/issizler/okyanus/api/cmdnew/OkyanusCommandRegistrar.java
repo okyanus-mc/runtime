@@ -7,6 +7,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
@@ -61,7 +62,6 @@ public class OkyanusCommandRegistrar {
                 });
                 return command.getRunnable().run(commandSource);
             } catch (Exception e) {
-                e.printStackTrace();
                 throw new RuntimeException(e);
             }
         };
