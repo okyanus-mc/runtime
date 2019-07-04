@@ -60,6 +60,19 @@ public class PlayerImpl extends EntityImpl implements Player {
     }
 
     @Override
+    public boolean isOp() {
+        return player.server.getPlayerManager().isOperator(player.getGameProfile());
+    }
+
+    @Override
+    public void setOp(boolean isOp) {
+        if (isOp)
+            player.server.getPlayerManager().addToOperators(player.getGameProfile());
+        else
+            player.server.getPlayerManager().removeFromOperators(player.getGameProfile());
+    }
+
+    @Override
     public String getIdentifier() {
         return getUUID().toString();
     }

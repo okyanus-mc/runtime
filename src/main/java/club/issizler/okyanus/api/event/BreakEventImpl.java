@@ -3,6 +3,7 @@ package club.issizler.okyanus.api.event;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import club.issizler.okyanus.api.math.Vec3d;
+import club.issizler.okyanus.api.world.Block;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerActionC2SPacket;
 
@@ -37,4 +38,8 @@ public class BreakEventImpl implements BreakEvent {
         return new Vec3d(packet.getPos().getX(), packet.getPos().getY(), packet.getPos().getZ());
     }
 
+    @Override
+    public Block getBlock() {
+        return player.getWorld().getBlockAt(getLocation());
+    }
 }

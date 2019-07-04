@@ -1,6 +1,7 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
 import club.issizler.okyanus.api.Okyanus;
+import club.issizler.okyanus.api.Server;
 import club.issizler.okyanus.api.event.DropEventImpl;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -22,7 +23,11 @@ public abstract class ServerPlayNetworkHandlerMixin$DropEvent {
         if (!(playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.DROP_ITEM || playerActionC2SPacket_1.getAction() == PlayerActionC2SPacket.Action.DROP_ALL_ITEMS))
             return;
 
-        DropEventImpl e = Okyanus.getServer().triggerEvent(new DropEventImpl(playerActionC2SPacket_1, player));
+        Server s = Okyanus.getServer();
+        if (!s.isMainThread())
+            return;
+
+        DropEventImpl e = s.triggerEvent(new DropEventImpl(playerActionC2SPacket_1, player));
 
         if (e.isCancelled()) {
             ci.cancel(); // TODO: Alert client of this cancellation.

@@ -5,6 +5,9 @@ import club.issizler.okyanus.api.entity.PlayerImpl;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.network.ServerPlayerEntity;
 
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+
 public class ConnectEventImpl implements ConnectEvent {
 
     private String cancelReason = "Disconnected";
@@ -39,5 +42,10 @@ public class ConnectEventImpl implements ConnectEvent {
     @Override
     public void setCancelReason(String reason) {
         cancelReason = reason;
+    }
+
+    @Override
+    public InetAddress getAddress() {
+        return ((InetSocketAddress) connection.getAddress()).getAddress();
     }
 }
