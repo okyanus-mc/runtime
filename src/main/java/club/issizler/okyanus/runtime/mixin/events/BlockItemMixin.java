@@ -4,6 +4,7 @@ import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.event.PlaceEventImpl;
 import club.issizler.okyanus.api.math.Vec3d;
 import club.issizler.okyanus.api.world.BlockImpl;
+import club.issizler.okyanus.api.world.WorldImpl;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -33,9 +34,12 @@ public abstract class BlockItemMixin {
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemPlacementContext;getBlockPos()Lnet/minecraft/util/math/BlockPos;"), method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;", cancellable = true)
     private void oky$place(ItemPlacementContext itemPlacementContext_1, CallbackInfoReturnable<ActionResult> cir) {
         ServerPlayerEntity player = (ServerPlayerEntity) itemPlacementContext_1.getPlayer();
+
         BlockPos mcPos = itemPlacementContext_1.getBlockPos();
         Vec3d pos = new Vec3d(mcPos.getX(), mcPos.getY(), mcPos.getZ());
-        PlaceEventImpl e = Okyanus.getServer().triggerEvent(new PlaceEventImpl(itemPlacementContext_1, player, new BlockImpl(getPlacementState(itemPlacementContext_1), pos)));
+
+        club.issizler.okyanus.api.world.Block block = new BlockImpl(new WorldImpl(itemPlacementContext_1.getWorld()), getPlacementState(itemPlacementContext_1), pos);
+        PlaceEventImpl e = Okyanus.getServer().triggerEvent(new PlaceEventImpl(itemPlacementContext_1, player, block));
 
         if (e.isCancelled()) {
             player.world.setBlockState(itemPlacementContext_1.getBlockPos(), Blocks.AIR.getDefaultState()); // This might be bad, not sure

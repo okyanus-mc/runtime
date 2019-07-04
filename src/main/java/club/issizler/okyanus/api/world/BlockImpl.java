@@ -7,8 +7,10 @@ public class BlockImpl implements Block {
 
     private final BlockState block;
     private final Vec3d pos;
+    private final World world;
 
-    public BlockImpl(BlockState block, Vec3d pos) {
+    public BlockImpl(World world, BlockState block, Vec3d pos) {
+        this.world = world;
         this.block = block;
         this.pos = pos;
     }
@@ -16,6 +18,11 @@ public class BlockImpl implements Block {
     @Override
     public Vec3d getLocation() {
         return pos;
+    }
+
+    @Override
+    public World getWorld() {
+        return world;
     }
 
 }

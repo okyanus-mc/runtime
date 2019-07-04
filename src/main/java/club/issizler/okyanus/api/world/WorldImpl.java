@@ -21,7 +21,7 @@ public class WorldImpl implements World {
     }
 
     public Block getBlockAt(Vec3d pos) {
-        return new BlockImpl(world.getBlockState(new BlockPos(pos.x, pos.y, pos.z)), pos);
+        return new BlockImpl(this, world.getBlockState(new BlockPos(pos.x, pos.y, pos.z)), pos);
     }
 
     @Override
