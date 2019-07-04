@@ -13,6 +13,7 @@ import club.issizler.okyanus.api.world.WorldImpl;
 import club.issizler.okyanus.runtime.utils.accessors.MinecraftServerLoggable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.LiteralText;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
@@ -94,12 +95,19 @@ public class ServerImpl implements Server {
         return Optional.of(new PlayerImpl(e));
     }
 
-    public CommandRegistryImpl getCommandRegistry() {
-        return (CommandRegistryImpl) commandRegistry;
-    }
-
+    @Override
     public void exec(String command) {
         server.getCommandManager().execute(server.getCommandSource(), command);
+    }
+
+    @Override
+    public void broadcast(String message) {
+        server.sendMessage(new LiteralText(message));
+        getPlayerList().forEach(player -> player.send(message));
+    }
+
+    public CommandRegistryImpl getCommandRegistry() {
+        return (CommandRegistryImpl) commandRegistry;
     }
 
 }
