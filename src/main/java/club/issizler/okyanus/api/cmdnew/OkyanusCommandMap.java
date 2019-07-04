@@ -78,7 +78,9 @@ public class OkyanusCommandMap {
             final CommandSource commandSource = new OkyanusCommandSource(context);
             final String[] inputs = context.getInput().split(" ");
             try {
-                finalBuilder.requires(new AndReq(command.getRequirements(), commandSource, inputs, location));
+                finalBuilder.requires(
+                    new AndReq(command.getRequirements(), commandSource, inputs, location)
+                );
                 return command.getRunnable().run(commandSource);
             } catch (Exception e) {
                 logger.fatal(e.getMessage() == null ? e.getMessage() : "");
