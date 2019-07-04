@@ -1,7 +1,7 @@
 package club.issizler.okyanus.runtime.command;
 
-import club.issizler.okyanus.api.cmd.CommandRunnable;
-import club.issizler.okyanus.api.cmd.CommandSource;
+import club.issizler.okyanus.api.cmdnew.CommandRunnable;
+import club.issizler.okyanus.api.cmdnew.CommandSource;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.metadata.ModMetadata;
@@ -26,15 +26,15 @@ public class ModsCommand implements CommandRunnable {
             mod = FabricLoader.getInstance().getAllMods().stream().filter(c -> c.getMetadata().getName().equals(modId)).findFirst();
 
             if (!mod.isPresent()) {
-                source.send("§cMod not found!");
+                source.sendMessage("§cMod not found!");
                 return -1;
             }
         }
 
         ModMetadata metadata = mod.get().getMetadata();
 
-        source.send("§a" + metadata.getName() + "§r " + metadata.getVersion());
-        source.send(metadata.getDescription());
+        source.sendMessage("§a" + metadata.getName() + "§r " + metadata.getVersion());
+        source.sendMessage(metadata.getDescription());
         return 1;
     }
 
@@ -53,7 +53,7 @@ public class ModsCommand implements CommandRunnable {
             mods.append(", ");
         }
 
-        source.send(mods.toString());
+        source.sendMessage(mods.toString());
         return 1;
     }
 

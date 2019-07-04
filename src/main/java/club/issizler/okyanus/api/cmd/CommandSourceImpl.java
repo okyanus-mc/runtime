@@ -11,9 +11,6 @@ import net.minecraft.text.LiteralText;
 
 import java.util.Optional;
 
-import static club.issizler.okyanus.tests.Tests.RUN_TESTS;
-import static club.issizler.okyanus.tests.Tests.tests;
-
 public class CommandSourceImpl {
 
     private CommandContext<ServerCommandSource> context;

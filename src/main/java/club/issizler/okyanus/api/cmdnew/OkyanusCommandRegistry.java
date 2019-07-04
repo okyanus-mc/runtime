@@ -1,19 +1,29 @@
 package club.issizler.okyanus.api.cmdnew;
 
+import club.issizler.okyanus.api.cmdnew.mck.MckCommand;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class OkyanusCommandRegistry implements CommandRegistry {
 
-    private List<ICommand> commands = new ArrayList<>();
+    private final List<ICommand> commands = new ArrayList<>();
 
-    // Override
+    @Override
     public void register(ICommand cmd) {
         commands.add(cmd);
     }
 
-    // Override
-    public List<ICommand> getCommandList() {
+    @Override
+    public ICommand getCommand(String commandLabel) {
+        for (ICommand command : commands)
+            if (command.getLabel().equals(commandLabel))
+                return command;
+        return new MckCommand();
+    }
+
+    @Override
+    public List<ICommand> getCommands() {
         return commands;
     }
 

@@ -1,8 +1,6 @@
 package club.issizler.okyanus.api;
 
 import club.issizler.okyanus.api.cmdnew.CommandRegistry;
-import club.issizler.okyanus.api.cmdnew.CommandSource;
-import club.issizler.okyanus.api.cmdnew.ICommand;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import club.issizler.okyanus.api.event.EventRegistry;
@@ -11,7 +9,6 @@ import club.issizler.okyanus.api.world.WorldImpl;
 import club.issizler.okyanus.runtime.utils.accessors.MinecraftServerLoggable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
@@ -49,7 +46,7 @@ public class ServerImpl implements Server {
         Set<Player> players = new HashSet<>();
 
         server.getPlayerManager().getPlayerList().forEach(e ->
-                players.add(new PlayerImpl(e))
+            players.add(new PlayerImpl(e))
         );
 
         return players;

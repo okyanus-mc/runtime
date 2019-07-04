@@ -1,7 +1,7 @@
 package club.issizler.okyanus.runtime.command;
 
-import club.issizler.okyanus.api.cmd.CommandRunnable;
-import club.issizler.okyanus.api.cmd.CommandSource;
+import club.issizler.okyanus.api.cmdnew.CommandRunnable;
+import club.issizler.okyanus.api.cmdnew.CommandSource;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class OkyanusCommand implements CommandRunnable {
@@ -23,7 +23,7 @@ public class OkyanusCommand implements CommandRunnable {
 
         okyanus.append(loader.getModContainer("okyanus").get().getMetadata().getVersion().getFriendlyString());
 
-        source.send(okyanus.toString());
+        source.sendMessage(okyanus.toString());
         return 1;
     }
 

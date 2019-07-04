@@ -1,8 +1,7 @@
 package club.issizler.okyanus.runtime;
 
 import club.issizler.okyanus.api.Mod;
-import club.issizler.okyanus.api.cmd.ArgumentType;
-import club.issizler.okyanus.api.cmd.CommandBuilder;
+import club.issizler.okyanus.api.cmdnew.CommandOf;
 import club.issizler.okyanus.runtime.command.ModsCommand;
 import club.issizler.okyanus.runtime.command.OkyanusCommand;
 import club.issizler.okyanus.runtime.command.TPSCommand;
@@ -17,6 +16,8 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 
 import java.io.File;
+
+import static club.issizler.okyanus.api.cmdnew.CommandOptions.*;
 
 public class Runtime extends Mod {
 
@@ -58,24 +59,41 @@ public class Runtime extends Mod {
             logger.warn("Okyanus: Fast redstone is currently experimental! Disable it from okyanus.toml if you have any redstone issues!");
 
         registerCommand(
-            new CommandBuilder("tps")
-                .opOnly()
-                .run(new TPSCommand())
+            new CommandOf(
+                "tps",
+                requirements(
+                    (commandSource, arguments, location) -> commandSource.isOp()
+                ),
+                run(new TPSCommand())
+            )
         );
 
         registerCommand(
-            new CommandBuilder("okyanus")
-                .opOnly()
-                .run(new OkyanusCommand())
-                .subCommand(new CommandBuilder("mods")
-                    .arg("modId", ArgumentType.TEXT, true)
-                    .opOnly()
-                    .run(new ModsCommand()))
-
-                .subCommand(new CommandBuilder("test")
-                    .opOnly()
-                    .run(new TestCommand())
+            new CommandOf(
+                "okyanusmaincommand",
+                label("okyanus"),
+                requirements(
+                    (commandSource, arguments, location) -> commandSource.isOp()
+                ),
+                run(new OkyanusCommand()),
+                subCommands(
+                    new CommandOf(
+                        "modssubcommand",
+                        label("mods"),
+                        subCommands(
+                            new CommandOf(
+                                "modId",
+                                run(new ModsCommand())
+                            ),
+                            new CommandOf(
+                                "testsubcommand",
+                                label("test"),
+                                run(new TestCommand())
+                            )
+                        )
+                    )
                 )
+            )
         );
     }
 

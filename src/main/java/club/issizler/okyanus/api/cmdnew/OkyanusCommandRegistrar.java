@@ -7,7 +7,6 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
@@ -24,20 +23,24 @@ import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
 public class OkyanusCommandRegistrar {
 
-    private static Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    public OkyanusCommandRegistrar() {
+        
+    }
 
     public static void register() {
         Server s = Okyanus.getServer();
-        for (ICommand command : s.getCommandRegistry().getCommandList()) {
+        for (ICommand command : s.getCommandRegistry().getCommands()) {
 
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getLabel());
 
-            builder = registerCommand(command, 0, builder);
+            builder = registerCommand(command, 0, false, builder);
             SomeGlobals.commandDispatcher.register(builder);
         }
     }
 
-    private static LiteralArgumentBuilder<ServerCommandSource> registerCommand(ICommand command, int location, LiteralArgumentBuilder<ServerCommandSource> builder) {
+    private static LiteralArgumentBuilder<ServerCommandSource> registerCommand(ICommand command, int location, boolean aliases, LiteralArgumentBuilder<ServerCommandSource> builder) {
         ArgumentBuilder argumentBuilder = null;
 
         List<ICommand> subCommands = command.getSubCommands();
@@ -62,7 +65,8 @@ public class OkyanusCommandRegistrar {
                 });
                 return command.getRunnable().run(commandSource);
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                LOGGER.fatal(e.getMessage() == null ? e.getMessage() : "");
+                return 0;
             }
         };
 
@@ -71,18 +75,19 @@ public class OkyanusCommandRegistrar {
         boolean wasPreviousOptional = false;
 
         for (ICommand subcommand : subCommands)
-            builder.then(registerCommand(subcommand, location + 1, literal(subcommand.getLabel())));
+            builder.then(registerCommand(subcommand, location + 1, false, literal(subcommand.getLabel())));
 
         Collections.reverse(subCommands);
         for (ICommand arg : subCommands) {
             com.mojang.brigadier.arguments.ArgumentType type;
 
-            // TODO Improve with all ArgumentTypes
+            // TODO Improve with all ArgumentType
             switch (arg.getType()) {
                 case PLAYER:
                     type = EntityArgumentType.players();
                     break;
                 case TEXT:
+                case NONE:
                 default:
                     type = StringArgumentType.string();
                     break;
