@@ -3,6 +3,7 @@ package club.issizler.okyanus.api.cmdnew;
 import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.Server;
 import club.issizler.okyanus.api.cmdnew.mck.MckArgumentBuilder;
+import club.issizler.okyanus.api.cmdnew.req.AndReq;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -13,8 +14,6 @@ import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import org.apache.logging.log4j.Logger;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.And;
 
 import java.util.*;
 
@@ -36,7 +35,7 @@ public class OkyanusCommandMap {
             register(command);
 
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getLabel());
-            builder = registerBuilder(command, 0, false, builder);
+            builder = registerBuilder(command, 0, builder);
 
             SomeGlobals.commandDispatcher.register(builder);
         }
@@ -66,7 +65,11 @@ public class OkyanusCommandMap {
         return true;
     }
 
-    private LiteralArgumentBuilder<ServerCommandSource> registerBuilder(ICommand command, int location, boolean isAlias, LiteralArgumentBuilder<ServerCommandSource> builder) {
+    private LiteralArgumentBuilder<ServerCommandSource> registerBuilder(
+        ICommand command,
+        int location,
+        LiteralArgumentBuilder<ServerCommandSource> builder
+    ) {
         ArgumentBuilder argumentBuilder = new MckArgumentBuilder();
         List<ICommand> subCommands = command.getSubCommands();
         final LiteralArgumentBuilder<ServerCommandSource> finalBuilder = builder;
@@ -75,19 +78,7 @@ public class OkyanusCommandMap {
             final CommandSource commandSource = new OkyanusCommandSource(context);
             final String[] inputs = context.getInput().split(" ");
             try {
-                finalBuilder.requires(source -> {
-                    final Scalar<Boolean> and = new And(
-                        requirement -> {
-                            return requirement.control(commandSource, inputs, location);
-                        },
-                        command.getRequirements()
-                    );
-                    try {
-                        return and.value();
-                    } catch (Exception e) {
-                        return false;
-                    }
-                });
+                finalBuilder.requires(new AndReq(command.getRequirements(), commandSource, inputs, location));
                 return command.getRunnable().run(commandSource);
             } catch (Exception e) {
                 logger.fatal(e.getMessage() == null ? e.getMessage() : "");
@@ -100,7 +91,13 @@ public class OkyanusCommandMap {
         boolean wasPreviousOptional = false;
 
         for (ICommand subcommand : subCommands)
-            builder.then(registerBuilder(subcommand, location + 1, false, literal(subcommand.getLabel())));
+            builder.then(
+                registerBuilder(
+                    subcommand,
+                    location + 1,
+                    literal(subcommand.getLabel())
+                )
+            );
 
         Collections.reverse(subCommands);
         for (ICommand arg : subCommands) {
