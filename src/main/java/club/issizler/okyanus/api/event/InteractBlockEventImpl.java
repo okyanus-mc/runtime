@@ -2,10 +2,12 @@ package club.issizler.okyanus.api.event;
 
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
+import club.issizler.okyanus.api.math.Vec3d;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerInteractBlockC2SPacket;
+import net.minecraft.util.math.BlockPos;
 
-public class InteractBlockEventImpl implements InteractItemEvent {
+public class InteractBlockEventImpl implements InteractBlockEvent {
 
     private boolean isCancelled = false;
 
@@ -30,6 +32,12 @@ public class InteractBlockEventImpl implements InteractItemEvent {
     @Override
     public Player getPlayer() {
         return player;
+    }
+
+    @Override
+    public Vec3d getLocation() {
+        BlockPos pos = packet.getHitY().getBlockPos();
+        return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
     }
 
 }

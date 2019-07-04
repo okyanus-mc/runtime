@@ -3,6 +3,7 @@ package club.issizler.okyanus.api.entity;
 import club.issizler.okyanus.api.chat.MessageType;
 import club.issizler.okyanus.api.math.Vec3d;
 import club.issizler.okyanus.api.world.Block;
+import club.issizler.okyanus.runtime.utils.accessors.EntityServerRaytraceable;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.hit.HitResult;
@@ -20,7 +21,7 @@ public class PlayerImpl extends EntityImpl implements Player {
     }
 
     public Optional<Block> getTargetBlock(double distance, boolean returnFluids) {
-        HitResult res = player.rayTrace(distance, 1.0f, returnFluids); // 1.0f = unknown
+        HitResult res = ((EntityServerRaytraceable) player).rayTraceInServer(distance, 1.0f, returnFluids); // 1.0f = unknown
 
         if (res.getType() != HitResult.Type.BLOCK)
             return Optional.empty();
@@ -56,6 +57,19 @@ public class PlayerImpl extends EntityImpl implements Player {
 
     public void kick(String message) {
         player.networkHandler.disconnect(new LiteralText(message));
+    }
+
+    @Override
+    public boolean isOp() {
+        return player.server.getPlayerManager().isOperator(player.getGameProfile());
+    }
+
+    @Override
+    public void setOp(boolean isOp) {
+        if (isOp)
+            player.server.getPlayerManager().addToOperators(player.getGameProfile());
+        else
+            player.server.getPlayerManager().removeFromOperators(player.getGameProfile());
     }
 
     @Override

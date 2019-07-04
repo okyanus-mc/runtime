@@ -1,6 +1,7 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
 import club.issizler.okyanus.api.Okyanus;
+import club.issizler.okyanus.api.Server;
 import club.issizler.okyanus.api.event.MoveEventImpl;
 import net.minecraft.client.network.packet.PlayerPositionLookS2CPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -24,7 +25,11 @@ public abstract class ServerPlayNetworkHandlerMixin$MoveEvent {
 
     @Inject(at = @At("HEAD"), method = "onPlayerMove", cancellable = true)
     private void oky$onPlayerMove(PlayerMoveC2SPacket packet, CallbackInfo ci) {
-        MoveEventImpl e = Okyanus.getServer().triggerEvent(new MoveEventImpl(packet, player));
+        Server s = Okyanus.getServer();
+        if (!s.isMainThread())
+            return;
+
+        MoveEventImpl e = s.triggerEvent(new MoveEventImpl(packet, player));
 
         if (e.isCancelled()) {
             moveCancelSendTimer++;
@@ -35,7 +40,7 @@ public abstract class ServerPlayNetworkHandlerMixin$MoveEvent {
             float yaw = this.player.yaw;
             float pitch = this.player.pitch;
 
-            if (moveCancelSendTimer > 5) { // If we don't do this, clients might potentially get kicked out due to our packet rate limits
+            if (moveCancelSendTimer > 5) { // If we don't do this, clients might potentially get kicked out due potential packet rate limits
                 this.player.networkHandler.sendPacket(new PlayerPositionLookS2CPacket(x, y, z, yaw, pitch, Collections.emptySet(), 0));
                 moveCancelSendTimer = 0;
             }

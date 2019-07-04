@@ -21,7 +21,12 @@ public class WorldImpl implements World {
     }
 
     public Block getBlockAt(Vec3d pos) {
-        return new BlockImpl(world.getBlockState(new BlockPos(pos.x, pos.y, pos.z)));
+        return new BlockImpl(this, world.getBlockState(new BlockPos(pos.x, pos.y, pos.z)), pos);
+    }
+
+    @Override
+    public String getName() {
+        return world.getServer().getLevelName(); // Not sure if we should account for mutliple worlds or not.
     }
 
 }

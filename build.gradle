@@ -38,7 +38,7 @@ dependencies {
     implementation 'org.cactoos:cactoos:0.41'
 
     fatJar 'com.electronwill.night-config:toml:3.4.0'
-    fatJar('club.issizler.okyanus:api:0.1.0-SNAPSHOT') { // always TODO: increment the API version
+    fatJar("club.issizler.okyanus:api:${project.version}") { // always TODO: increment the API version
         exclude group: "org.apache.commons"
     }
 }
@@ -48,7 +48,7 @@ processResources {
 
     from(sourceSets.main.resources.srcDirs) {
         include "fabric.mod.json"
-        expand "version": project.version
+        expand "version": project.version.replace("-SNAPSHOT", "")
     }
 
     from(sourceSets.main.resources.srcDirs) {

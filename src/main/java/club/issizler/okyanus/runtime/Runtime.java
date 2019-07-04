@@ -23,10 +23,6 @@ import static club.issizler.okyanus.api.cmdnew.CommandOptions.*;
 public class Runtime extends Mod {
 
     public static boolean DEBUG;
-    public static boolean USE_FAST_REDSTONE;
-    public static boolean USE_FAST_EXPLOSIONS;
-    public static int PACKET_RATE_LIMIT;
-    public static double PACKET_RATE_LIMIT_INTERVAL;
     public static FileConfig config;
     private Logger logger = LogManager.getLogger();
 
@@ -34,12 +30,6 @@ public class Runtime extends Mod {
     public void init() {
         config = CommentedFileConfig.builder("okyanus.toml").defaultResource("/config.toml").autosave().build();
         config.load();
-
-        USE_FAST_REDSTONE = config.get("optimizations.fastRedstone");
-        USE_FAST_EXPLOSIONS = config.get("optimizations.fastExplosions");
-
-        PACKET_RATE_LIMIT = config.get("limits.packetRateLimit");
-        PACKET_RATE_LIMIT_INTERVAL = config.get("limits.packetRateLimitInterval");
 
         DEBUG = config.get("debug");
         if (DEBUG) {
@@ -55,9 +45,6 @@ public class Runtime extends Mod {
         File configFolder = new File("./config/");
         if (!configFolder.exists())
             configFolder.mkdir();
-
-        if (USE_FAST_REDSTONE)
-            logger.warn("Okyanus: Fast redstone is currently experimental! Disable it from okyanus.toml if you have any redstone issues!");
 
         registerCommand(
             new CommandOf(

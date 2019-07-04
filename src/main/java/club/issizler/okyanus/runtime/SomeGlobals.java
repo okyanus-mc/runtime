@@ -13,22 +13,6 @@ public class SomeGlobals {
     public static final RollingAverage tps5 = new RollingAverage(60 * 5);
     public static final RollingAverage tps15 = new RollingAverage(60 * 15);
 
-    public static final Random SHARED_RANDOM = new Random() {
-
-        private boolean locked = false;
-
-        @Override
-        public synchronized void setSeed(long seed) {
-            if (locked)
-                return;
-
-            LogManager.getLogger().debug("Okyanus: Set shared random seed = " + seed);
-            super.setSeed(seed);
-            locked = true;
-        }
-
-    };
-
     public static CommandDispatcher<ServerCommandSource> commandDispatcher;
 
     private SomeGlobals() {

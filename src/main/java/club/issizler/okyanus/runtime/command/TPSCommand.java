@@ -11,12 +11,12 @@ public class TPSCommand implements CommandRunnable {
         boolean isConsole = source.isConsole();
         StringBuilder tps = new StringBuilder();
 
-        if (isConsole)
+        if (!isConsole)
             tps.append("§a");
 
         tps.append("TPS (1m/5m/15m): ");
 
-        if (isConsole)
+        if (!isConsole)
             tps.append("§r");
 
         tps.append(String.format("%.02f", SomeGlobals.tps1.getAverage())).append(", ");
