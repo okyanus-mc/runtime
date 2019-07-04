@@ -2,6 +2,7 @@ package club.issizler.okyanus.api.cmdnew;
 
 import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.Server;
+import club.issizler.okyanus.api.cmdnew.mck.MckArgumentBuilder;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -19,20 +20,25 @@ import java.util.*;
 
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
-public class OkyanusCommandRegistrar {
+public class OkyanusCommandMap {
 
     private final Map<String, ICommand> knowCommands = new HashMap<>();
 
     private final Server server = Okyanus.getServer();
     private final Logger logger;
 
-    public OkyanusCommandRegistrar(Logger logger) {
+    public OkyanusCommandMap(Logger logger) {
         this.logger = logger;
     }
 
     public void registerAll() {
         for (ICommand command : server.getCommandRegistry().getCommands()) {
             register(command);
+
+            LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getLabel());
+            builder = registerBuilder(command, 0, false, builder);
+
+            SomeGlobals.commandDispatcher.register(builder);
         }
     }
 
@@ -48,26 +54,23 @@ public class OkyanusCommandRegistrar {
     }
 
     private synchronized boolean register(String label, ICommand command, boolean isAlias) {
-        knowCommands.put()
+        knowCommands.put(label, command);
+        if (isAlias && knowCommands.containsKey(label))
+            return false;
+
+        ICommand conflict = knowCommands.get(label);
+        if (conflict != null && conflict.getLabel().equals(label))
+            return false;
+
+        knowCommands.put(label, command);
+        return true;
     }
 
-    public void register() {
-        Server s = Okyanus.getServer();
-        for (ICommand command : s.getCommandRegistry().getCommands()) {
-
-            LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getLabel());
-
-            builder = registerCommand(command, 0, false, builder);
-            SomeGlobals.commandDispatcher.register(builder);
-        }
-    }
-
-    private LiteralArgumentBuilder<ServerCommandSource> registerCommand(ICommand command, int location, boolean aliases, LiteralArgumentBuilder<ServerCommandSource> builder) {
-        ArgumentBuilder argumentBuilder = null;
-
+    private LiteralArgumentBuilder<ServerCommandSource> registerBuilder(ICommand command, int location, boolean isAlias, LiteralArgumentBuilder<ServerCommandSource> builder) {
+        ArgumentBuilder argumentBuilder = new MckArgumentBuilder();
         List<ICommand> subCommands = command.getSubCommands();
-
         final LiteralArgumentBuilder<ServerCommandSource> finalBuilder = builder;
+
         Command<ServerCommandSource> cmd = context -> {
             final CommandSource commandSource = new OkyanusCommandSource(context);
             final String[] inputs = context.getInput().split(" ");
@@ -97,7 +100,7 @@ public class OkyanusCommandRegistrar {
         boolean wasPreviousOptional = false;
 
         for (ICommand subcommand : subCommands)
-            builder.then(registerCommand(subcommand, location + 1, false, literal(subcommand.getLabel())));
+            builder.then(registerBuilder(subcommand, location + 1, false, literal(subcommand.getLabel())));
 
         Collections.reverse(subCommands);
         for (ICommand arg : subCommands) {
@@ -117,7 +120,7 @@ public class OkyanusCommandRegistrar {
 
             ArgumentBuilder argument = CommandManager.argument(arg.getLabel(), type);
 
-            if (argumentBuilder == null) {
+            if (argumentBuilder instanceof MckArgumentBuilder) {
                 argumentBuilder = argument.executes(cmd);
             } else {
                 if (wasPreviousOptional)
@@ -144,5 +147,4 @@ public class OkyanusCommandRegistrar {
         }
         return builder;
     }
-
 }
