@@ -18,7 +18,7 @@
     "events.MinecraftServerMixin",
     "events.PlayerManagerMixin$ChatEvent",
     "events.PlayerManagerMixin$ConnectEvent",
-    "events.PlayerManagerMixin$DisconnectEvent",
+    "events.ServerPlayNetworkHandler$DisconnectEvent",
     "events.ServerPlayNetworkHandlerMixin$BreakEvent",
     "events.ServerPlayNetworkHandlerMixin$DropEvent",
     "events.ServerPlayNetworkHandlerMixin$InteractBlockEvent",
