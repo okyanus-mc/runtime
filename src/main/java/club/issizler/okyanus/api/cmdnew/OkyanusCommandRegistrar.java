@@ -11,25 +11,47 @@ import com.mojang.brigadier.tree.CommandNode;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.And;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
 public class OkyanusCommandRegistrar {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private final Map<String, ICommand> knowCommands = new HashMap<>();
 
-    public OkyanusCommandRegistrar() {
-        
+    private final Server server = Okyanus.getServer();
+    private final Logger logger;
+
+    public OkyanusCommandRegistrar(Logger logger) {
+        this.logger = logger;
     }
 
-    public static void register() {
+    public void registerAll() {
+        for (ICommand command : server.getCommandRegistry().getCommands()) {
+            register(command);
+        }
+    }
+
+    private void register(ICommand command) {
+        register(command.getLabel(), command);
+    }
+
+    private void register(String label, ICommand command) {
+        label = label.toLowerCase(Locale.ENGLISH).trim();
+        register(label, command, false);
+
+        command.getAliases().removeIf(alias -> !register(alias, command, true));
+    }
+
+    private synchronized boolean register(String label, ICommand command, boolean isAlias) {
+        knowCommands.put()
+    }
+
+    public void register() {
         Server s = Okyanus.getServer();
         for (ICommand command : s.getCommandRegistry().getCommands()) {
 
@@ -40,7 +62,7 @@ public class OkyanusCommandRegistrar {
         }
     }
 
-    private static LiteralArgumentBuilder<ServerCommandSource> registerCommand(ICommand command, int location, boolean aliases, LiteralArgumentBuilder<ServerCommandSource> builder) {
+    private LiteralArgumentBuilder<ServerCommandSource> registerCommand(ICommand command, int location, boolean aliases, LiteralArgumentBuilder<ServerCommandSource> builder) {
         ArgumentBuilder argumentBuilder = null;
 
         List<ICommand> subCommands = command.getSubCommands();
@@ -65,7 +87,7 @@ public class OkyanusCommandRegistrar {
                 });
                 return command.getRunnable().run(commandSource);
             } catch (Exception e) {
-                LOGGER.fatal(e.getMessage() == null ? e.getMessage() : "");
+                logger.fatal(e.getMessage() == null ? e.getMessage() : "");
                 return 0;
             }
         };
@@ -117,7 +139,7 @@ public class OkyanusCommandRegistrar {
 
         CommandNode<ServerCommandSource> overwriteCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.getLabel());
         if (overwriteCommand != null) {
-            LOGGER.info("Okyanus: Overwriting a command (/" + command.getLabel() + "). Just letting you know");
+            logger.info("Okyanus: Overwriting a command (/" + command.getLabel() + "). Just letting you know");
             SomeGlobals.commandDispatcher.getRoot().getChildren().remove(overwriteCommand);
         }
         return builder;

@@ -2,6 +2,7 @@ package club.issizler.okyanus.runtime;
 
 import club.issizler.okyanus.api.Mod;
 import club.issizler.okyanus.api.cmdnew.CommandOf;
+import club.issizler.okyanus.api.cmdnew.req.OpReq;
 import club.issizler.okyanus.runtime.command.ModsCommand;
 import club.issizler.okyanus.runtime.command.OkyanusCommand;
 import club.issizler.okyanus.runtime.command.TPSCommand;
@@ -62,7 +63,7 @@ public class Runtime extends Mod {
             new CommandOf(
                 "tps",
                 requirements(
-                    (commandSource, arguments, location) -> commandSource.isOp()
+                    new OpReq()
                 ),
                 run(new TPSCommand())
             )
@@ -73,7 +74,7 @@ public class Runtime extends Mod {
                 "okyanusmaincommand",
                 label("okyanus"),
                 requirements(
-                    (commandSource, arguments, location) -> commandSource.isOp()
+                    new OpReq()
                 ),
                 run(new OkyanusCommand()),
                 subCommands(

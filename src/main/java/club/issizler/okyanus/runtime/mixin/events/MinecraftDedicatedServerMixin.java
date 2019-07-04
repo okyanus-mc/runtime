@@ -1,8 +1,8 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
 import club.issizler.okyanus.api.Okyanus;
+import club.issizler.okyanus.api.cmdnew.OkyanusCommandRegistrar;
 import club.issizler.okyanus.api.event.ReadyEventImpl;
-import club.issizler.okyanus.runtime.command.CommandRegistrar;
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
@@ -21,9 +21,9 @@ public abstract class MinecraftDedicatedServerMixin {
 
     @Inject(at = @At(value = "INVOKE", target = "net.minecraft.util.SystemUtil.getMeasuringTimeNano()J", ordinal = 1), method = "setupServer")
     private void oky$setupServer$ready(CallbackInfoReturnable<Boolean> cir) {
-        CommandRegistrar.register();
+        new OkyanusCommandRegistrar(LOGGER).registerAll();
         LOGGER.info("Okyanus: Starting all plugins");
-        Okyanus.getServer().triggerEvent(new ReadyEventImpl());
+        Okyanus.getServer().getEventRegistry().trigger(new ReadyEventImpl());
     }
 
 }
