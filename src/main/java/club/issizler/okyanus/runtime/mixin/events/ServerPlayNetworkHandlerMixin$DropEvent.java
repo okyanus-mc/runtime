@@ -27,7 +27,7 @@ public abstract class ServerPlayNetworkHandlerMixin$DropEvent {
         if (!s.isMainThread())
             return;
 
-        DropEventImpl e = s.triggerEvent(new DropEventImpl(playerActionC2SPacket_1, player));
+        DropEventImpl e = s.getEventRegistry().trigger(new DropEventImpl(playerActionC2SPacket_1, player));
 
         if (e.isCancelled()) {
             ci.cancel(); // TODO: Alert client of this cancellation.

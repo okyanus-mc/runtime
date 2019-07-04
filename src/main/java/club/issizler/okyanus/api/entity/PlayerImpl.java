@@ -72,9 +72,4 @@ public class PlayerImpl extends EntityImpl implements Player {
             player.server.getPlayerManager().removeFromOperators(player.getGameProfile());
     }
 
-    @Override
-    public String getIdentifier() {
-        return getUUID().toString();
-    }
-
 }

@@ -3,9 +3,6 @@ package club.issizler.okyanus.runtime;
 import club.issizler.okyanus.runtime.utils.RollingAverage;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.command.ServerCommandSource;
-import org.apache.logging.log4j.LogManager;
-
-import java.util.Random;
 
 public class SomeGlobals {
 

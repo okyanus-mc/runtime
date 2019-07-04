@@ -24,10 +24,10 @@ public abstract class CommandManagerMixin$RawCommandEvent {
         Server s = Okyanus.getServer();
 
         if (serverCommandSource_1.getEntity() == null) {
-            event = s.triggerEvent(new RawCommandEventImpl(string_1));
+            event = s.getEventRegistry().trigger(new RawCommandEventImpl(string_1));
         } else {
             try {
-                event = s.triggerEvent(new RawCommandEventImpl(new PlayerImpl(serverCommandSource_1.getPlayer()), string_1));
+                event = s.getEventRegistry().trigger(new RawCommandEventImpl(new PlayerImpl(serverCommandSource_1.getPlayer()), string_1));
             } catch (CommandSyntaxException e) {
                 throw new RuntimeException(e);
             }

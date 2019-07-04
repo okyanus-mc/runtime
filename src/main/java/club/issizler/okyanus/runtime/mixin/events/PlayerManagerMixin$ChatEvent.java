@@ -38,7 +38,7 @@ public abstract class PlayerManagerMixin$ChatEvent {
         if (!player.isPresent())
             return;
 
-        ChatEventImpl e = s.triggerEvent(new ChatEventImpl(player.get(), textMessage));
+        ChatEventImpl e = s.getEventRegistry().trigger(new ChatEventImpl(player.get(), textMessage));
 
         if (e.isCancelled())
             ci.cancel();

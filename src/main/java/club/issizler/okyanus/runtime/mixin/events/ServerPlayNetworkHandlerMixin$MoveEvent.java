@@ -29,7 +29,7 @@ public abstract class ServerPlayNetworkHandlerMixin$MoveEvent {
         if (!s.isMainThread())
             return;
 
-        MoveEventImpl e = s.triggerEvent(new MoveEventImpl(packet, player));
+        MoveEventImpl e = s.getEventRegistry().trigger(new MoveEventImpl(packet, player));
 
         if (e.isCancelled()) {
             moveCancelSendTimer++;

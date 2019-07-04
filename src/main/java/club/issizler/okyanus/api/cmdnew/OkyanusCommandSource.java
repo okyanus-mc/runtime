@@ -20,6 +20,11 @@ public class OkyanusCommandSource implements CommandSource {
     }
 
     @Override
+    public boolean isConsole() {
+        return context.getSource().getEntity() == null;
+    }
+
+    @Override
     public void sendMessage(String text) {
         context.getSource().sendFeedback(new LiteralText(text), false);
     }

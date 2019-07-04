@@ -21,7 +21,7 @@ public abstract class PlayerManagerMixin$ConnectEvent {
     @Inject(at = @At("HEAD"), method = "onPlayerConnect", cancellable = true)
     private void oky$onPlayerConnect(ClientConnection connection, ServerPlayerEntity playerEntity, CallbackInfo ci) {
         joinMessage = null;
-        ConnectEventImpl e = Okyanus.getServer().triggerEvent(new ConnectEventImpl(connection, playerEntity, "§e" + playerEntity.getDisplayName().asFormattedString() + " joined the game"));
+        ConnectEventImpl e = Okyanus.getServer().getEventRegistry().trigger(new ConnectEventImpl(connection, playerEntity, "§e" + playerEntity.getDisplayName().asFormattedString() + " joined the game"));
 
         if (e.isCancelled()) {
             connection.disconnect(new LiteralText(e.getCancelReason()));

@@ -24,7 +24,7 @@ public abstract class ServerPlayNetworkHandlerMixin$InteractBlockEvent {
         if (!s.isMainThread())
             return;
 
-        InteractBlockEventImpl e = s.triggerEvent(new InteractBlockEventImpl(playerInteractBlockC2SPacket_1, player));
+        InteractBlockEventImpl e = s.getEventRegistry().trigger(new InteractBlockEventImpl(playerInteractBlockC2SPacket_1, player));
         if (e.isCancelled()) {
             ci.cancel();
         }
