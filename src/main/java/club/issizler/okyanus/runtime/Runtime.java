@@ -6,7 +6,6 @@ import club.issizler.okyanus.api.cmdnew.req.OpReq;
 import club.issizler.okyanus.runtime.command.ModsCommand;
 import club.issizler.okyanus.runtime.command.OkyanusCommand;
 import club.issizler.okyanus.runtime.command.TPSCommand;
-import club.issizler.okyanus.tests.TestCommand;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.file.FileConfig;
 import org.apache.logging.log4j.Level;
@@ -72,11 +71,6 @@ public class Runtime extends Mod {
                             new CommandOf(
                                 "modId",
                                 run(new ModsCommand())
-                            ),
-                            new CommandOf(
-                                "testsubcommand",
-                                label("test"),
-                                run(new TestCommand())
                             )
                         )
                     )

@@ -1,12 +1,16 @@
 package club.issizler.okyanus.test;
 
 import club.issizler.okyanus.api.Mod;
+import club.issizler.okyanus.api.cmdnew.CommandOf;
+import club.issizler.okyanus.api.cmdnew.CommandOptions;
 import club.issizler.okyanus.test.events.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static club.issizler.okyanus.api.cmdnew.CommandOptions.*;
 
 public class Tests extends Mod {
 
@@ -66,6 +70,14 @@ public class Tests extends Mod {
         registerEvent(new PlaceEventTest());
         registerEvent(new ReadyEventTest());
         registerEvent(new StopEventTest());
+
+        registerCommand(
+            new CommandOf(
+                "testmaincommand",
+                label("okyanus"),
+                run(new TestCommand())
+            )
+        );
     }
 
 }
