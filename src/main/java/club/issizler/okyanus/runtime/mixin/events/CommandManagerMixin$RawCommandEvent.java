@@ -15,8 +15,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(CommandManager.class)
 public abstract class CommandManagerMixin$RawCommandEvent {
 
-    @Inject(at = @At("HEAD"), method = "execute")
+    @Inject(at = @At("HEAD"), method = "execute", cancellable = true)
     private void oky$execute(ServerCommandSource serverCommandSource_1, String string_1, CallbackInfoReturnable<Integer> cir) {
+        if (string_1.startsWith("/"))
+            string_1 = string_1.substring(1);
+
         RawCommandEventImpl event = null;
         Server s = Okyanus.getServer();
 
