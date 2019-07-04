@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "okyanus",
+  "version": "${version}",
+  "name": "Okyanus",
+  "description": "Okyanus server test.",
+  "environment": "server",
+  "mixins": [
+    "mixins.okyanus.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.4.8"
+  },
+  "entrypoints": {
+    "server": [
+      "club.issizler.okyanus.test.Tests::init"
+    ]
+  }
+}

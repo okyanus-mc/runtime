@@ -1,9 +1,9 @@
-package club.issizler.okyanus.tests;
+package club.issizler.okyanus.test;
 
 import club.issizler.okyanus.api.cmdnew.CommandRunnable;
 import club.issizler.okyanus.api.cmdnew.CommandSource;
 
-import static club.issizler.okyanus.tests.Tests.tests;
+import static club.issizler.okyanus.test.Tests.tests;
 
 public class TestCommand implements CommandRunnable {
 

@@ -1,9 +1,9 @@
-package club.issizler.okyanus.tests.events;
+package club.issizler.okyanus.test.events;
 
 import club.issizler.okyanus.api.event.EventHandler;
 import club.issizler.okyanus.api.event.MoveEvent;
 
-import static club.issizler.okyanus.tests.Tests.tests;
+import static club.issizler.okyanus.test.Tests.tests;
 
 public class MoveEventTest implements EventHandler<MoveEvent> {
 

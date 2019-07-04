@@ -1,7 +1,7 @@
-package club.issizler.okyanus.tests;
+package club.issizler.okyanus.test;
 
 import club.issizler.okyanus.api.Mod;
-import club.issizler.okyanus.tests.events.*;
+import club.issizler.okyanus.test.events.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
