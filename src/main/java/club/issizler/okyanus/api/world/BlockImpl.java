@@ -8,7 +8,7 @@ public class BlockImpl implements Block {
     private final BlockState block;
     private final Vec3d pos;
 
-    BlockImpl(BlockState block, Vec3d pos) {
+    public BlockImpl(BlockState block, Vec3d pos) {
         this.block = block;
         this.pos = pos;
     }
