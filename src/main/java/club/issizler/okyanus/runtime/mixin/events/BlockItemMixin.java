@@ -8,6 +8,7 @@ import club.issizler.okyanus.api.world.WorldImpl;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -33,7 +34,7 @@ public abstract class BlockItemMixin {
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemPlacementContext;getBlockPos()Lnet/minecraft/util/math/BlockPos;"), method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;", cancellable = true)
     private void oky$place(ItemPlacementContext itemPlacementContext_1, CallbackInfoReturnable<ActionResult> cir) {
-        ServerPlayerEntity player = (ServerPlayerEntity) itemPlacementContext_1.getPlayer();
+        PlayerEntity player = itemPlacementContext_1.getPlayer();
 
         BlockPos mcPos = itemPlacementContext_1.getBlockPos();
         Vec3d pos = new Vec3d(mcPos.getX(), mcPos.getY(), mcPos.getZ());
