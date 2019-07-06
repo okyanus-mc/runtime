@@ -127,7 +127,7 @@ public class OkyanusCommandMap {
             wasPreviousOptional = arg.isOptional();
         }
 
-        if (argumentBuilder != null) {
+        if (!(argumentBuilder instanceof MckArgumentBuilder)) {
             builder = builder.then(argumentBuilder);
 
             if (wasPreviousOptional)
