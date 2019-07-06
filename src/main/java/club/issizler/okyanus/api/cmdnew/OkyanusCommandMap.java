@@ -32,17 +32,13 @@ public class OkyanusCommandMap {
 
     public void registerAll() {
         for (ICommand command : server.getCommandRegistry().getCommands()) {
-            register(command);
+            register(command.getLabel(), command);
 
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getLabel());
             builder = registerBuilder(command, 0, builder);
 
             SomeGlobals.commandDispatcher.register(builder);
         }
-    }
-
-    private void register(ICommand command) {
-        register(command.getLabel(), command);
     }
 
     private void register(String label, ICommand command) {
