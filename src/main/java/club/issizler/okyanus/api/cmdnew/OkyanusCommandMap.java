@@ -6,7 +6,6 @@ import club.issizler.okyanus.api.cmd.CommandRunnable;
 import club.issizler.okyanus.api.cmdnew.mck.MckCommandRunnable;
 import club.issizler.okyanus.api.cmdnew.req.AndReq;
 import club.issizler.okyanus.runtime.SomeGlobals;
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -25,7 +24,7 @@ import static net.minecraft.server.command.CommandManager.argument;
 
 public class OkyanusCommandMap {
 
-    private final Map<String, ICommand> knownCommands = new HashMap<>();
+    private final Map<String, Command> knownCommands = new HashMap<>();
 
     private final Server server = Okyanus.getServer();
     private final Logger logger;
@@ -35,7 +34,7 @@ public class OkyanusCommandMap {
     }
 
     public void registerAll() {
-        for (ICommand command : server.getCommandRegistry().getCommands()) {
+        for (Command command : server.getCommandRegistry().getCommands()) {
             if (command.getLabel().isEmpty()) {
                 logger.error("Command with id '" + command.getId() + "' can't registered because the label isn't defined!");
                 continue;
@@ -50,19 +49,19 @@ public class OkyanusCommandMap {
         }
     }
 
-    private void register(String label, ICommand command) {
+    private void register(String label, Command command) {
         label = label.toLowerCase(Locale.ENGLISH).trim();
         register(label, command, false);
 
         command.getAliases().removeIf(alias -> !register(alias, command, true));
     }
 
-    private synchronized boolean register(String label, ICommand command, boolean isAlias) {
+    private synchronized boolean register(String label, Command command, boolean isAlias) {
         knownCommands.put(label, command);
         if (isAlias && knownCommands.containsKey(label))
             return false;
 
-        ICommand conflict = knownCommands.get(label);
+        Command conflict = knownCommands.get(label);
         if (conflict != null && conflict.getLabel().equals(label))
             return false;
 
@@ -71,7 +70,7 @@ public class OkyanusCommandMap {
     }
 
     private ArgumentBuilder registerBuilder(
-        ICommand command,
+        Command command,
         int location
     ) {
 
@@ -81,7 +80,7 @@ public class OkyanusCommandMap {
         final boolean isArg = label.equals("") || label.equals(" ") || label.isEmpty();
         final CommandRunnable run = command.getRunnable();
         final List<Requirement> requirements = command.getRequirements();
-        final List<ICommand> subCommands = command.getSubCommands();
+        final List<Command> subCommands = command.getSubCommands();
         final com.mojang.brigadier.arguments.ArgumentType type;
         switch (command.getType()) {
             case PLAYER:
@@ -94,7 +93,7 @@ public class OkyanusCommandMap {
                 break;
         }
         final ArgumentBuilder finalBuilder = isArg ? argument(id, type) : literal(label);
-        final Command<ServerCommandSource> cmd = context -> {
+        final com.mojang.brigadier.Command<ServerCommandSource> cmd = context -> {
             final String[] inputs = context.getInput().split(" ");
             final String currentArg = inputs[location];
             final CommandSource commandSource = new CommandSourceImpl(context, currentArg);
