@@ -29,7 +29,7 @@ public abstract class ServerPlayNetworkHandlerMixin$BreakEvent {
         if (!s.isMainThread())
             return;
 
-        BreakEventImpl e = s.triggerEvent(new BreakEventImpl(playerActionC2SPacket_1, player));
+        BreakEventImpl e = s.getEventRegistry().trigger(new BreakEventImpl(playerActionC2SPacket_1, player));
         if (e.isCancelled()) {
             this.player.networkHandler.sendPacket(new BlockUpdateS2CPacket(player.world, playerActionC2SPacket_1.getPos()));
             ci.cancel();

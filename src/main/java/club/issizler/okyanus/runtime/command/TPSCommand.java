@@ -1,7 +1,7 @@
 package club.issizler.okyanus.runtime.command;
 
-import club.issizler.okyanus.api.cmd.CommandRunnable;
-import club.issizler.okyanus.api.cmd.CommandSource;
+import club.issizler.okyanus.api.cmdnew.CommandRunnable;
+import club.issizler.okyanus.api.cmdnew.CommandSource;
 import club.issizler.okyanus.runtime.SomeGlobals;
 
 public class TPSCommand implements CommandRunnable {
@@ -23,7 +23,7 @@ public class TPSCommand implements CommandRunnable {
         tps.append(String.format("%.02f", SomeGlobals.tps5.getAverage())).append(", ");
         tps.append(String.format("%.02f", SomeGlobals.tps15.getAverage()));
 
-        source.send(tps.toString());
+        source.sendMessage(tps.toString());
         return 1;
     }
 

@@ -3,6 +3,7 @@ package club.issizler.okyanus.runtime.mixin.events;
 import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.Server;
 import club.issizler.okyanus.api.entity.Player;
+import club.issizler.okyanus.api.entity.mck.MckPlayer;
 import club.issizler.okyanus.api.event.ChatEventImpl;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.text.LiteralText;
@@ -34,11 +35,11 @@ public abstract class PlayerManagerMixin$ChatEvent {
 
         Server s = Okyanus.getServer();
 
-        Optional<Player> player = s.getPlayerByName(playerName);
-        if (!player.isPresent())
+        Player player = s.getPlayerByName(playerName);
+        if (player instanceof MckPlayer)
             return;
 
-        ChatEventImpl e = s.triggerEvent(new ChatEventImpl(player.get(), textMessage));
+        ChatEventImpl e = s.getEventRegistry().trigger(new ChatEventImpl(player, textMessage));
 
         if (e.isCancelled())
             ci.cancel();

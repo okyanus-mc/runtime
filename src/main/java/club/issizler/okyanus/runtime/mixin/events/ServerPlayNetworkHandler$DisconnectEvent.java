@@ -26,7 +26,7 @@ public abstract class ServerPlayNetworkHandler$DisconnectEvent {
     @Inject(at = @At("HEAD"), method = "onDisconnected")
     private void oky$remove(Text text_1, CallbackInfo ci) {
         leaveMessage = null;
-        DisconnectEvent event = Okyanus.getServer().triggerEvent(new DisconnectEventImpl(player, player.getDisplayName().asFormattedString() + " left the game"));
+        DisconnectEvent event = Okyanus.getServer().getEventRegistry().trigger(new DisconnectEventImpl(player, player.getDisplayName().asFormattedString() + " left the game"));
 
         leaveMessage = event.getMessage();
     }

@@ -1,10 +1,10 @@
 package club.issizler.okyanus.api;
 
 import club.issizler.okyanus.api.cmd.CommandBuilder;
-import club.issizler.okyanus.api.cmd.CommandRegistry;
-import club.issizler.okyanus.api.cmd.CommandRegistryImpl;
+import club.issizler.okyanus.api.cmdnew.CommandRegistry;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
+import club.issizler.okyanus.api.entity.mck.MckPlayer;
 import club.issizler.okyanus.api.event.Event;
 import club.issizler.okyanus.api.event.EventHandler;
 import club.issizler.okyanus.api.event.EventRegistry;
@@ -21,15 +21,15 @@ import java.util.*;
 public class ServerImpl implements Server {
 
     private final MinecraftServer server;
-
     private final CommandRegistry commandRegistry;
+    private final club.issizler.okyanus.api.cmd.CommandRegistry oldCommandRegistry;
     private final EventRegistry eventRegistry;
 
-    public ServerImpl(MinecraftServer server, CommandRegistry commandManager, EventRegistry eventManager) {
+    public ServerImpl(MinecraftServer server, CommandRegistry commandRegistry, club.issizler.okyanus.api.cmd.CommandRegistry oldCommandRegistry, EventRegistry eventRegistry) {
         this.server = server;
-
-        this.commandRegistry = commandManager;
-        this.eventRegistry = eventManager;
+        this.commandRegistry = commandRegistry;
+        this.oldCommandRegistry = oldCommandRegistry;
+        this.eventRegistry = eventRegistry;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ServerImpl implements Server {
         Set<Player> players = new HashSet<>();
 
         server.getPlayerManager().getPlayerList().forEach(e ->
-                players.add(new PlayerImpl(e))
+            players.add(new PlayerImpl(e))
         );
 
         return players;
@@ -72,8 +72,43 @@ public class ServerImpl implements Server {
     }
 
     @Override
+    public Player getPlayerByName(String playerName) {
+        ServerPlayerEntity e = server.getPlayerManager().getPlayer(playerName);
+        if (e == null)
+            return new MckPlayer();
+
+        return new PlayerImpl(e);
+    }
+
+    @Override
+    public void runCommand(String command) {
+        server.getCommandManager().execute(server.getCommandSource(), command);
+    }
+
+    @Override
+    public club.issizler.okyanus.api.cmd.CommandRegistry getOldCommandRegistry() {
+        return oldCommandRegistry;
+    }
+
+    @Override
+    public CommandRegistry getCommandRegistry() {
+        return commandRegistry;
+    }
+
+    @Override
+    public EventRegistry getEventRegistry() {
+        return eventRegistry;
+    }
+
+    @Override
+    public void broadcast(String message) {
+        server.sendMessage(new LiteralText(message));
+        getPlayerList().forEach(player -> player.send(message));
+    }
+
+    @Override
     public void registerCommand(CommandBuilder cmd) {
-        commandRegistry.register(cmd);
+        oldCommandRegistry.register(cmd);
     }
 
     @Override
@@ -87,27 +122,8 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public Optional<Player> getPlayerByName(String playerName) {
-        ServerPlayerEntity e = server.getPlayerManager().getPlayer(playerName);
-        if (e == null)
-            return Optional.empty();
-
-        return Optional.of(new PlayerImpl(e));
-    }
-
-    @Override
     public void exec(String command) {
         server.getCommandManager().execute(server.getCommandSource(), command);
-    }
-
-    @Override
-    public void broadcast(String message) {
-        server.sendMessage(new LiteralText(message));
-        getPlayerList().forEach(player -> player.send(message));
-    }
-
-    public CommandRegistryImpl getCommandRegistry() {
-        return (CommandRegistryImpl) commandRegistry;
     }
 
 }

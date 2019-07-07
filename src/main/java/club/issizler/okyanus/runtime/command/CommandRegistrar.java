@@ -1,7 +1,7 @@
 package club.issizler.okyanus.runtime.command;
 
 import club.issizler.okyanus.api.Okyanus;
-import club.issizler.okyanus.api.ServerImpl;
+import club.issizler.okyanus.api.Server;
 import club.issizler.okyanus.api.cmd.ArgumentType;
 import club.issizler.okyanus.api.cmd.CommandBuilder;
 import club.issizler.okyanus.api.cmd.CommandSourceImpl;
@@ -23,16 +23,15 @@ import java.util.List;
 
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
+@Deprecated
 public class CommandRegistrar {
 
     private static Logger LOGGER = LogManager.getLogger();
 
     public static void register() {
-        LOGGER.info("Okyanus: Late command registration");
-
-        ServerImpl s = (ServerImpl) Okyanus.getServer();
-        for (CommandBuilder command : s.getCommandRegistry().getCommands()) {
-            LOGGER.debug("Okyanus: Creating brigadier command for " + command.getName());
+        Server s = Okyanus.getServer();
+        for (CommandBuilder command : s.getOldCommandRegistry().getCommands()) {
+            LOGGER.debug("Okyanus Old Command Registerer: Creating brigadier command for " + command.getName());
 
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getName());
 

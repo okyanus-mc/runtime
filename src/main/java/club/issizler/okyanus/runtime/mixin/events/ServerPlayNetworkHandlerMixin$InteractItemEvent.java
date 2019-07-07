@@ -24,7 +24,7 @@ public abstract class ServerPlayNetworkHandlerMixin$InteractItemEvent {
         if (!s.isMainThread())
             return;
 
-        InteractItemEventImpl e = s.triggerEvent(new InteractItemEventImpl(playerInteractItemC2SPacket_1, player));
+        InteractItemEventImpl e = s.getEventRegistry().trigger(new InteractItemEventImpl(playerInteractItemC2SPacket_1, player));
         if (e.isCancelled()) {
             ci.cancel();
         }
