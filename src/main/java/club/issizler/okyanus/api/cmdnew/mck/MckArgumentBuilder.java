@@ -7,7 +7,7 @@ public class MckArgumentBuilder extends ArgumentBuilder {
 
     @Override
     protected ArgumentBuilder getThis() {
-        return null;
+        return this;
     }
 
     @Override

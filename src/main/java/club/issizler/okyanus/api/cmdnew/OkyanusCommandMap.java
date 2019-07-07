@@ -2,20 +2,25 @@ package club.issizler.okyanus.api.cmdnew;
 
 import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.Server;
+import club.issizler.okyanus.api.cmdnew.mck.MckCommandRunnable;
+import club.issizler.okyanus.api.cmdnew.req.AndReq;
 import club.issizler.okyanus.runtime.SomeGlobals;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
+import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.mojang.brigadier.arguments.IntegerArgumentType.getInteger;
-import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
-import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
+import static net.minecraft.server.command.CommandManager.argument;
 
 public class OkyanusCommandMap {
 
@@ -30,14 +35,15 @@ public class OkyanusCommandMap {
 
     public void registerAll() {
         for (ICommand command : server.getCommandRegistry().getCommands()) {
-            if (command.getLabel().equals("")) {
+            if (command.getLabel().isEmpty()) {
                 logger.error("Command which has id '" + command.getId() + "' can't registered because of the label didn't defined!");
                 continue;
             }
 
             register(command.getLabel(), command);
 
-            LiteralArgumentBuilder<ServerCommandSource> builder = registerBuilder(command, 0, literal(command.getLabel()););
+            LiteralArgumentBuilder<ServerCommandSource> builder =
+                (LiteralArgumentBuilder<ServerCommandSource>) registerBuilder(command, 0);
 
             SomeGlobals.commandDispatcher.register(builder);
         }
@@ -63,39 +69,55 @@ public class OkyanusCommandMap {
         return true;
     }
 
-    private LiteralArgumentBuilder<ServerCommandSource> registerBuilder(
+    private ArgumentBuilder registerBuilder(
         ICommand command,
-        int location,
-        LiteralArgumentBuilder<ServerCommandSource> builder
+        int location
     ) {
 
-        // ALGORITHM
-        literal("foo")
-            .then(
-                argument("bar", integer())
-                    .executes(c -> {
-                        System.out.println("Bar is " + getInteger(c, "bar"));
-                        return 1;
-                    })
-            )
-            .then(
-                literal("mods")
-                    .executes(c -> {
+        // Defining
+        final String id = command.getId();
+        final String label = command.getLabel();
+        final boolean isArg = label.equals("") || label.equals(" ") || label.isEmpty();
+        final CommandRunnable run = command.getRunnable();
+        final List<Requirement> requirements = command.getRequirements();
+        final List<ICommand> subCommands = command.getSubCommands();
+        final com.mojang.brigadier.arguments.ArgumentType type;
+        switch (command.getType()) {
+            case PLAYER:
+                type = EntityArgumentType.players();
+                break;
+            case TEXT:
+            case NONE:
+            default:
+                type = StringArgumentType.string();
+                break;
+        }
+        final ArgumentBuilder finalBuilder = isArg ? argument(id, type) : literal(label);
+        final Command<ServerCommandSource> cmd = context -> {
+            final CommandSource commandSource = new OkyanusCommandSource(context);
+            final String[] inputs = context.getInput().split(" ");
+            finalBuilder.requires(
+                new AndReq(requirements, commandSource, inputs, location)
+            );
+            return run.run(commandSource);
+        };
+        // Defining
 
-                        return 1;
-                    })
-            )
-            .executes(c -> {
-                System.out.println("Called foo with no arguments");
-                return 1;
-            });
+        if (!(run instanceof MckCommandRunnable))
+            finalBuilder.executes(cmd);
+
+        subCommands.forEach(iCommand -> {
+            finalBuilder.then(
+                registerBuilder(iCommand, location + 1)
+            );
+        });
 
         CommandNode<ServerCommandSource> overwriteCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.getLabel());
         if (overwriteCommand != null) {
-            logger.info("Okyanus: Overwriting a command (/" + command.getLabel() + "). Just letting you know");
+            logger.warn("Okyanus: Overwriting a command (/" + command.getLabel() + "). Just letting you know");
             SomeGlobals.commandDispatcher.getRoot().getChildren().remove(overwriteCommand);
         }
 
-        return builder;
+        return finalBuilder;
     }
 }
