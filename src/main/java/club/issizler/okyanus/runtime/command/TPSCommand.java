@@ -1,6 +1,6 @@
 package club.issizler.okyanus.runtime.command;
 
-import club.issizler.okyanus.api.cmd.CommandRunnable;
+import club.issizler.okyanus.api.cmdnew.CommandRunnable;
 import club.issizler.okyanus.api.cmdnew.CommandSource;
 import club.issizler.okyanus.runtime.SomeGlobals;
 

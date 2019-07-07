@@ -1,7 +1,10 @@
 package club.issizler.okyanus.api.cmdnew;
 
+import club.issizler.okyanus.api.entity.Entity;
+import club.issizler.okyanus.api.entity.EntityImpl;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
+import club.issizler.okyanus.api.entity.mck.MckEntity;
 import club.issizler.okyanus.api.entity.mck.MckPlayer;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -18,6 +21,13 @@ public class CommandSourceImpl implements CommandSource {
     public CommandSourceImpl(CommandContext<ServerCommandSource> context, String arg) {
         this.context = context;
         this.arg = arg;
+    }
+
+    @Override
+    public Entity getEntity() {
+        return context.getSource().getEntity() == null
+            ? new MckEntity()
+            : new EntityImpl(context.getSource().getEntity());
     }
 
     @Override
