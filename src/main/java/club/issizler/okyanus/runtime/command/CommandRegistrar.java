@@ -29,11 +29,9 @@ public class CommandRegistrar {
     private static Logger LOGGER = LogManager.getLogger();
 
     public static void register() {
-        LOGGER.info("Okyanus: Late command registration");
-
         Server s = Okyanus.getServer();
         for (CommandBuilder command : s.getOldCommandRegistry().getCommands()) {
-            LOGGER.debug("Okyanus: Creating brigadier command for " + command.getName());
+            LOGGER.debug("Okyanus Old Command Registerer: Creating brigadier command for " + command.getName());
 
             LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getName());
 
