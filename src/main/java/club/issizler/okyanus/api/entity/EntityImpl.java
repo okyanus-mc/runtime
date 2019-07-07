@@ -14,10 +14,12 @@ public class EntityImpl implements Entity {
         this.entity = entity;
     }
 
+    @Override
     public String getName() {
         return entity.getName().asFormattedString();
     }
 
+    @Override
     public String getCustomName() {
         if (entity.getCustomName() == null)
             return getName();
@@ -25,24 +27,29 @@ public class EntityImpl implements Entity {
         return entity.getCustomName().asFormattedString();
     }
 
+    @Override
     public void setCustomName(String name) {
         entity.setCustomName(new LiteralText(name));
     }
 
+    @Override
     public UUID getUUID() {
         return entity.getUuid();
     }
 
+    @Override
     public Vec3d getPos() {
         net.minecraft.util.math.Vec3d pos = entity.getPos();
 
         return new Vec3d(pos.x, pos.y, pos.z);
     }
 
+    @Override
     public WorldImpl getWorld() {
         return new WorldImpl(entity.world);
     }
 
+    @Override
     public void teleport(Vec3d pos) {
         entity.teleport(pos.x, pos.y, pos.z);
     }

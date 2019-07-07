@@ -3,7 +3,7 @@ package club.issizler.okyanus.runtime;
 import club.issizler.okyanus.api.Mod;
 import club.issizler.okyanus.api.cmdnew.CommandOf;
 import club.issizler.okyanus.api.cmdnew.req.OpReq;
-import club.issizler.okyanus.runtime.command.ModIDCommand;
+import club.issizler.okyanus.runtime.command.ModDetailCommand;
 import club.issizler.okyanus.runtime.command.ModsCommand;
 import club.issizler.okyanus.runtime.command.OkyanusCommand;
 import club.issizler.okyanus.runtime.command.TPSCommand;
@@ -73,7 +73,7 @@ public class Runtime extends Mod {
                         subCommands(
                             new CommandOf(
                                 "modId",
-                                run(new ModIDCommand())
+                                run(new ModDetailCommand())
                             )
                         )
                     )

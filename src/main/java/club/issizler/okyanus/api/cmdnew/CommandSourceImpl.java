@@ -11,11 +11,11 @@ import net.minecraft.text.LiteralText;
 
 import java.util.Optional;
 
-public class OkyanusCommandSource implements CommandSource {
+public class CommandSourceImpl implements CommandSource {
 
     private final CommandContext<ServerCommandSource> context;
 
-    public OkyanusCommandSource(CommandContext<ServerCommandSource> context) {
+    public CommandSourceImpl(CommandContext<ServerCommandSource> context) {
         this.context = context;
     }
 

@@ -2,8 +2,7 @@ package club.issizler.okyanus.runtime.mixin;
 
 import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.ServerImpl;
-import club.issizler.okyanus.api.cmd.CommandRegistryImpl;
-import club.issizler.okyanus.api.cmdnew.OkyanusCommandRegistry;
+import club.issizler.okyanus.api.cmdnew.CommandRegistryImpl;
 import club.issizler.okyanus.api.event.EventRegistryImpl;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.ServerCommandOutput;
@@ -20,8 +19,8 @@ public abstract class ServerCommandOutputMixin {
         Okyanus.setServer(
             new ServerImpl(
                 minecraftServer,
-                new OkyanusCommandRegistry(),
                 new CommandRegistryImpl(),
+                new club.issizler.okyanus.api.cmd.CommandRegistryImpl(),
                 new EventRegistryImpl()
             )
         );

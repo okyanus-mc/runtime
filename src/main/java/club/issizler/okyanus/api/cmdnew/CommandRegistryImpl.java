@@ -5,7 +5,7 @@ import club.issizler.okyanus.api.cmdnew.mck.MckCommand;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OkyanusCommandRegistry implements CommandRegistry {
+public class CommandRegistryImpl implements CommandRegistry {
 
     private final List<ICommand> commands = new ArrayList<>();
 

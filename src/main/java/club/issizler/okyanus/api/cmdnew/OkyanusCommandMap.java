@@ -2,6 +2,7 @@ package club.issizler.okyanus.api.cmdnew;
 
 import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.Server;
+import club.issizler.okyanus.api.cmd.CommandRunnable;
 import club.issizler.okyanus.api.cmdnew.mck.MckCommandRunnable;
 import club.issizler.okyanus.api.cmdnew.req.AndReq;
 import club.issizler.okyanus.runtime.SomeGlobals;
@@ -24,7 +25,7 @@ import static net.minecraft.server.command.CommandManager.argument;
 
 public class OkyanusCommandMap {
 
-    private final Map<String, ICommand> knowCommands = new HashMap<>();
+    private final Map<String, ICommand> knownCommands = new HashMap<>();
 
     private final Server server = Okyanus.getServer();
     private final Logger logger;
@@ -36,7 +37,7 @@ public class OkyanusCommandMap {
     public void registerAll() {
         for (ICommand command : server.getCommandRegistry().getCommands()) {
             if (command.getLabel().isEmpty()) {
-                logger.error("Command which has id '" + command.getId() + "' can't registered because of the label didn't defined!");
+                logger.error("Command with id '" + command.getId() + "' can't registered because the label isn't defined!");
                 continue;
             }
 
@@ -57,15 +58,15 @@ public class OkyanusCommandMap {
     }
 
     private synchronized boolean register(String label, ICommand command, boolean isAlias) {
-        knowCommands.put(label, command);
-        if (isAlias && knowCommands.containsKey(label))
+        knownCommands.put(label, command);
+        if (isAlias && knownCommands.containsKey(label))
             return false;
 
-        ICommand conflict = knowCommands.get(label);
+        ICommand conflict = knownCommands.get(label);
         if (conflict != null && conflict.getLabel().equals(label))
             return false;
 
-        knowCommands.put(label, command);
+        knownCommands.put(label, command);
         return true;
     }
 
@@ -94,7 +95,7 @@ public class OkyanusCommandMap {
         }
         final ArgumentBuilder finalBuilder = isArg ? argument(id, type) : literal(label);
         final Command<ServerCommandSource> cmd = context -> {
-            final CommandSource commandSource = new OkyanusCommandSource(context);
+            final CommandSource commandSource = new CommandSourceImpl(context);
             final String[] inputs = context.getInput().split(" ");
             finalBuilder.requires(
                 new AndReq(requirements, commandSource, inputs, location)
@@ -114,7 +115,7 @@ public class OkyanusCommandMap {
 
         CommandNode<ServerCommandSource> overwriteCommand = SomeGlobals.commandDispatcher.getRoot().getChild(command.getLabel());
         if (overwriteCommand != null) {
-            logger.warn("Okyanus: Overwriting a command (/" + command.getLabel() + "). Just letting you know");
+            logger.info("Okyanus: Overwriting a command (/" + command.getLabel() + "). Just letting you know");
             SomeGlobals.commandDispatcher.getRoot().getChildren().remove(overwriteCommand);
         }
 

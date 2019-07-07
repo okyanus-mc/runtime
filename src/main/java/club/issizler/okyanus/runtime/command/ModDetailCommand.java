@@ -8,7 +8,7 @@ import net.fabricmc.loader.api.metadata.ModMetadata;
 
 import java.util.Optional;
 
-public class ModIDCommand implements CommandRunnable {
+public class ModDetailCommand implements CommandRunnable {
 
     @Override
     public int run(CommandSource source) {
