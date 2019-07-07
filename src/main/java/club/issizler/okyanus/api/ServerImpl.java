@@ -1,14 +1,19 @@
 package club.issizler.okyanus.api;
 
+import club.issizler.okyanus.api.cmd.CommandBuilder;
 import club.issizler.okyanus.api.cmdnew.CommandRegistry;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
+import club.issizler.okyanus.api.entity.mck.MckPlayer;
+import club.issizler.okyanus.api.event.Event;
+import club.issizler.okyanus.api.event.EventHandler;
 import club.issizler.okyanus.api.event.EventRegistry;
 import club.issizler.okyanus.api.world.World;
 import club.issizler.okyanus.api.world.WorldImpl;
 import club.issizler.okyanus.runtime.utils.accessors.MinecraftServerLoggable;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.LiteralText;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
@@ -67,12 +72,12 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public Optional<Player> getPlayerByName(String playerName) {
+    public Player getPlayerByName(String playerName) {
         ServerPlayerEntity e = server.getPlayerManager().getPlayer(playerName);
         if (e == null)
-            return Optional.empty();
+            return new MckPlayer();
 
-        return Optional.of(new PlayerImpl(e));
+        return new PlayerImpl(e);
     }
 
     @Override
@@ -93,6 +98,32 @@ public class ServerImpl implements Server {
     @Override
     public EventRegistry getEventRegistry() {
         return eventRegistry;
+    }
+
+    @Override
+    public void broadcast(String message) {
+        server.sendMessage(new LiteralText(message));
+        getPlayerList().forEach(player -> player.send(message));
+    }
+
+    @Override
+    public void registerCommand(CommandBuilder cmd) {
+        oldCommandRegistry.register(cmd);
+    }
+
+    @Override
+    public void registerEvent(EventHandler e) {
+        eventRegistry.register(e);
+    }
+
+    @Override
+    public <E extends Event> E triggerEvent(E e) {
+        return eventRegistry.trigger(e);
+    }
+
+    @Override
+    public void exec(String command) {
+        server.getCommandManager().execute(server.getCommandSource(), command);
     }
 
 }
