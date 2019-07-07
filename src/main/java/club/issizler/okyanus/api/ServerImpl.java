@@ -16,14 +16,15 @@ import java.util.*;
 public class ServerImpl implements Server {
 
     private final MinecraftServer server;
-
     private final CommandRegistry commandRegistry;
+    private final club.issizler.okyanus.api.cmd.CommandRegistry oldCommandRegistry;
     private final EventRegistry eventRegistry;
 
-    public ServerImpl(MinecraftServer server, CommandRegistry commandManager, EventRegistry eventManager) {
+    public ServerImpl(MinecraftServer server, CommandRegistry commandRegistry, club.issizler.okyanus.api.cmd.CommandRegistry oldCommandRegistry, EventRegistry eventRegistry) {
         this.server = server;
-        this.commandRegistry = commandManager;
-        this.eventRegistry = eventManager;
+        this.commandRegistry = commandRegistry;
+        this.oldCommandRegistry = oldCommandRegistry;
+        this.eventRegistry = eventRegistry;
     }
 
     @Override
@@ -77,6 +78,11 @@ public class ServerImpl implements Server {
     @Override
     public void runCommand(String command) {
         server.getCommandManager().execute(server.getCommandSource(), command);
+    }
+
+    @Override
+    public club.issizler.okyanus.api.cmd.CommandRegistry getOldCommandRegistry() {
+        return oldCommandRegistry;
     }
 
     @Override
