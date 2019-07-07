@@ -8,6 +8,7 @@ import club.issizler.okyanus.runtime.utils.accessors.EntityServerRaytraceable;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.hit.HitResult;
+import java.util.Optional;
 
 public class PlayerImpl extends EntityImpl implements Player {
 
@@ -20,13 +21,13 @@ public class PlayerImpl extends EntityImpl implements Player {
     }
 
     @Override
-    public Block getTargetBlock(double distance, boolean returnFluids) {
+    public Optional<Block> getTargetBlock(double distance, boolean returnFluids) {
         HitResult res = ((EntityServerRaytraceable) player).rayTraceInServer(distance, 1.0f, returnFluids); // 1.0f = unknown
 
         if (res.getType() != HitResult.Type.BLOCK)
-            return new MckBlock();
+            return Optional.empty();
 
-        return getWorld().getBlockAt(new Vec3d(res.getPos().x, res.getPos().y, res.getPos().z));
+        return Optional.ofNullable(getWorld().getBlockAt(new Vec3d(res.getPos().x, res.getPos().y, res.getPos().z)));
     }
 
     @Override
