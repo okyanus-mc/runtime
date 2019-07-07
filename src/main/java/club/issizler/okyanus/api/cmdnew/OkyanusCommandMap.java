@@ -97,8 +97,7 @@ public class OkyanusCommandMap {
         final ArgumentBuilder finalBuilder = isArg ? argument(id, type) : literal(label);
         final com.mojang.brigadier.Command<ServerCommandSource> cmd = context -> {
             final String[] inputs = context.getInput().split(" ");
-            final String currentArg = inputs[location];
-            final CommandSource commandSource = new CommandSourceImpl(context, currentArg);
+            final CommandSource commandSource = new CommandSourceImpl(context, command.getId());
             finalBuilder.requires(
                 new AndReq(requirements, commandSource, inputs, location)
             );
