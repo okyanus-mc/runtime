@@ -1,7 +1,6 @@
 package club.issizler.okyanus.runtime;
 
 import club.issizler.okyanus.api.Mod;
-import club.issizler.okyanus.api.cmdnew.ArgumentType;
 import club.issizler.okyanus.api.cmdnew.CommandOf;
 import club.issizler.okyanus.api.cmdnew.req.OpReq;
 import club.issizler.okyanus.runtime.command.ModIDCommand;
@@ -54,18 +53,7 @@ public class Runtime extends Mod {
                 requirements(
                     new OpReq()
                 ),
-                run(new TPSCommand()),
-                subCommands(
-                    new CommandOf(
-                        "player",
-                        type(ArgumentType.PLAYER),
-                        run(source -> {
-                            if (source.getArgPlayer("player").isPresent())
-                                source.getArgPlayer("player").get().send("Tps: x.x.x");
-                            return 1;
-                        })
-                    )
-                )
+                run(new TPSCommand())
             )
         );
 
