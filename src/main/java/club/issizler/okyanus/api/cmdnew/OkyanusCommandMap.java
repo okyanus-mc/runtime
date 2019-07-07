@@ -95,8 +95,9 @@ public class OkyanusCommandMap {
         }
         final ArgumentBuilder finalBuilder = isArg ? argument(id, type) : literal(label);
         final Command<ServerCommandSource> cmd = context -> {
-            final CommandSource commandSource = new CommandSourceImpl(context);
             final String[] inputs = context.getInput().split(" ");
+            final String currentArg = inputs[location];
+            final CommandSource commandSource = new CommandSourceImpl(context, currentArg);
             finalBuilder.requires(
                 new AndReq(requirements, commandSource, inputs, location)
             );
