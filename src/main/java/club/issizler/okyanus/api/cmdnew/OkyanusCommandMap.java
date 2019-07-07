@@ -79,6 +79,13 @@ public class OkyanusCommandMap {
                         return 1;
                     })
             )
+            .then(
+                literal("mods")
+                    .executes(c -> {
+
+                        return 1;
+                    })
+            )
             .executes(c -> {
                 System.out.println("Called foo with no arguments");
                 return 1;
