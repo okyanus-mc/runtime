@@ -1,6 +1,6 @@
 package club.issizler.okyanus.runtime.command;
 
-import club.issizler.okyanus.api.cmdnew.CommandRunnable;
+import club.issizler.okyanus.api.cmd.CommandRunnable;
 import club.issizler.okyanus.api.cmdnew.CommandSource;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -12,12 +12,7 @@ public class ModDetailCommand implements CommandRunnable {
 
     @Override
     public int run(CommandSource source) {
-        final String modId;
-
-        if (source.getArgText("modId").isPresent())
-            modId = source.getArgText("modId").get();
-        else
-            modId = "";
+        final String modId = source.getArgText();
 
         Optional<ModContainer> mod = FabricLoader.getInstance().getModContainer(modId);
 
