@@ -85,6 +85,9 @@ public class OkyanusCommandMap {
             case PLAYER:
                 type = EntityArgumentType.players();
                 break;
+            case GREEDY_TEXT:
+                type = StringArgumentType.greedyString();
+                break;
             case TEXT:
             case NONE:
             default:

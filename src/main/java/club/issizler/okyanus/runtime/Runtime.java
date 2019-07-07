@@ -1,6 +1,7 @@
 package club.issizler.okyanus.runtime;
 
 import club.issizler.okyanus.api.Mod;
+import club.issizler.okyanus.api.cmd.ArgumentType;
 import club.issizler.okyanus.api.cmdnew.CommandOf;
 import club.issizler.okyanus.api.cmdnew.req.OpReq;
 import club.issizler.okyanus.runtime.command.ModDetailCommand;
@@ -73,6 +74,7 @@ public class Runtime extends Mod {
                         subCommands(
                             new CommandOf(
                                 "modId",
+                                type(ArgumentType.GREEDY_TEXT),
                                 run(new ModDetailCommand())
                             )
                         )
