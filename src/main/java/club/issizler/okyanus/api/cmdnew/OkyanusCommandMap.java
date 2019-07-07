@@ -37,8 +37,7 @@ public class OkyanusCommandMap {
 
             register(command.getLabel(), command);
 
-            LiteralArgumentBuilder<ServerCommandSource> builder = literal(command.getLabel());
-            builder = registerBuilder(command, 0, builder);
+            LiteralArgumentBuilder<ServerCommandSource> builder = registerBuilder(command, 0, literal(command.getLabel()););
 
             SomeGlobals.commandDispatcher.register(builder);
         }
