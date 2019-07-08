@@ -24,7 +24,7 @@ configurations {
 repositories {
     mavenCentral()
 
-    maven { url "https://maven.issizler.club/repository/maven-snapshots/" } // TODO: use maven-releases when we release
+    maven { url "https://maven.issizler.club" }
 }
 
 dependencies {
@@ -34,8 +34,6 @@ dependencies {
     modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
-
-    fatJar 'org.cactoos:cactoos:0.41'
 
     fatJar 'com.electronwill.night-config:toml:3.4.0'
     fatJar("club.issizler.okyanus:api:${project.version}") { // always TODO: increment the API version
@@ -78,10 +76,6 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-def releases = "https://maven.issizler.club/repository/maven-releases/"
-def snapshots = "https://maven.issizler.club/repository/maven-snapshots/"
-def currentRepo = version.endsWith("-SNAPSHOT") ? snapshots : releases
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -122,7 +116,7 @@ publishing {
 
     repositories {
         maven {
-            url = currentRepo
+            url = "https://maven.issizler.club"
 
             if (project.hasProperty("nexusPassword")) {
                 credentials {
