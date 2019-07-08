@@ -24,7 +24,7 @@ configurations {
 repositories {
     mavenCentral()
 
-    maven { url "https://maven.issizler.club/repository/maven-snapshots/" } // TODO: use maven-releases when we release
+    maven { url "https://maven.issizler.club" }
 }
 
 dependencies {
@@ -76,10 +76,6 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-def releases = "https://maven.issizler.club/repository/maven-releases/"
-def snapshots = "https://maven.issizler.club/repository/maven-snapshots/"
-def currentRepo = version.endsWith("-SNAPSHOT") ? snapshots : releases
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -120,7 +116,7 @@ publishing {
 
     repositories {
         maven {
-            url = currentRepo
+            url = "https://maven.issizler.club"
 
             if (project.hasProperty("nexusPassword")) {
                 credentials {
