@@ -3,11 +3,11 @@ package club.issizler.okyanus.api.entity;
 import club.issizler.okyanus.api.chat.MessageType;
 import club.issizler.okyanus.api.math.Vec3d;
 import club.issizler.okyanus.api.world.Block;
+import club.issizler.okyanus.api.world.mck.MckBlock;
 import club.issizler.okyanus.runtime.utils.accessors.EntityServerRaytraceable;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.hit.HitResult;
-
 import java.util.Optional;
 
 public class PlayerImpl extends EntityImpl implements Player {
