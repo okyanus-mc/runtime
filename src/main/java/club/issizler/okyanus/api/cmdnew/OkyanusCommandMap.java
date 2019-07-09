@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
-import org.cactoos.scalar.FallbackFrom;
 
 import java.util.HashMap;
 import java.util.List;
