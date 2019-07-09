@@ -2,7 +2,6 @@ package club.issizler.okyanus.api.cmdnew;
 
 import club.issizler.okyanus.api.cmdnew.mck.MckCommand;
 import club.issizler.okyanus.api.cmdnew.mck.MckCommandRunnable;
-import club.issizler.okyanus.api.cmdnew.req.AndReq;
 import club.issizler.okyanus.api.cmdnew.req.Requirement;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -12,7 +11,10 @@ import com.mojang.brigadier.tree.CommandNode;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import org.apache.logging.log4j.Logger;
+import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
+import org.cactoos.scalar.And;
+import org.cactoos.scalar.FallbackFrom;
 
 import java.util.HashMap;
 import java.util.List;
@@ -119,11 +121,29 @@ public class OkyanusCommandMap {
         final com.mojang.brigadier.Command<ServerCommandSource> cmd = context -> {
             final String[] inputs = context.getInput().split(" ");
             final CommandSource commandSource = new CommandSourceImpl(context, command.getId());
-            finalBuilder.requires(
-                o -> command.isActive() &&
-                    new AndReq(requirements, commandSource.getCommandSender(), inputs, location).test((ServerCommandSource) o)
-            );
-            return run.run(commandSource);
+            return ((CommandRunnable) source -> {
+                if (!command.isActive())
+                    return 0;
+
+                final Scalar<Boolean> and = new And(
+                    requirement -> {
+                        return requirement.control(commandSource.getCommandSender(), inputs, location);
+                    },
+                    requirements
+                );
+
+                boolean pass = false;
+                try {
+                    pass = and.value();
+                } catch (Exception e) {
+                    // Ignore...
+                }
+
+                if (!pass)
+                    return 0;
+
+                return run.run(source);
+            }).run(commandSource);
         };
         // Defining
 

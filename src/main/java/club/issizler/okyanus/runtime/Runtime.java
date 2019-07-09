@@ -52,39 +52,10 @@ public class Runtime extends Mod {
 
         registerCommand(
             new CommandOf(
-                "title-command-id",
-                label("totle"),
-                subCommands(
-                    new CommandOf(
-                        "player-id",
-                        type(ArgumentType.PLAYER),
-                        requirements(
-                            new OnlinePlayerReq()
-                        ),
-                        subCommands(
-                            new CommandOf(
-                                "title-message",
-                                type(ArgumentType.GREEDY_TEXT),
-                                run(source -> {
-                                    Player target = source.getArgPlayer("player-id");
-
-                                    target.sendTitle(source.getArgText(), "", 20, 20, 20);
-
-                                    return 1;
-                                })
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        registerCommand(
-            new CommandOf(
                 "tps",
                 label("tps"),
                 requirements(
-                    new OpReq()
+                    new OpReq("You don't have to OP permission!")
                 ),
                 run(new TPSCommand())
             )

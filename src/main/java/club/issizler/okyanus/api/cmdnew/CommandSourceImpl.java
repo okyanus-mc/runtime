@@ -63,6 +63,12 @@ public class CommandSourceImpl implements CommandSource {
         if (context.getSource().getEntity() == null)
             return Okyanus.getServer().getConsoleSender();
 
+        try {
+            return new PlayerImpl(context.getSource().getPlayer());
+        } catch (CommandSyntaxException e) {
+            // Ignore...
+        }
+
         return new EntityImpl(context.getSource().getEntity());
     }
 
