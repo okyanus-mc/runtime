@@ -8,12 +8,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class MoveEventImpl implements MoveEvent {
 
-    private Player player;
-    private PlayerMoveC2SPacket packet;
+    private final Player player;
+    private final PlayerMoveC2SPacket packet;
 
     private boolean isCancelled = false;
 
-    public MoveEventImpl(PlayerMoveC2SPacket packet, ServerPlayerEntity playerEntity) {
+    public MoveEventImpl(@NotNull final PlayerMoveC2SPacket packet,
+                         @NotNull final ServerPlayerEntity playerEntity) {
         this.packet = packet;
         this.player = new PlayerImpl(playerEntity);
     }

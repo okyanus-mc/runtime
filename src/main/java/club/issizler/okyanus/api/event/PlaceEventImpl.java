@@ -15,11 +15,11 @@ public class PlaceEventImpl implements PlaceEvent {
     private final ItemUsageContext context;
     private final Block block;
 
-
     private boolean isCancelled;
 
-    public PlaceEventImpl(ItemUsageContext itemUsageContext_1, PlayerEntity player, Block block) {
-        this.context = itemUsageContext_1;
+    public PlaceEventImpl(@NotNull final ItemUsageContext itemUsageContext,
+                          @NotNull final PlayerEntity player, Block block) {
+        this.context = itemUsageContext;
         this.player = new PlayerImpl((ServerPlayerEntity) player);
         this.block = block;
     }

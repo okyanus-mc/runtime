@@ -14,11 +14,13 @@ public class ConnectEventImpl implements ConnectEvent {
     private String cancelReason = "Disconnected";
     private String message;
 
-    private ClientConnection connection;
-    private Player player;
+    private final ClientConnection connection;
+    private final Player player;
     private boolean isCancelled = false;
 
-    public ConnectEventImpl(ClientConnection connection, ServerPlayerEntity playerEntity, String message) {
+    public ConnectEventImpl(@NotNull final ClientConnection connection,
+                            @NotNull final ServerPlayerEntity playerEntity,
+                            @NotNull final String message) {
         this.connection = connection;
         this.player = new PlayerImpl(playerEntity);
         this.message = message;

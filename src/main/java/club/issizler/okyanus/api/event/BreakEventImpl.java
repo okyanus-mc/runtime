@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class BreakEventImpl implements BreakEvent {
 
-    private PlayerActionC2SPacket packet;
-    private Player player;
+    private final PlayerActionC2SPacket packet;
+    private final Player player;
 
     private boolean isCancelled;
 
-    public BreakEventImpl(PlayerActionC2SPacket packet, ServerPlayerEntity playerEntity) {
+    public BreakEventImpl(@NotNull final PlayerActionC2SPacket packet, @NotNull final ServerPlayerEntity playerEntity) {
         this.packet = packet;
         this.player = new PlayerImpl(playerEntity);
     }

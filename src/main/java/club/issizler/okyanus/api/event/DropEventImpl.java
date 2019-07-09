@@ -8,12 +8,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class DropEventImpl implements DropEvent {
 
-    private PlayerActionC2SPacket packet;
-    private Player player;
+    private final PlayerActionC2SPacket packet;
+    private final Player player;
 
     private boolean isCancelled;
 
-    public DropEventImpl(PlayerActionC2SPacket packet, ServerPlayerEntity playerEntity) {
+    public DropEventImpl(@NotNull final PlayerActionC2SPacket packet,
+                         @NotNull final ServerPlayerEntity playerEntity) {
         this.packet = packet;
         this.player = new PlayerImpl(playerEntity);
     }

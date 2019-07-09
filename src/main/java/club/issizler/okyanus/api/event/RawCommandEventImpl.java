@@ -12,7 +12,8 @@ public class RawCommandEventImpl implements RawCommandEvent {
     private String command;
     private boolean isCancelled;
 
-    public RawCommandEventImpl(Player player, String command) {
+    public RawCommandEventImpl(@NotNull final Player player,
+                               @NotNull final String command) {
         this.player = player;
         this.command = command;
     }

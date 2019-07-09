@@ -6,14 +6,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChatEventImpl implements ChatEvent {
 
-    private Player player;
+    private final Player player;
 
     private String format;
     private String message;
 
     private boolean cancelled;
 
-    public ChatEventImpl(Player player, String message) {
+    public ChatEventImpl(@NotNull final Player player, @NotNull final String message) {
         this.player = player;
         this.message = message;
 

@@ -9,9 +9,9 @@ public class DisconnectEventImpl implements DisconnectEvent {
 
     private String message;
 
-    private Player player;
+    private final Player player;
 
-    public DisconnectEventImpl(ServerPlayerEntity playerEntity, String message) {
+    public DisconnectEventImpl(@NotNull final ServerPlayerEntity playerEntity, @NotNull final String message) {
         this.player = new PlayerImpl(playerEntity);
         this.message = message;
     }

@@ -10,12 +10,13 @@ public class InteractEntityEventImpl implements InteractEntityEvent {
 
     private boolean isCancelled;
 
-    private Player player;
-    private PlayerInteractEntityC2SPacket packet;
+    private final Player player;
+    private final PlayerInteractEntityC2SPacket packet;
 
-    public InteractEntityEventImpl(PlayerInteractEntityC2SPacket playerInteractEntityC2SPacket_1, ServerPlayerEntity player) {
+    public InteractEntityEventImpl(@NotNull final PlayerInteractEntityC2SPacket playerInteractEntityC2SPacket,
+                                   @NotNull final ServerPlayerEntity player) {
         this.player = new PlayerImpl(player);
-        this.packet = playerInteractEntityC2SPacket_1;
+        this.packet = playerInteractEntityC2SPacket;
     }
 
     @Override
