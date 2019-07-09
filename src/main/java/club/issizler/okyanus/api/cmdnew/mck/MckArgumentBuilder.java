@@ -2,6 +2,7 @@ package club.issizler.okyanus.api.cmdnew.mck;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
+import com.mojang.brigadier.tree.RootCommandNode;
 
 public class MckArgumentBuilder extends ArgumentBuilder {
 
@@ -12,7 +13,7 @@ public class MckArgumentBuilder extends ArgumentBuilder {
 
     @Override
     public CommandNode build() {
-        return null;
+        return new RootCommandNode();
     }
 
 }
