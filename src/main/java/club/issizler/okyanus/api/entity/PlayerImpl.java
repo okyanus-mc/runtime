@@ -6,6 +6,7 @@ import club.issizler.okyanus.api.math.Vec3d;
 import club.issizler.okyanus.api.world.Block;
 import club.issizler.okyanus.runtime.utils.accessors.EntityServerRaytraceable;
 import net.minecraft.client.network.packet.ChatMessageS2CPacket;
+import net.minecraft.client.network.packet.TitleS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -65,6 +66,22 @@ public class PlayerImpl extends EntityImpl implements Player {
     @Override
     public void sendRawJson(JsonCompound jsonCompound) {
         player.networkHandler.sendPacket(new ChatMessageS2CPacket(Text.Serializer.fromJson(jsonCompound.convert())));
+    }
+
+    @Override
+    public void sendTitle(String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+        TitleS2CPacket times = new TitleS2CPacket(fadeIn, stay, fadeOut);
+        player.networkHandler.sendPacket(times);
+
+        if (!title.isEmpty()) {
+            TitleS2CPacket packetTitle = new TitleS2CPacket(TitleS2CPacket.Action.TITLE, new LiteralText(title));
+            player.networkHandler.sendPacket(packetTitle);
+        }
+
+        if (!subtitle.isEmpty()) {
+            TitleS2CPacket packetSubtitle = new TitleS2CPacket(TitleS2CPacket.Action.SUBTITLE, new LiteralText(subtitle));
+            player.networkHandler.sendPacket(packetSubtitle);
+        }
     }
 
     @Override
