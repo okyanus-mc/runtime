@@ -1,8 +1,8 @@
 package club.issizler.okyanus.api;
 
 import club.issizler.okyanus.api.cmd.CommandBuilder;
+import club.issizler.okyanus.api.cmdnew.ColoredConsoleCommandSender;
 import club.issizler.okyanus.api.cmdnew.CommandRegistry;
-import club.issizler.okyanus.api.cmdnew.CommandSender;
 import club.issizler.okyanus.api.cmdnew.ConsoleCommandSender;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
@@ -17,12 +17,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class ServerImpl implements Server {
 
-    private final CommandSender sender;
+    private final ConsoleCommandSender sender = new ColoredConsoleCommandSender();
     private final MinecraftServer server;
     private final CommandRegistry commandRegistry;
     private final club.issizler.okyanus.api.cmd.CommandRegistry oldCommandRegistry;
@@ -35,21 +36,25 @@ public class ServerImpl implements Server {
         this.eventRegistry = eventRegistry;
     }
 
+    @NotNull
     @Override
     public String getName() {
         return server.getName();
     }
 
+    @NotNull
     @Override
     public String getVersion() {
         return server.getVersion();
     }
 
+    @NotNull
     @Override
     public Logger getLogger() {
         return ((MinecraftServerLoggable) server).getLogger();
     }
 
+    @NotNull
     @Override
     public Collection<Player> getPlayerList() {
         Set<Player> players = new HashSet<>();
@@ -61,6 +66,7 @@ public class ServerImpl implements Server {
         return players;
     }
 
+    @NotNull
     @Override
     public List<World> getWorlds() {
         List<World> worlds = new ArrayList<>();
@@ -74,8 +80,9 @@ public class ServerImpl implements Server {
         return Thread.currentThread().getName().equals("Server thread");
     }
 
+    @NotNull
     @Override
-    public Player getPlayerByName(String playerName) {
+    public Player getPlayerByName(@NotNull String playerName) {
         ServerPlayerEntity e = server.getPlayerManager().getPlayer(playerName);
         if (e == null)
             return new MckPlayer();
@@ -84,37 +91,40 @@ public class ServerImpl implements Server {
     }
 
     @Override
-    public void runCommand(String command) {
+    public void runCommand(@NotNull String command) {
         server.getCommandManager().execute(server.getCommandSource(), command);
     }
 
-    @Override
-    public club.issizler.okyanus.api.cmd.CommandRegistry getOldCommandRegistry() {
-        return oldCommandRegistry;
-    }
-
+    @NotNull
     @Override
     public CommandRegistry getCommandRegistry() {
         return commandRegistry;
     }
 
+    @NotNull
     @Override
     public EventRegistry getEventRegistry() {
         return eventRegistry;
     }
 
     @Override
-    public void broadcast(String message) {
+    public void broadcast(@NotNull String message) {
         server.sendMessage(new LiteralText(message));
         getPlayerList().forEach(player -> player.send(message));
     }
 
+    @NotNull
     @Override
     public ConsoleCommandSender getConsoleSender() {
-        return server.;
+        return sender;
     }
 
     // Deprecated Section
+
+    @Override
+    public club.issizler.okyanus.api.cmd.CommandRegistry getOldCommandRegistry() {
+        return oldCommandRegistry;
+    }
 
     @Override
     public void registerCommand(CommandBuilder cmd) {

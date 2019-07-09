@@ -34,7 +34,7 @@ public class PlayerImpl extends EntityImpl implements Player {
         if (res.getType() != HitResult.Type.BLOCK)
             return Optional.empty();
 
-        return Optional.ofNullable(getWorld().getBlockAt(new Vec3d(res.getPos().x, res.getPos().y, res.getPos().z)));
+        return Optional.of(getWorld().getBlockAt(new Vec3d(res.getPos().x, res.getPos().y, res.getPos().z)));
     }
 
     @Override

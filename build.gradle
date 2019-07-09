@@ -35,8 +35,11 @@ dependencies {
 
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 
+    fatJar 'jline:jline:2.14.6'
+    fatJar 'org.fusesource.jansi:jansi:1.18'
     fatJar 'org.cactoos:cactoos:0.41'
     fatJar 'org.jetbrains:annotations:17.0.0'
+
     fatJar 'com.electronwill.night-config:toml:3.4.0'
     fatJar("club.issizler.okyanus:api:${project.version}") { // always TODO: increment the API version
         exclude group: "org.apache.commons"
