@@ -1,7 +1,6 @@
 package club.issizler.okyanus.runtime.mixin.events;
 
 import club.issizler.okyanus.api.Okyanus;
-import club.issizler.okyanus.api.cmdnew.OkyanusCommandMap;
 import club.issizler.okyanus.api.event.ReadyEventImpl;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import club.issizler.okyanus.runtime.command.CommandRegistrar;
