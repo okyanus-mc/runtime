@@ -3,11 +3,12 @@ package club.issizler.okyanus.runtime.command;
 import club.issizler.okyanus.api.cmdnew.CommandRunnable;
 import club.issizler.okyanus.api.cmdnew.CommandSource;
 import club.issizler.okyanus.runtime.SomeGlobals;
+import org.jetbrains.annotations.NotNull;
 
 public class TPSCommand implements CommandRunnable {
 
     @Override
-    public int run(CommandSource source) {
+    public int run(@NotNull CommandSource source) {
         boolean isConsole = source.isConsole();
         StringBuilder tps = new StringBuilder();
 

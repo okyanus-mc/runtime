@@ -4,6 +4,7 @@ import club.issizler.okyanus.api.cmdnew.CommandSender;
 import net.minecraft.server.command.ServerCommandSource;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.And;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -15,7 +16,10 @@ public class AndReq implements Predicate<ServerCommandSource> {
     private final String[] inputs;
     private final int location;
 
-    public AndReq(List<Requirement> requirements, CommandSender sender, String[] inputs, int location) {
+    public AndReq(@NotNull final List<Requirement> requirements,
+                  @NotNull final CommandSender sender,
+                  @NotNull final String[] inputs,
+                  int location) {
         this.requirements = requirements;
         this.sender = sender;
         this.inputs = inputs;

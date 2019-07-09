@@ -5,13 +5,14 @@ import club.issizler.okyanus.api.cmdnew.CommandSource;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.metadata.ModMetadata;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 public class ModDetailCommand implements CommandRunnable {
 
     @Override
-    public int run(CommandSource source) {
+    public int run(@NotNull CommandSource source) {
         final String modId = source.getArgText();
 
         Optional<ModContainer> mod = FabricLoader.getInstance().getModContainer(modId);

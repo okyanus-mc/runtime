@@ -11,6 +11,9 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.HitResult;
+import org.cactoos.Proc;
+import org.cactoos.scalar.And;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -35,8 +38,65 @@ public class PlayerImpl extends EntityImpl implements Player {
     }
 
     @Override
-    public void teleport(Vec3d pos) {
+    public void teleport(@NotNull Vec3d pos) {
         player.teleport(pos.x, pos.y, pos.z, true);
+    }
+
+    @Override
+    public void sendMessage(@NotNull final String... messages) {
+        try {
+            new And(
+                (Proc<@NotNull String>) this::send,
+                messages
+            ).value();
+        } catch (Exception e) {
+            // Ignore...
+        }
+    }
+
+    @Override
+    public void sendRawJson(@NotNull JsonCompound jsonCompound) {
+        player.networkHandler.sendPacket(new ChatMessageS2CPacket(Text.Serializer.fromJson(jsonCompound.convert())));
+    }
+
+    @Override
+    public void sendTitle(@NotNull String title, @NotNull String subtitle, int fadeIn, int stay, int fadeOut) {
+        TitleS2CPacket times = new TitleS2CPacket(fadeIn, stay, fadeOut);
+        player.networkHandler.sendPacket(times);
+
+        if (!title.isEmpty()) {
+            TitleS2CPacket packetTitle = new TitleS2CPacket(TitleS2CPacket.Action.TITLE, new LiteralText(title));
+            player.networkHandler.sendPacket(packetTitle);
+        }
+
+        if (!subtitle.isEmpty()) {
+            TitleS2CPacket packetSubtitle = new TitleS2CPacket(TitleS2CPacket.Action.SUBTITLE, new LiteralText(subtitle));
+            player.networkHandler.sendPacket(packetSubtitle);
+        }
+    }
+
+    @Override
+    public void kick(@NotNull String message) {
+        player.networkHandler.disconnect(new LiteralText(message));
+    }
+
+    @Override
+    public boolean isOp() {
+        return player.server.getPlayerManager().isOperator(player.getGameProfile());
+    }
+
+    @Override
+    public void setOp(boolean isOp) {
+        if (isOp)
+            player.server.getPlayerManager().addToOperators(player.getGameProfile());
+        else
+            player.server.getPlayerManager().removeFromOperators(player.getGameProfile());
+    }
+
+    @NotNull
+    @Override
+    public String getIdentifier() {
+        return getUUID().toString();
     }
 
     @Override
@@ -61,65 +121,6 @@ public class PlayerImpl extends EntityImpl implements Player {
         }
 
         player.sendChatMessage(new LiteralText(message), nmsType);
-    }
-
-    @Override
-    public void sendRawJson(JsonCompound jsonCompound) {
-        player.networkHandler.sendPacket(new ChatMessageS2CPacket(Text.Serializer.fromJson(jsonCompound.convert())));
-    }
-
-    @Override
-    public void sendTitle(String title, String subtitle, int fadeIn, int stay, int fadeOut) {
-        TitleS2CPacket times = new TitleS2CPacket(fadeIn, stay, fadeOut);
-        player.networkHandler.sendPacket(times);
-
-        if (!title.isEmpty()) {
-            TitleS2CPacket packetTitle = new TitleS2CPacket(TitleS2CPacket.Action.TITLE, new LiteralText(title));
-            player.networkHandler.sendPacket(packetTitle);
-        }
-
-        if (!subtitle.isEmpty()) {
-            TitleS2CPacket packetSubtitle = new TitleS2CPacket(TitleS2CPacket.Action.SUBTITLE, new LiteralText(subtitle));
-            player.networkHandler.sendPacket(packetSubtitle);
-        }
-    }
-
-    @Override
-    public void kick(String message) {
-        player.networkHandler.disconnect(new LiteralText(message));
-    }
-
-    @Override
-    public boolean isOp() {
-        return player.server.getPlayerManager().isOperator(player.getGameProfile());
-    }
-
-    @Override
-    public void setOp(boolean isOp) {
-        if (isOp)
-            player.server.getPlayerManager().addToOperators(player.getGameProfile());
-        else
-            player.server.getPlayerManager().removeFromOperators(player.getGameProfile());
-    }
-
-    @Override
-    public String getIdentifier() {
-        return getUUID().toString();
-    }
-
-    @Override
-    public Entity getEntity() {
-        return this;
-    }
-
-    @Override
-    public Player getPlayer() {
-        return this;
-    }
-
-    @Override
-    public boolean isConsole() {
-        return false;
     }
 
 }

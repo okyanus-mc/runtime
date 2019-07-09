@@ -4,11 +4,12 @@ import club.issizler.okyanus.api.cmdnew.CommandRunnable;
 import club.issizler.okyanus.api.cmdnew.CommandSource;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+import org.jetbrains.annotations.NotNull;
 
 public class ModsCommand implements CommandRunnable {
 
     @Override
-    public int run(CommandSource source) {
+    public int run(@NotNull CommandSource source) {
         boolean isConsole = source.isConsole();
 
         StringBuilder mods = new StringBuilder("Mods: ");

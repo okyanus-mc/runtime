@@ -3,11 +3,12 @@ package club.issizler.okyanus.runtime.command;
 import club.issizler.okyanus.api.cmdnew.CommandRunnable;
 import club.issizler.okyanus.api.cmdnew.CommandSource;
 import net.fabricmc.loader.api.FabricLoader;
+import org.jetbrains.annotations.NotNull;
 
 public class OkyanusCommand implements CommandRunnable {
 
     @Override
-    public int run(CommandSource source) {
+    public int run(@NotNull CommandSource source) {
         boolean isConsole = source.isConsole();
         FabricLoader loader = FabricLoader.getInstance();
 

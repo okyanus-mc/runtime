@@ -121,7 +121,7 @@ public class OkyanusCommandMap {
             final CommandSource commandSource = new CommandSourceImpl(context, command.getId());
             finalBuilder.requires(
                 o -> command.isActive() &&
-                    new AndReq(requirements, commandSource, inputs, location).test((ServerCommandSource) o)
+                    new AndReq(requirements, commandSource.getCommandSender(), inputs, location).test((ServerCommandSource) o)
             );
             return run.run(commandSource);
         };
