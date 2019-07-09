@@ -1,7 +1,6 @@
 package club.issizler.okyanus.api.cmdnew.req;
 
-import club.issizler.okyanus.api.cmdnew.CommandSource;
-import club.issizler.okyanus.api.cmdnew.Requirement;
+import club.issizler.okyanus.api.cmdnew.CommandSender;
 import net.minecraft.server.command.ServerCommandSource;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.And;
@@ -12,13 +11,13 @@ import java.util.function.Predicate;
 public class AndReq implements Predicate<ServerCommandSource> {
 
     private final List<Requirement> requirements;
-    private final CommandSource source;
+    private final CommandSender sender;
     private final String[] inputs;
     private final int location;
 
-    public AndReq(List<Requirement> requirements, CommandSource source, String[] inputs, int location) {
+    public AndReq(List<Requirement> requirements, CommandSender sender, String[] inputs, int location) {
         this.requirements = requirements;
-        this.source = source;
+        this.sender = sender;
         this.inputs = inputs;
         this.location = location;
     }
@@ -27,7 +26,7 @@ public class AndReq implements Predicate<ServerCommandSource> {
     public boolean test(ServerCommandSource serverCommandSource) {
         final Scalar<Boolean> and = new And(
             requirement -> {
-                return requirement.control(source, inputs, location);
+                return requirement.control(sender, inputs, location);
             },
             requirements
         );

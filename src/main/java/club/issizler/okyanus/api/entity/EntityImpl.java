@@ -6,7 +6,7 @@ import net.minecraft.text.LiteralText;
 
 import java.util.UUID;
 
-public class EntityImpl implements Entity {
+public abstract class EntityImpl implements Entity {
 
     private final net.minecraft.entity.Entity entity;
 

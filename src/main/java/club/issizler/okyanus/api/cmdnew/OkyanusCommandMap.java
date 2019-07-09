@@ -3,6 +3,7 @@ package club.issizler.okyanus.api.cmdnew;
 import club.issizler.okyanus.api.cmdnew.mck.MckCommand;
 import club.issizler.okyanus.api.cmdnew.mck.MckCommandRunnable;
 import club.issizler.okyanus.api.cmdnew.req.AndReq;
+import club.issizler.okyanus.api.cmdnew.req.Requirement;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;

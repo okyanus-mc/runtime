@@ -107,4 +107,19 @@ public class PlayerImpl extends EntityImpl implements Player {
         return getUUID().toString();
     }
 
+    @Override
+    public Entity getEntity() {
+        return this;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return this;
+    }
+
+    @Override
+    public boolean isConsole() {
+        return false;
+    }
+
 }

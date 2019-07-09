@@ -3,7 +3,10 @@ package club.issizler.okyanus.runtime;
 import club.issizler.okyanus.api.Mod;
 import club.issizler.okyanus.api.cmd.ArgumentType;
 import club.issizler.okyanus.api.cmdnew.CommandOf;
+import club.issizler.okyanus.api.cmdnew.CommandSender;
+import club.issizler.okyanus.api.cmdnew.req.OnlinePlayerReq;
 import club.issizler.okyanus.api.cmdnew.req.OpReq;
+import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.runtime.command.ModDetailCommand;
 import club.issizler.okyanus.runtime.command.ModsCommand;
 import club.issizler.okyanus.runtime.command.OkyanusCommand;
@@ -46,6 +49,34 @@ public class Runtime extends Mod {
         File configFolder = new File("./config/");
         if (!configFolder.exists())
             configFolder.mkdir();
+
+        registerCommand(
+            new CommandOf(
+                "title-command-id",
+                label("title"),
+                subCommands(
+                    new CommandOf(
+                        "player-id",
+                        type(ArgumentType.PLAYER),
+                        requirements(
+                            new OnlinePlayerReq()
+                        ),
+                        subCommands(
+                            new CommandOf(
+                                "title-message",
+                                type(ArgumentType.GREEDY_TEXT),
+                                run(source -> {
+                                    Player target = source.getArgPlayer("player-id");
+                                    String title = source.getArgText();
+
+                                    return 1;
+                                })
+                            )
+                        )
+                    )
+                )
+            )
+        );
 
         registerCommand(
             new CommandOf(

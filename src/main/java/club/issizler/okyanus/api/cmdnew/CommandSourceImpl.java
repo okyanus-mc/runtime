@@ -64,17 +64,27 @@ public class CommandSourceImpl implements CommandSource {
 
     @Override
     public String getArgText() {
+        return getArgText(arg);
+    }
+
+    @Override
+    public Player getArgPlayer() {
+        return getArgPlayer(arg);
+    }
+
+    @Override
+    public String getArgText(String commandId) {
         try {
-            return StringArgumentType.getString(context, arg);
+            return StringArgumentType.getString(context, commandId);
         } catch (IllegalArgumentException e) {
             return "";
         }
     }
 
     @Override
-    public Player getArgPlayer() {
+    public Player getArgPlayer(String commandId) {
         try {
-            return new PlayerImpl(EntityArgumentType.getPlayer(context, arg));
+            return new PlayerImpl(EntityArgumentType.getPlayer(context, commandId));
         } catch (CommandSyntaxException e) {
             sendMessage(e.toString());
             throw new RuntimeException(e);
@@ -82,5 +92,4 @@ public class CommandSourceImpl implements CommandSource {
             return new MckPlayer();
         }
     }
-
 }
