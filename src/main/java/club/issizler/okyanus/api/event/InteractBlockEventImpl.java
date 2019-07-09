@@ -6,6 +6,7 @@ import club.issizler.okyanus.api.math.Vec3d;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerInteractBlockC2SPacket;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.NotNull;
 
 public class InteractBlockEventImpl implements InteractBlockEvent {
 
@@ -29,11 +30,13 @@ public class InteractBlockEventImpl implements InteractBlockEvent {
         this.isCancelled = isCancelled;
     }
 
+    @NotNull
     @Override
     public Player getPlayer() {
         return player;
     }
 
+    @NotNull
     @Override
     public Vec3d getLocation() {
         BlockPos pos = packet.getHitY().getBlockPos();

@@ -1,6 +1,7 @@
 package club.issizler.okyanus.api.event;
 
 import club.issizler.okyanus.api.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -36,13 +37,14 @@ public class RawCommandEventImpl implements RawCommandEvent {
         return Optional.ofNullable(player);
     }
 
+    @NotNull
     @Override
     public String getCommand() {
         return command;
     }
 
     @Override
-    public void setCommand(String command) {
+    public void setCommand(@NotNull String command) {
         this.command = command;
     }
 

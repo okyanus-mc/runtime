@@ -4,6 +4,7 @@ import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerMoveC2SPacket;
+import org.jetbrains.annotations.NotNull;
 
 public class MoveEventImpl implements MoveEvent {
 
@@ -27,6 +28,7 @@ public class MoveEventImpl implements MoveEvent {
         this.isCancelled = isCancelled;
     }
 
+    @NotNull
     public Player getPlayer() {
         return player;
     }

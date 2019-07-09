@@ -6,6 +6,7 @@ import club.issizler.okyanus.api.math.Vec3d;
 import club.issizler.okyanus.api.world.Block;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerActionC2SPacket;
+import org.jetbrains.annotations.NotNull;
 
 public class BreakEventImpl implements BreakEvent {
 
@@ -19,6 +20,7 @@ public class BreakEventImpl implements BreakEvent {
         this.player = new PlayerImpl(playerEntity);
     }
 
+    @NotNull
     public Player getPlayer() {
         return player;
     }
@@ -33,11 +35,13 @@ public class BreakEventImpl implements BreakEvent {
         this.isCancelled = isCancelled;
     }
 
+    @NotNull
     @Override
     public Vec3d getLocation() {
         return new Vec3d(packet.getPos().getX(), packet.getPos().getY(), packet.getPos().getZ());
     }
 
+    @NotNull
     @Override
     public Block getBlock() {
         return player.getWorld().getBlockAt(getLocation());

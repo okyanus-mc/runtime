@@ -2,6 +2,7 @@ package club.issizler.okyanus.api.event;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -15,7 +16,7 @@ public class EventRegistryImpl implements EventRegistry {
     private Map<String, List<EventHandler>> handlers = new HashMap<>();
     private Logger logger = LogManager.getLogger();
 
-    public void register(EventHandler eventHandler) {
+    public void register(@NotNull EventHandler eventHandler) {
         for (Type type : eventHandler.getClass().getGenericInterfaces()) {
             if (!(type instanceof ParameterizedType))
                 continue;
@@ -39,7 +40,7 @@ public class EventRegistryImpl implements EventRegistry {
     }
 
     @Override
-    public void unregister(EventHandler eventHandler) {
+    public void unregister(@NotNull EventHandler eventHandler) {
         for (Type type : eventHandler.getClass().getGenericInterfaces()) {
             if (!(type instanceof ParameterizedType))
                 continue;
@@ -56,7 +57,8 @@ public class EventRegistryImpl implements EventRegistry {
         }
     }
 
-    public <E extends Event> E trigger(E e) {
+    @NotNull
+    public <E extends Event> E trigger(@NotNull E e) {
         String eventName = e.getClass().getInterfaces()[0].getTypeName();
         List<EventHandler> handlerList = handlers.get(eventName);
 

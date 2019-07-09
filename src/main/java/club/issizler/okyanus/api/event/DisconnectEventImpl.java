@@ -3,6 +3,7 @@ package club.issizler.okyanus.api.event;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import net.minecraft.server.network.ServerPlayerEntity;
+import org.jetbrains.annotations.NotNull;
 
 public class DisconnectEventImpl implements DisconnectEvent {
 
@@ -15,17 +16,19 @@ public class DisconnectEventImpl implements DisconnectEvent {
         this.message = message;
     }
 
+    @NotNull
     public Player getPlayer() {
         return player;
     }
 
+    @NotNull
     @Override
     public String getMessage() {
         return message;
     }
 
     @Override
-    public void setMessage(String message) {
+    public void setMessage(@NotNull String message) {
         this.message = message;
     }
 

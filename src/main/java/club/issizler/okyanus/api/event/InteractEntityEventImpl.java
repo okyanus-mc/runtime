@@ -4,6 +4,7 @@ import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerInteractEntityC2SPacket;
+import org.jetbrains.annotations.NotNull;
 
 public class InteractEntityEventImpl implements InteractEntityEvent {
 
@@ -27,6 +28,7 @@ public class InteractEntityEventImpl implements InteractEntityEvent {
         this.isCancelled = isCancelled;
     }
 
+    @NotNull
     @Override
     public Player getPlayer() {
         return player;
