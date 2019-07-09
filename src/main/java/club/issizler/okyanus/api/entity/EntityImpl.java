@@ -11,7 +11,7 @@ public class EntityImpl implements Entity {
 
     private final net.minecraft.entity.Entity entity;
 
-    public EntityImpl(net.minecraft.entity.Entity entity) {
+    public EntityImpl(@NotNull final net.minecraft.entity.Entity entity) {
         this.entity = entity;
     }
 

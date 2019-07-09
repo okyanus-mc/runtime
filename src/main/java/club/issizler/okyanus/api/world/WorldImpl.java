@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public class WorldImpl implements World {
 
-    private net.minecraft.world.World world;
+    private final net.minecraft.world.World world;
 
-    public WorldImpl(net.minecraft.world.World world) {
+    public WorldImpl(@NotNull final net.minecraft.world.World world) {
         this.world = world;
     }
 

@@ -17,7 +17,8 @@ public class CommandSourceImpl implements CommandSource {
     private final CommandContext<ServerCommandSource> context;
     private final String arg;
 
-    CommandSourceImpl(CommandContext<ServerCommandSource> context, String arg) {
+    CommandSourceImpl(@NotNull final CommandContext<ServerCommandSource> context,
+                      @NotNull final String arg) {
         this.context = context;
         this.arg = arg;
     }

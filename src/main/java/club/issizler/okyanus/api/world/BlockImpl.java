@@ -10,7 +10,9 @@ public class BlockImpl implements Block {
     private final Vec3d pos;
     private final World world;
 
-    public BlockImpl(World world, BlockState block, Vec3d pos) {
+    public BlockImpl(@NotNull final World world,
+                     @NotNull final BlockState block,
+                     @NotNull final Vec3d pos) {
         this.world = world;
         this.block = block;
         this.pos = pos;

@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.And;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +31,7 @@ public class OkyanusCommandMap {
 
     private boolean started = false;
 
-    public OkyanusCommandMap(Logger logger) {
+    public OkyanusCommandMap(@NotNull final Logger logger) {
         this.logger = logger;
     }
 

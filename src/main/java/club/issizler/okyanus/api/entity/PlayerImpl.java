@@ -21,7 +21,7 @@ public class PlayerImpl extends EntityImpl implements Player {
 
     private final ServerPlayerEntity player;
 
-    public PlayerImpl(ServerPlayerEntity player) {
+    public PlayerImpl(@NotNull final ServerPlayerEntity player) {
         super(player);
 
         this.player = player;

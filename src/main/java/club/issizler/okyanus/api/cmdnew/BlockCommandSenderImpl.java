@@ -18,7 +18,8 @@ public class BlockCommandSenderImpl extends ServerCommandSender implements Block
     private final ServerCommandSource sourceBlock;
     private final BlockEntity blockEntity;
 
-    public BlockCommandSenderImpl(ServerCommandSource sourceBlock, BlockEntity blockEntity) {
+    public BlockCommandSenderImpl(@NotNull final ServerCommandSource sourceBlock,
+                                  @NotNull final BlockEntity blockEntity) {
         this.sourceBlock = sourceBlock;
         this.blockEntity = blockEntity;
     }
