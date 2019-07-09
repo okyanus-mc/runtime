@@ -72,4 +72,15 @@ public class BlockCommandSenderImpl extends ServerCommandSender implements Block
             ? ""
             : sourceBlock.getName();
     }
+
+    @Override
+    public boolean isOp() {
+        return true;
+    }
+
+    @Override
+    public void setOp(boolean value) {
+        throw new UnsupportedOperationException("Cannot change operator status of a block");
+    }
+
 }

@@ -1,6 +1,7 @@
 package club.issizler.okyanus.runtime;
 
 import club.issizler.okyanus.api.Mod;
+import club.issizler.okyanus.api.chat.ChatColor;
 import club.issizler.okyanus.api.cmd.ArgumentType;
 import club.issizler.okyanus.api.cmdnew.CommandOf;
 import club.issizler.okyanus.api.cmdnew.req.OnlinePlayerReq;
@@ -52,7 +53,7 @@ public class Runtime extends Mod {
         registerCommand(
             new CommandOf(
                 "title-command-id",
-                label("title"),
+                label("totle"),
                 subCommands(
                     new CommandOf(
                         "player-id",
@@ -66,7 +67,8 @@ public class Runtime extends Mod {
                                 type(ArgumentType.GREEDY_TEXT),
                                 run(source -> {
                                     Player target = source.getArgPlayer("player-id");
-                                    String title = source.getArgText();
+
+                                    target.sendTitle(source.getArgText(), "", 20, 20, 20);
 
                                     return 1;
                                 })

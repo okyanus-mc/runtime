@@ -20,8 +20,9 @@ public class ConsoleCommandSenderImpl extends ServerCommandSender implements Con
         }
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return "CONSOLE";
     }
 
