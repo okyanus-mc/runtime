@@ -3,9 +3,12 @@ package club.issizler.okyanus.runtime.mixin;
 import club.issizler.okyanus.api.Okyanus;
 import club.issizler.okyanus.api.ServerImpl;
 import club.issizler.okyanus.api.cmdnew.CommandRegistryImpl;
+import club.issizler.okyanus.api.cmdnew.OkyanusCommandMap;
 import club.issizler.okyanus.api.event.EventRegistryImpl;
+import club.issizler.okyanus.runtime.SomeGlobals;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.ServerCommandOutput;
+import org.apache.logging.log4j.LogManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,6 +27,7 @@ public abstract class ServerCommandOutputMixin {
                 new EventRegistryImpl()
             )
         );
+        SomeGlobals.commandMap = new OkyanusCommandMap(LogManager.getLogger());
     }
 
 }

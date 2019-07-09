@@ -15,8 +15,8 @@ public class EventRegistryImpl implements EventRegistry {
     private Map<String, List<EventHandler>> handlers = new HashMap<>();
     private Logger logger = LogManager.getLogger();
 
-    public void register(EventHandler eventClass) {
-        for (Type type : eventClass.getClass().getGenericInterfaces()) {
+    public void register(EventHandler eventHandler) {
+        for (Type type : eventHandler.getClass().getGenericInterfaces()) {
             if (!(type instanceof ParameterizedType))
                 continue;
 
@@ -32,8 +32,26 @@ public class EventRegistryImpl implements EventRegistry {
                     handlers.put(eventKey, new ArrayList<>());
                 }
 
-                logger.debug("Okyanus: Registering event class " + eventClass.getClass().getName() + " for event " + eventKey);
-                handlers.get(eventKey).add(eventClass);
+                logger.debug("Okyanus: Registering event class " + eventHandler.getClass().getName() + " for event " + eventKey);
+                handlers.get(eventKey).add(eventHandler);
+            }
+        }
+    }
+
+    @Override
+    public void unregister(EventHandler eventHandler) {
+        for (Type type : eventHandler.getClass().getGenericInterfaces()) {
+            if (!(type instanceof ParameterizedType))
+                continue;
+
+            if (!type.getTypeName().contains(EventHandler.class.getTypeName()))
+                continue;
+
+            Type[] genericTypes = ((ParameterizedType) type).getActualTypeArguments();
+            for (Type genericType : genericTypes) {
+                String eventKey = genericType.getTypeName().replace("class ", "");
+
+                handlers.remove(eventKey);
             }
         }
     }

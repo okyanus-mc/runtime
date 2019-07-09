@@ -11,6 +11,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 
 public class CommandSourceImpl implements CommandSource {
@@ -25,9 +26,25 @@ public class CommandSourceImpl implements CommandSource {
 
     @Override
     public Entity getEntity() {
-        return context.getSource().getEntity() == null
-            ? new MckEntity()
-            : new EntityImpl(context.getSource().getEntity());
+        final net.minecraft.entity.Entity entity = context.getSource().getEntity();
+
+        if (entity == null)
+            return new MckEntity();
+
+        return new EntityImpl(context.getSource().getEntity());
+    }
+
+    @Override
+    public Player getPlayer() {
+        final net.minecraft.entity.Entity entity = context.getSource().getEntity();
+
+        if (entity == null)
+            return new MckPlayer();
+
+        if (!(entity instanceof ServerPlayerEntity))
+            return new MckPlayer();
+
+        return new PlayerImpl((ServerPlayerEntity) entity);
     }
 
     @Override
