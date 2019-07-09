@@ -122,9 +122,6 @@ public class OkyanusCommandMap {
             final String[] inputs = context.getInput().split(" ");
             final CommandSource commandSource = new CommandSourceImpl(context, command.getId());
             return ((CommandRunnable) source -> {
-                if (!command.isActive())
-                    return 0;
-
                 final Scalar<Boolean> and = new And(
                     requirement -> {
                         return requirement.control(commandSource.getCommandSender(), inputs, location);
