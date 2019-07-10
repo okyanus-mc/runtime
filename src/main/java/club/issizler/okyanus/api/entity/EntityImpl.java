@@ -71,9 +71,9 @@ public class EntityImpl implements Entity {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof EntityImpl))
+        if (!(o instanceof Entity))
             return false;
 
-        return ((EntityImpl) o).entity.getEntityId() == entity.getEntityId();
+        return o.hashCode() == hashCode();
     }
 }
