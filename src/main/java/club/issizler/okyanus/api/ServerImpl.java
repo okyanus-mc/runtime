@@ -1,9 +1,9 @@
 package club.issizler.okyanus.api;
 
 import club.issizler.okyanus.api.cmd.CommandBuilder;
-import club.issizler.okyanus.api.cmdnew.ColoredConsoleCommandSender;
 import club.issizler.okyanus.api.cmdnew.CommandRegistry;
 import club.issizler.okyanus.api.cmdnew.ConsoleCommandSender;
+import club.issizler.okyanus.api.cmdnew.ConsoleCommandSenderImpl;
 import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import club.issizler.okyanus.api.entity.mck.MckPlayer;
@@ -23,7 +23,7 @@ import java.util.*;
 
 public class ServerImpl implements Server {
 
-    private final ConsoleCommandSender sender = new ColoredConsoleCommandSender();
+    private final ConsoleCommandSender sender = new ConsoleCommandSenderImpl();
     private final MinecraftServer server;
     private final CommandRegistry commandRegistry;
     private final club.issizler.okyanus.api.cmd.CommandRegistry oldCommandRegistry;
