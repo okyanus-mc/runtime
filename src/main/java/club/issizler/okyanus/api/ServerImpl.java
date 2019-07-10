@@ -121,26 +121,31 @@ public class ServerImpl implements Server {
 
     // Deprecated Section
 
+    @Deprecated
     @Override
     public club.issizler.okyanus.api.cmd.CommandRegistry getOldCommandRegistry() {
         return oldCommandRegistry;
     }
 
+    @Deprecated
     @Override
     public void registerCommand(CommandBuilder cmd) {
         oldCommandRegistry.register(cmd);
     }
 
+    @Deprecated
     @Override
     public void registerEvent(EventHandler e) {
         eventRegistry.register(e);
     }
 
+    @Deprecated
     @Override
     public <E extends Event> E triggerEvent(E e) {
         return eventRegistry.trigger(e);
     }
 
+    @Deprecated
     @Override
     public void exec(String command) {
         server.getCommandManager().execute(server.getCommandSource(), command);
