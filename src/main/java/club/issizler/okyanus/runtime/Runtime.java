@@ -52,7 +52,7 @@ public class Runtime extends Mod {
                 "tps",
                 label("tps"),
                 requirements(
-                    new OpReq("You don't have to OP permission!")
+                    new OpReq("You don't have OP permission!")
                 ),
                 run(new TPSCommand())
             )
