@@ -1,9 +1,8 @@
 package club.issizler.okyanus.api.cmdnew;
 
-import club.issizler.okyanus.api.Okyanus;
-import club.issizler.okyanus.api.Server;
+import club.issizler.okyanus.api.cmdnew.mck.MckCommand;
 import club.issizler.okyanus.api.cmdnew.mck.MckCommandRunnable;
-import club.issizler.okyanus.api.cmdnew.req.AndReq;
+import club.issizler.okyanus.api.cmdnew.req.Requirement;
 import club.issizler.okyanus.runtime.SomeGlobals;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -12,6 +11,10 @@ import com.mojang.brigadier.tree.CommandNode;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import org.apache.logging.log4j.Logger;
+import org.cactoos.Scalar;
+import org.cactoos.list.ListOf;
+import org.cactoos.scalar.And;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,39 +27,59 @@ import static net.minecraft.server.command.CommandManager.argument;
 public class OkyanusCommandMap {
 
     private final Map<String, Command> knownCommands = new HashMap<>();
-
-    private final Server server = Okyanus.getServer();
     private final Logger logger;
 
-    public OkyanusCommandMap(Logger logger) {
+    private boolean started = false;
+
+    public OkyanusCommandMap(@NotNull final Logger logger) {
         this.logger = logger;
     }
 
     public void registerAll() {
-        for (Command command : server.getCommandRegistry().getCommands()) {
+        for (Command command : knownCommands.values()) {
             if (command.getLabel().isEmpty()) {
                 logger.error("Command with id '" + command.getId() + "' can't registered because the label isn't defined!");
                 continue;
             }
 
-            register(command.getLabel(), command);
+            register(command);
 
             LiteralArgumentBuilder<ServerCommandSource> builder =
                 (LiteralArgumentBuilder<ServerCommandSource>) registerBuilder(command, 0);
 
             SomeGlobals.commandDispatcher.register(builder);
         }
+        started = true;
     }
 
-    private void register(String label, Command command) {
-        label = label.toLowerCase(Locale.ENGLISH).trim();
+    void register(Command command) {
+        if (started) {
+            LiteralArgumentBuilder<ServerCommandSource> builder =
+                (LiteralArgumentBuilder<ServerCommandSource>) registerBuilder(command, 0);
+
+            SomeGlobals.commandDispatcher.register(builder);
+        }
+
+        String label = command.getLabel().toLowerCase(Locale.ENGLISH).trim();
         register(label, command, false);
 
         command.getAliases().removeIf(alias -> !register(alias, command, true));
     }
 
+    Command getCommand(String label) {
+        return knownCommands.getOrDefault(label, new MckCommand());
+    }
+
+    List<Command> getCommands() {
+        return new ListOf<>(knownCommands.values());
+    }
+
+    void unregister(Command command) {
+        command.setActive(false);
+        knownCommands.remove(command.getLabel());
+    }
+
     private synchronized boolean register(String label, Command command, boolean isAlias) {
-        knownCommands.put(label, command);
         if (isAlias && knownCommands.containsKey(label))
             return false;
 
@@ -98,10 +121,26 @@ public class OkyanusCommandMap {
         final com.mojang.brigadier.Command<ServerCommandSource> cmd = context -> {
             final String[] inputs = context.getInput().split(" ");
             final CommandSource commandSource = new CommandSourceImpl(context, command.getId());
-            finalBuilder.requires(
-                new AndReq(requirements, commandSource, inputs, location)
-            );
-            return run.run(commandSource);
+            return ((CommandRunnable) source -> {
+                final Scalar<Boolean> and = new And(
+                    requirement -> {
+                        return requirement.control(commandSource.getCommandSender(), inputs, location);
+                    },
+                    requirements
+                );
+
+                boolean pass = false;
+                try {
+                    pass = and.value();
+                } catch (Exception e) {
+                    // Ignore...
+                }
+
+                if (!pass)
+                    return 0;
+
+                return run.run(source);
+            }).run(commandSource);
         };
         // Defining
 

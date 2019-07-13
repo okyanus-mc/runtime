@@ -1,30 +1,31 @@
 package club.issizler.okyanus.api.cmdnew;
 
-import club.issizler.okyanus.api.cmdnew.mck.MckCommand;
+import club.issizler.okyanus.runtime.SomeGlobals;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommandRegistryImpl implements CommandRegistry {
 
-    private final List<Command> commands = new ArrayList<>();
-
     @Override
-    public void register(Command cmd) {
-        commands.add(cmd);
+    public void register(@NotNull Command cmd) {
+        SomeGlobals.commandMap.register(cmd);
     }
 
     @Override
-    public Command getCommand(String commandLabel) {
-        for (Command command : commands)
-            if (command.getLabel().equals(commandLabel))
-                return command;
-        return new MckCommand();
+    public void unregister(@NotNull Command cmd) {
+        SomeGlobals.commandMap.unregister(cmd);
     }
 
+    @NotNull
+    @Override
+    public Command getCommand(@NotNull String commandLabel) {
+        return SomeGlobals.commandMap.getCommand(commandLabel);
+    }
+
+    @NotNull
     @Override
     public List<Command> getCommands() {
-        return commands;
+        return SomeGlobals.commandMap.getCommands();
     }
-
 }

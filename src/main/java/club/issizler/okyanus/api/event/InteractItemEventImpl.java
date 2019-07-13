@@ -4,19 +4,20 @@ import club.issizler.okyanus.api.entity.Player;
 import club.issizler.okyanus.api.entity.PlayerImpl;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.packet.PlayerInteractItemC2SPacket;
+import org.jetbrains.annotations.NotNull;
 
 public class InteractItemEventImpl implements InteractItemEvent {
 
     private boolean isCancelled = false;
 
-    private PlayerInteractItemC2SPacket packet;
-    private Player player;
+    private final PlayerInteractItemC2SPacket packet;
+    private final Player player;
 
-    public InteractItemEventImpl(PlayerInteractItemC2SPacket playerInteractItemC2SPacket_1, ServerPlayerEntity player) {
+    public InteractItemEventImpl(@NotNull final PlayerInteractItemC2SPacket playerInteractItemC2SPacket,
+                                 @NotNull final ServerPlayerEntity player) {
         this.player = new PlayerImpl(player);
-        this.packet = playerInteractItemC2SPacket_1;
+        this.packet = playerInteractItemC2SPacket;
     }
-
 
     @Override
     public boolean isCancelled() {
@@ -28,6 +29,7 @@ public class InteractItemEventImpl implements InteractItemEvent {
         this.isCancelled = isCancelled;
     }
 
+    @NotNull
     @Override
     public Player getPlayer() {
         return player;

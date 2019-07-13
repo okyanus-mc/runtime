@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.NotNull;
 
 public class PlaceEventImpl implements PlaceEvent {
 
@@ -14,15 +15,16 @@ public class PlaceEventImpl implements PlaceEvent {
     private final ItemUsageContext context;
     private final Block block;
 
-
     private boolean isCancelled;
 
-    public PlaceEventImpl(ItemUsageContext itemUsageContext_1, PlayerEntity player, Block block) {
-        this.context = itemUsageContext_1;
+    public PlaceEventImpl(@NotNull final ItemUsageContext itemUsageContext,
+                          @NotNull final PlayerEntity player, Block block) {
+        this.context = itemUsageContext;
         this.player = new PlayerImpl((ServerPlayerEntity) player);
         this.block = block;
     }
 
+    @NotNull
     public PlayerImpl getPlayer() {
         return player;
     }
@@ -37,12 +39,14 @@ public class PlaceEventImpl implements PlaceEvent {
         this.isCancelled = isCancelled;
     }
 
+    @NotNull
     @Override
     public Vec3d getLocation() {
         BlockPos pos = context.getBlockPos();
         return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
     }
 
+    @NotNull
     @Override
     public Block getBlock() {
         return block;
